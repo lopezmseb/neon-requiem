@@ -1,11 +1,25 @@
-[gd_scene load_steps=11 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=16 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Character.gd" id="1_c11dy"]
 [ext_resource type="Texture2D" uid="uid://bsg5k6o8v23am" path="res://Assets/TestAssets/CharacterSprites/sheets/DinoSprites - doux.png" id="2_yhugl"]
+[ext_resource type="Script" path="res://Scripts/States/StateMachine.gd" id="3_26k2r"]
+[ext_resource type="Script" path="res://Scripts/States/Player/PlayerMoveState.gd" id="4_05xpc"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_k4bi2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0r2t"]
 atlas = ExtResource("2_yhugl")
 region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dnnt"]
+atlas = ExtResource("2_yhugl")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfsjk"]
+atlas = ExtResource("2_yhugl")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swt3h"]
+atlas = ExtResource("2_yhugl")
+region = Rect2(72, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fgdc5"]
 atlas = ExtResource("2_yhugl")
@@ -31,7 +45,16 @@ region = Rect2(192, 0, 24, 24)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_k4bi2")
+"texture": SubResource("AtlasTexture_w0r2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dnnt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfsjk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swt3h")
 }],
 "loop": true,
 "name": &"Idle",
@@ -62,12 +85,22 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_c11dy")
+speed = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_7wljc")
 animation = &"Idle"
-frame_progress = 0.192392
+frame_progress = 0.517855
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kfq2m")
+
+[node name="ControllerStateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initialState")]
+script = ExtResource("3_26k2r")
+initialState = NodePath("Movement")
+
+[node name="Movement" type="Node2D" parent="ControllerStateMachine" node_paths=PackedStringArray("player", "animatedSprite")]
+script = ExtResource("4_05xpc")
+player = NodePath("../..")
+animatedSprite = NodePath("../../AnimatedSprite2D")

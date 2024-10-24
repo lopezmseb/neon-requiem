@@ -23,6 +23,7 @@ func Update(delta):
 func Physics_Update(delta):
 	if enemy:
 		enemy.velocity = direction * speed
+		animate.flip_h = enemy.velocity.x < 0
 		
 	var playerDirection = player.global_position - enemy.global_position
 	

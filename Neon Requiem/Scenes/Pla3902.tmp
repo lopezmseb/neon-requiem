@@ -86,12 +86,13 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_c11dy")
+speed = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_7wljc")
 animation = &"Idle"
-frame_progress = 0.165521
+frame_progress = 0.125724
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kfq2m")
@@ -112,5 +113,3 @@ player = NodePath("../..")
 animatedSprite = NodePath("../../AnimatedSprite2D")
 
 [node name="DashTimer" type="Timer" parent="ControllerStateMachine/Dash"]
-wait_time = 0.1
-one_shot = true

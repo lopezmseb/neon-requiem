@@ -92,10 +92,12 @@ shape = SubResource("RectangleShape2D_vxlqs")
 script = ExtResource("2_1hncl")
 initialState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy", "animate")]
 script = ExtResource("4_4lkf5")
 enemy = NodePath("../..")
+animate = NodePath("../../AnimatedSprite2D")
 
-[node name="Follow" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy")]
+[node name="Follow" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy", "animate")]
 script = ExtResource("5_h2kdd")
 enemy = NodePath("../..")
+animate = NodePath("../../AnimatedSprite2D")

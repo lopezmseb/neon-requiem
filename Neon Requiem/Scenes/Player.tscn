@@ -1,10 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=14 format=3 uid="uid://byw7abk88jgwq"]
 
-[ext_resource type="Script" path="res://Scripts/Player/Character.gd" id="1_c11dy"]
+[ext_resource type="Script" path="res://Scenes/Player.gd" id="1_rr7fk"]
 [ext_resource type="Texture2D" uid="uid://bsg5k6o8v23am" path="res://Assets/TestAssets/CharacterSprites/sheets/DinoSprites - doux.png" id="2_yhugl"]
-[ext_resource type="Script" path="res://Scripts/States/StateMachine.gd" id="3_26k2r"]
-[ext_resource type="Script" path="res://Scripts/States/Player/PlayerMoveState.gd" id="4_05xpc"]
-[ext_resource type="Script" path="res://Scripts/States/Player/PlayerDashState.gd" id="5_j5fij"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0r2t"]
 atlas = ExtResource("2_yhugl")
@@ -83,9 +80,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfq2m"]
+size = Vector2(15, 17)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-script = ExtResource("1_c11dy")
+script = ExtResource("1_rr7fk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)
@@ -94,29 +92,21 @@ animation = &"Idle"
 frame_progress = 0.165521
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_kfq2m")
 
-[node name="ControllerStateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initialState")]
-script = ExtResource("3_26k2r")
-initialState = NodePath("Movement")
-
-[node name="Movement" type="Node2D" parent="ControllerStateMachine" node_paths=PackedStringArray("dashCooldown", "player", "animatedSprite")]
-script = ExtResource("4_05xpc")
-dashCooldown = NodePath("../Dash/DashCooldown")
-player = NodePath("../..")
-animatedSprite = NodePath("../../AnimatedSprite2D")
-
-[node name="Dash" type="Node2D" parent="ControllerStateMachine" node_paths=PackedStringArray("dashTimer", "cooldownTimer", "player", "animatedSprite")]
-script = ExtResource("5_j5fij")
-dashTimer = NodePath("DashTimer")
-cooldownTimer = NodePath("DashCooldown")
-player = NodePath("../..")
-animatedSprite = NodePath("../../AnimatedSprite2D")
-
-[node name="DashTimer" type="Timer" parent="ControllerStateMachine/Dash"]
-wait_time = 0.1
+[node name="DashCooldown" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 
-[node name="DashCooldown" type="Timer" parent="ControllerStateMachine/Dash"]
-wait_time = 2.0
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 0.25
 one_shot = true
+
+[node name="Gun" type="Node2D" parent="."]
+
+[node name="Aiming" type="Marker2D" parent="Gun"]
+position = Vector2(15, 0)
+
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

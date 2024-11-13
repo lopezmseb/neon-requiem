@@ -85,6 +85,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfq2m"]
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_mask = 5
 script = ExtResource("1_c11dy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

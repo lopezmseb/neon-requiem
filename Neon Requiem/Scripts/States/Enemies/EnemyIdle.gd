@@ -24,9 +24,10 @@ func Physics_Update(delta):
 	if enemy:
 		enemy.velocity = direction * speed
 		animate.flip_h = enemy.velocity.x < 0
-		
-	var playerDirection = player.global_position - enemy.global_position
 	
-	if(playerDirection.length() < 100):
-		onNewState.emit(self, AvailableStates.Follow)
+	if(player):
+		var playerDirection = player.global_position - enemy.global_position
+		
+		if(playerDirection.length() < 100):
+			onNewState.emit(self, AvailableStates.Follow)
 	

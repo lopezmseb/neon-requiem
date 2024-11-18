@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AttackComponent" load_steps=2 format=3 uid="uid://c5ls27kury3bv"]
+
+[ext_resource type="Script" path="res://Scripts/Stats/AttackComponent.gd" id="1_6t4a4"]
+
+[resource]
+script = ExtResource("1_6t4a4")
+baseAttack = 10.0

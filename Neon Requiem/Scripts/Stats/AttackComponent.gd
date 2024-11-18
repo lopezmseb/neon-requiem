@@ -1,3 +1,4 @@
+extends Node
 class_name AttackComponent
 
 const DEFAULT_ATTACK = 10

@@ -1,10 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=20 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Character.gd" id="1_c11dy"]
 [ext_resource type="Texture2D" uid="uid://bsg5k6o8v23am" path="res://Assets/TestAssets/CharacterSprites/sheets/DinoSprites - doux.png" id="2_yhugl"]
 [ext_resource type="Script" path="res://Scripts/States/StateMachine.gd" id="3_26k2r"]
+[ext_resource type="Script" path="res://Scripts/Stats/HitboxDetection.gd" id="3_nhmsr"]
 [ext_resource type="Script" path="res://Scripts/States/Player/PlayerMoveState.gd" id="4_05xpc"]
 [ext_resource type="Script" path="res://Scripts/States/Player/PlayerDashState.gd" id="5_j5fij"]
+[ext_resource type="Script" path="res://Scripts/Stats/HealthComponent.gd" id="6_v21iu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0r2t"]
 atlas = ExtResource("2_yhugl")
@@ -82,7 +84,11 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_nv1gu"]
+radius = 6.08276
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfq2m"]
+size = Vector2(15, 18)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_c11dy")
@@ -93,7 +99,15 @@ sprite_frames = SubResource("SpriteFrames_7wljc")
 animation = &"Idle"
 frame_progress = 0.165521
 
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_nhmsr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_nv1gu")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 1)
 shape = SubResource("RectangleShape2D_kfq2m")
 
 [node name="ControllerStateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initialState")]
@@ -120,3 +134,8 @@ one_shot = true
 [node name="DashCooldown" type="Timer" parent="ControllerStateMachine/Dash"]
 wait_time = 2.0
 one_shot = true
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("6_v21iu")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

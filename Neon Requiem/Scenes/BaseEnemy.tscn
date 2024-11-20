@@ -80,7 +80,7 @@ animations = [{
 
 [node name="BaseEnemy" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 15
 script = ExtResource("1_eknkv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -6,3 +6,7 @@ class_name HealthComponent
 
 func damage(attack: AttackComponent):
 	currentHealth -= attack.calculateDamage()
+	
+	# If health == 0 or lower, destroy the object.
+	if(currentHealth <= 0):
+		get_parent().queue_free()

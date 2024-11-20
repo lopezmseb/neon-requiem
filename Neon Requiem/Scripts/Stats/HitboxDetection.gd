@@ -1,4 +1,5 @@
 extends Area2D
+class_name HitboxCollision
 
 @onready var healthComponent: HealthComponent
 

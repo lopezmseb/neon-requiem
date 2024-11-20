@@ -14,6 +14,6 @@ func _on_body_entered(body):
 		
 		return
 		
-	body.get_tree().queue_free()
+	#body.get_tree().queue_free()
 	
 	

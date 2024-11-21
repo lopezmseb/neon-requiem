@@ -27,6 +27,12 @@ func _on_area_2d_body_entered(body):
 	
 	# Deal damage to enemy
 	health.damage(attack)
+	
+	# Enable HealthBar
+	var healthBar = body.find_child("HealthBar")
+		
+	if(healthBar is HealthBar):
+		healthBar.show()
 		
 	queue_free()
 	

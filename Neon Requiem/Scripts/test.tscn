@@ -197,7 +197,6 @@ position = Vector2(113, 93)
 zoom = Vector2(3, 3)
 
 [node name="BaseEnemy" parent="." instance=ExtResource("3_akghi")]
-visible = false
 position = Vector2(217, 101)
 
 [node name="Area2D" type="Area2D" parent="."]

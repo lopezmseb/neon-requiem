@@ -13,6 +13,9 @@ func _on_body_entered(body):
 	if(attack != null):
 		healthComponent.damage(attack)
 		
+		
+		
+		
 		return
 		
 	#body.get_tree().queue_free()

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyIdle.gd" id="4_4lkf5"]
 [ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyFollow.gd" id="5_h2kdd"]
 [ext_resource type="Script" path="res://Scripts/Stats/HealthComponent.gd" id="6_t48s2"]
-[ext_resource type="PackedScene" uid="uid://fto1fd4wbbqb" path="res://Scenes/ObjectHealthBar.tscn" id="7_xgv0k"]
+[ext_resource type="PackedScene" uid="uid://5ojpb1xjautu" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rnh6i"]
 atlas = ExtResource("1_vor37")
@@ -78,7 +78,6 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vxlqs"]
-size = Vector2(15, 17)
 
 [node name="BaseEnemy" type="CharacterBody2D"]
 collision_layer = 2
@@ -91,7 +90,6 @@ animation = &"Idle"
 frame_progress = 0.229316
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 0.5)
 shape = SubResource("RectangleShape2D_vxlqs")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initialState")]
@@ -109,23 +107,21 @@ enemy = NodePath("../..")
 animate = NodePath("../../AnimatedSprite2D")
 
 [node name="AttackCooldown" type="Timer" parent="StateMachine/Follow"]
-wait_time = 2.0
-one_shot = true
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("6_t48s2")
 
 [node name="Gun" type="Node2D" parent="."]
 
 [node name="Aiming" type="Marker2D" parent="Gun"]
 position = Vector2(15, 0)
 
-[node name="HealthComponent" type="Node" parent="."]
-script = ExtResource("6_t48s2")
-
-[node name="HealthBar" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("7_xgv0k")]
-offset_left = -15.0
-offset_top = -18.0
-offset_right = -15.0
-offset_bottom = -18.0
-scale = Vector2(0.192876, 0.272876)
+[node name="HealthBar" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("8_nxvgv")]
+offset_left = -8.0
+offset_top = -14.0
+offset_right = -8.0
+offset_bottom = -14.0
+scale = Vector2(0.110062, 0.110062)
 healthComponent = NodePath("../HealthComponent")
 
 [connection signal="timeout" from="StateMachine/Follow/AttackCooldown" to="StateMachine/Follow" method="_on_attack_cooldown_timeout"]

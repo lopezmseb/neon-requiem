@@ -3,6 +3,7 @@ extends Node
 @export var spawnArea: CollisionShape2D
 @export var numOfEnemies: int = 4
 
+
 const enemyScene: PackedScene = preload("res://Scenes/BaseEnemy.tscn")
 
 func _ready():

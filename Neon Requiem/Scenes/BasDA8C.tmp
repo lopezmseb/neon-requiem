@@ -1,12 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://577xd1d52p1t"]
+[gd_scene load_steps=19 format=3 uid="uid://577xd1d52p1t"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/BaseEnemy.gd" id="1_eknkv"]
 [ext_resource type="Texture2D" uid="uid://d1n36dwike423" path="res://Assets/TestAssets/CharacterSprites/sheets/DinoSprites - mort.png" id="1_vor37"]
 [ext_resource type="Script" path="res://Scripts/States/StateMachine.gd" id="2_1hncl"]
 [ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyIdle.gd" id="4_4lkf5"]
 [ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyFollow.gd" id="5_h2kdd"]
+[ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyAttack.gd" id="6_if2w3"]
 [ext_resource type="Script" path="res://Scripts/Stats/HealthComponent.gd" id="6_t48s2"]
-[ext_resource type="PackedScene" uid="uid://fto1fd4wbbqb" path="res://Scenes/ObjectHealthBar.tscn" id="7_xgv0k"]
+[ext_resource type="PackedScene" uid="uid://fto1fd4wbbqb" path="res://Scenes/HealthBar.tscn" id="7_xgv0k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rnh6i"]
 atlas = ExtResource("1_vor37")
@@ -78,7 +79,6 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vxlqs"]
-size = Vector2(15, 17)
 
 [node name="BaseEnemy" type="CharacterBody2D"]
 collision_layer = 2
@@ -91,7 +91,6 @@ animation = &"Idle"
 frame_progress = 0.229316
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 0.5)
 shape = SubResource("RectangleShape2D_vxlqs")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initialState")]
@@ -108,13 +107,18 @@ script = ExtResource("5_h2kdd")
 enemy = NodePath("../..")
 animate = NodePath("../../AnimatedSprite2D")
 
-[node name="AttackCooldown" type="Timer" parent="StateMachine/Follow"]
-wait_time = 2.0
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy", "animate")]
+script = ExtResource("6_if2w3")
+enemy = NodePath("../..")
+animate = NodePath("../../AnimatedSprite2D")
+
+[node name="AttackCooldown" type="Timer" parent="StateMachine/Attack"]
+wait_time = 0.25
 one_shot = true
 
-[node name="Gun" type="Node2D" parent="."]
+[node name="Gun" type="Node2D" parent="StateMachine/Attack"]
 
-[node name="Aiming" type="Marker2D" parent="Gun"]
+[node name="Aiming" type="Marker2D" parent="StateMachine/Attack/Gun"]
 position = Vector2(15, 0)
 
 [node name="HealthComponent" type="Node" parent="."]
@@ -127,5 +131,3 @@ offset_right = -15.0
 offset_bottom = -18.0
 scale = Vector2(0.192876, 0.272876)
 healthComponent = NodePath("../HealthComponent")
-
-[connection signal="timeout" from="StateMachine/Follow/AttackCooldown" to="StateMachine/Follow" method="_on_attack_cooldown_timeout"]

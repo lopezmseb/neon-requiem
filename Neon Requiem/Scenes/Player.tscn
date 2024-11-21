@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://byw7abk88jgwq"]
 
-[ext_resource type="Script" path="res://Scenes/Player.gd" id="1_rr7fk"]
+[ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Texture2D" uid="uid://bsg5k6o8v23am" path="res://Assets/TestAssets/CharacterSprites/sheets/DinoSprites - doux.png" id="2_yhugl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0r2t"]
@@ -83,7 +83,8 @@ animations = [{
 size = Vector2(15, 17)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-script = ExtResource("1_rr7fk")
+collision_mask = 9
+script = ExtResource("1_2efai")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)

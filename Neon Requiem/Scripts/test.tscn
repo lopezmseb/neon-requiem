@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dyf55hnqn1bgi"]
+[gd_scene load_steps=8 format=3 uid="uid://dyf55hnqn1bgi"]
 
 [ext_resource type="Texture2D" uid="uid://sktayqgcfgkn" path="res://Assets/TestAssets/TileMaps/minitileset.png" id="1_p7d7v"]
 [ext_resource type="PackedScene" uid="uid://byw7abk88jgwq" path="res://Scenes/Player.tscn" id="2_3l062"]
 [ext_resource type="PackedScene" uid="uid://577xd1d52p1t" path="res://Scenes/BaseEnemy.tscn" id="3_akghi"]
+[ext_resource type="Script" path="res://Scripts/Enemy/EnemySpawner.gd" id="4_6m008"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ighu3"]
 texture = ExtResource("1_p7d7v")
@@ -174,7 +175,14 @@ texture = ExtResource("1_p7d7v")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_ighu3")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ptw7s"]
+size = Vector2(1232.5, 672)
+
 [node name="Node2D" type="Node2D"]
+
+[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("spawnArea")]
+script = ExtResource("4_6m008")
+spawnArea = NodePath("../Area2D/CollisionShape2D")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(0, -1)
@@ -190,3 +198,10 @@ zoom = Vector2(3, 3)
 
 [node name="BaseEnemy" parent="." instance=ExtResource("3_akghi")]
 position = Vector2(217, 101)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(632.75, 351)
+shape = SubResource("RectangleShape2D_ptw7s")
+disabled = true

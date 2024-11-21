@@ -1,16 +1,40 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1vlue38274fi"]
+[gd_scene load_steps=5 format=3 uid="uid://b1vlue38274fi"]
 
-[ext_resource type="Texture2D" uid="uid://bdugsu1fc67h5" path="res://Assets/TestAssets/CharacterSprites/aseprite/bullet.png" id="1_ca1mw"]
-[ext_resource type="Script" path="res://Scripts/Player/bullet.gd" id="1_qax6u"]
+[ext_resource type="Script" path="res://Scripts/Player/bullet.gd" id="1_jia21"]
+[ext_resource type="Texture2D" uid="uid://bdugsu1fc67h5" path="res://Assets/TestAssets/CharacterSprites/aseprite/bullet.png" id="2_bmigj"]
+[ext_resource type="Script" path="res://Scripts/Stats/AttackComponent.gd" id="3_lof4c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnpq7"]
 radius = 2.0
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
-script = ExtResource("1_qax6u")
+[node name="Bullet" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_jia21")
 
-[node name="Bullet" type="Sprite2D" parent="."]
-texture = ExtResource("1_ca1mw")
+[node name="BulletSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_bmigj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_tnpq7")
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_tnpq7")
+
+[node name="Life" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="AttackComponent" type="Node" parent="."]
+script = ExtResource("3_lof4c")
+baseAttack = 5.0
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
+[connection signal="timeout" from="Life" to="." method="_on_life_timeout"]

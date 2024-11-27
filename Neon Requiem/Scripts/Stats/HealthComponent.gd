@@ -9,7 +9,12 @@ func damage(attack: AttackComponent):
 	
 	# If health == 0 or lower, destroy the object.
 	if(currentHealth <= 0):
-		get_parent().queue_free()
+		var parent = get_parent()
+		
+		if(parent is Player): 
+			get_tree().reload_current_scene()
+		else:
+			parent.queue_free()
 
 func calcMaxHealth():
 	# Here we will run all health upgrades when implemented

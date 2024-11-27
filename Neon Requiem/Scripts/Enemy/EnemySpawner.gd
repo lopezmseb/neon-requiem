@@ -8,7 +8,7 @@ const enemyScene: PackedScene = preload("res://Scenes/BaseEnemy.tscn")
 
 func _ready():
 	var origin = spawnArea.get_transform().get_origin()
-	var size = spawnArea.shape.extents * 2
+	var size = spawnArea.shape.extents 
 	
 	for i in range(0, numOfEnemies):
 		var instance: CharacterBody2D = enemyScene.instantiate()
@@ -16,7 +16,7 @@ func _ready():
 		var randomPositionX = randf_range(origin.x, origin.x + size.x)
 		var randomPositionY = randf_range(origin.y, origin.y + size.y)
 		instance.position = Vector2(randomPositionX, randomPositionY)
-		
+		instance.z_index = 99
 		add_child(instance)
 		
 	

@@ -195,7 +195,7 @@ layer_0/tile_data = PackedInt32Array(0, 196608, 0, 65536, 196608, 0, 65537, 0, 0
 position = Vector2(113, 93)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(3, 3)
+zoom = Vector2(5, 5)
 
 [node name="BaseEnemy" parent="." instance=ExtResource("3_akghi")]
 position = Vector2(217, 101)
@@ -208,6 +208,7 @@ shape = SubResource("RectangleShape2D_ptw7s")
 disabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="PlayerHealthBar" parent="CanvasLayer" instance=ExtResource("4_x8xie")]
 anchors_preset = 2
@@ -219,4 +220,5 @@ offset_right = 25.0
 offset_bottom = -38.0
 grow_horizontal = 1
 grow_vertical = 0
+scale = Vector2(1.64, 1.64)
 size_flags_horizontal = 0

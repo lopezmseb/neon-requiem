@@ -7,10 +7,10 @@ const bulletSpeed = 500.0
 var is_dash_ready: bool = true
 var is_attack_ready: bool = true
 
+@onready var animatedSprite = $AnimatedSprite2D
 
 const bulletPath = preload("res://Scenes/bullet.tscn")
 
-@onready var animatedSprite = $AnimatedSprite2D
 	
 func _physics_process(delta):
 	$Gun.look_at(get_global_mouse_position())
@@ -34,9 +34,11 @@ func _physics_process(delta):
 
 func dash():
 	is_dash_ready = false
-	$DashCooldown.start()
+	
 	velocity = velocity * dashSpeed
 	move_and_slide()
+	
+	$DashCooldown.start()
 
 func _on_dash_cooldown_timeout():
 	is_dash_ready = true

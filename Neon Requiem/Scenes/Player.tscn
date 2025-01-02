@@ -1,7 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=16 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Texture2D" uid="uid://bsg5k6o8v23am" path="res://Assets/TestAssets/CharacterSprites/sheets/DinoSprites - doux.png" id="2_yhugl"]
+[ext_resource type="Script" path="res://Scripts/Stats/HealthComponent.gd" id="3_2s3ow"]
+[ext_resource type="Texture2D" uid="uid://ckay72y2lp226" path="res://Assets/UI/PlayerReticle/PlayerReticle.png" id="3_723uu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0r2t"]
 atlas = ExtResource("2_yhugl")
@@ -108,6 +110,13 @@ one_shot = true
 
 [node name="Aiming" type="Marker2D" parent="Gun"]
 position = Vector2(15, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Gun/Aiming"]
+scale = Vector2(1.24, 1.24)
+texture = ExtResource("3_723uu")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("3_2s3ow")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

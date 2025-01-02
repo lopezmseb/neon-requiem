@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dyf55hnqn1bgi"]
+[gd_scene load_steps=9 format=3 uid="uid://dyf55hnqn1bgi"]
 
 [ext_resource type="Texture2D" uid="uid://sktayqgcfgkn" path="res://Assets/TestAssets/TileMaps/minitileset.png" id="1_p7d7v"]
 [ext_resource type="PackedScene" uid="uid://byw7abk88jgwq" path="res://Scenes/Player.tscn" id="2_3l062"]
 [ext_resource type="PackedScene" uid="uid://577xd1d52p1t" path="res://Scenes/BaseEnemy.tscn" id="3_akghi"]
 [ext_resource type="Script" path="res://Scripts/Enemy/EnemySpawner.gd" id="4_6m008"]
+[ext_resource type="PackedScene" path="res://Scenes/PlayerHealthBar.tscn" id="4_x8xie"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ighu3"]
 texture = ExtResource("1_p7d7v")
@@ -194,7 +195,7 @@ layer_0/tile_data = PackedInt32Array(0, 196608, 0, 65536, 196608, 0, 65537, 0, 0
 position = Vector2(113, 93)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(3, 3)
+zoom = Vector2(5, 5)
 
 [node name="BaseEnemy" parent="." instance=ExtResource("3_akghi")]
 position = Vector2(217, 101)
@@ -205,3 +206,19 @@ position = Vector2(217, 101)
 position = Vector2(632.75, 351)
 shape = SubResource("RectangleShape2D_ptw7s")
 disabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="PlayerHealthBar" parent="CanvasLayer" instance=ExtResource("4_x8xie")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 25.0
+offset_top = -38.0
+offset_right = 25.0
+offset_bottom = -38.0
+grow_horizontal = 1
+grow_vertical = 0
+scale = Vector2(1.64, 1.64)
+size_flags_horizontal = 0

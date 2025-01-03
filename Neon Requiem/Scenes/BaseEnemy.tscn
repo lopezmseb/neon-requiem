@@ -1,13 +1,21 @@
-[gd_scene load_steps=19 format=3 uid="uid://577xd1d52p1t"]
+[gd_scene load_steps=21 format=3 uid="uid://577xd1d52p1t"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/BaseEnemy.gd" id="1_eknkv"]
 [ext_resource type="Texture2D" uid="uid://d1n36dwike423" path="res://Assets/TestAssets/CharacterSprites/sheets/DinoSprites - mort.png" id="1_vor37"]
 [ext_resource type="Script" path="res://Scripts/States/StateMachine.gd" id="2_1hncl"]
+[ext_resource type="Shader" path="res://Assets/Shaders/Defensive.gdshader" id="2_ude0n"]
 [ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyIdle.gd" id="4_4lkf5"]
 [ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyFollow.gd" id="5_h2kdd"]
 [ext_resource type="Script" path="res://Scripts/Stats/HealthComponent.gd" id="6_t48s2"]
 [ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="7_15nv6"]
 [ext_resource type="PackedScene" uid="uid://5ojpb1xjautu" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0rneu"]
+shader = ExtResource("2_ude0n")
+shader_parameter/line_color = Color(0, 0.7, 0, 1)
+shader_parameter/min_thickness = 0.0
+shader_parameter/max_thickness = 1.0
+shader_parameter/line_thickness = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rnh6i"]
 atlas = ExtResource("1_vor37")
@@ -86,6 +94,7 @@ collision_mask = 15
 script = ExtResource("1_eknkv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_0rneu")
 sprite_frames = SubResource("SpriteFrames_4vycq")
 animation = &"Idle"
 frame_progress = 0.229316

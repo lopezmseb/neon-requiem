@@ -15,4 +15,4 @@ func calculateDamage():
 	return baseAttack * mult
 	
 func updateMult(n_mult: float):
-	mult = n_mult
+	mult *= n_mult

@@ -10,9 +10,9 @@
 [ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="7_15nv6"]
 [ext_resource type="PackedScene" uid="uid://5ojpb1xjautu" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0rneu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ulle7"]
 shader = ExtResource("2_ude0n")
-shader_parameter/line_color = Color(0, 0.7, 0, 1)
+shader_parameter/line_color = Color(0.439216, 0.945098, 0.239216, 1)
 shader_parameter/min_thickness = 0.0
 shader_parameter/max_thickness = 1.0
 shader_parameter/line_thickness = 1.0
@@ -94,7 +94,7 @@ collision_mask = 15
 script = ExtResource("1_eknkv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_0rneu")
+material = SubResource("ShaderMaterial_ulle7")
 sprite_frames = SubResource("SpriteFrames_4vycq")
 animation = &"Idle"
 frame_progress = 0.229316

@@ -6,6 +6,7 @@ const dashSpeed: float = 50
 const bulletSpeed = 500.0
 var is_dash_ready: bool = true
 var is_attack_ready: bool = true
+var currentColor : String = COLORS.DEFENSIVE;
 
 @onready var animatedSprite = $AnimatedSprite2D
 
@@ -31,6 +32,11 @@ func _physics_process(delta):
 		
 	if Input.is_action_pressed("attack") && is_attack_ready:
 		shoot()
+		
+	if Input.is_action_just_pressed("change_color"): 
+		# TODO: Change Later
+		currentColor = COLORS.OFFENSIVE if currentColor == COLORS.DEFENSIVE else COLORS.DEFENSIVE; 
+		$AnimatedSprite2D.material.set("shader_parameter/line_color", COLORS.OUTLINE_CLRS[currentColor])
 
 func dash():
 	is_dash_ready = false
@@ -47,6 +53,8 @@ func shoot():
 	is_attack_ready = false
 	$AttackCooldown.start()
 	var bullet = bulletPath.instantiate()
+	var bulletSprite := bullet.find_child("BulletSprite")
+	bulletSprite.modulate = COLORS.OUTLINE_CLRS[currentColor]
 	get_parent().add_child(bullet)
 	
 	# Position the bullet at the player's shooting point (Marker2D).

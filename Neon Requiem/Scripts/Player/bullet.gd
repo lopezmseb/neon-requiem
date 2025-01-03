@@ -11,6 +11,7 @@ func _physics_process(delta):
 func _on_area_2d_body_entered(body):
 	# Get Health Component
 	var health = body.find_child("HealthComponent")
+	var body_color = body.find_child("ColorComponent")
 	
 	# If the object does not have a health component, then it must be a wall
 	# therefore, delete projectile
@@ -20,7 +21,8 @@ func _on_area_2d_body_entered(body):
 		
 	# Get Attack Component
 	var attack = find_child("AttackComponent")
-	
+	var own_color = find_child("ColorComponent")
+		
 	#If projectile has attack component, then damage object
 	if(attack == null):
 		return

@@ -4,7 +4,7 @@ var Room = preload("res://Scenes/Room.tscn")
 # Members
 var tileSize = 32
 var maxRooms = 30
-var minRooms = 20
+var minRooms = 10
 var minSize = 4
 var maxSize = 10
 var spread = 400
@@ -78,31 +78,29 @@ func _on_mst_start_timeout():
 	path = find_mst(roomPositions)
 	
 func find_mst(nodes: Array):
-	# Implementing Prim's Algorithm
-	var aStar = AStar2D.new()
-	print(aStar)
-	aStar.add_point(aStar.get_available_point_id(), nodes.pop_front())
+	#Prim's algorithm
+	path = AStar2D.new()
+	# TODO: Figure out why it crashes here sometimes lol
+	path.add_point(path.get_available_point_id(), nodes.pop_front())
 	
-	# Repeat until all nodes are gone
+	#repeat until no more node remains
 	while nodes:
-		# Infinity is the minimum distance 
-		var min_dist = INF 
-		var minPosition = null # Position of Node
-		var currentPosition= null # Current Position
-		
-		for positionId in aStar.get_point_ids():
-			var positionOfNode = aStar.get_point_position(positionId)
-			# Loop through rest of nodes
-			for otherId in nodes:
-				if(positionOfNode.distance_to(otherId) < min_dist):
-					min_dist = positionOfNode.distance_to(otherId)
-					minPosition = otherId
-					currentPosition = positionOfNode
-					
-		var n = aStar.get_available_point_id()
-		aStar.add_point(n,minPosition)
-		aStar.connect_points(aStar.get_closest_point(currentPosition), n)
-		nodes.erase(minPosition)
-	
-	return aStar
+		var minD = INF #minimum distance so far
+		var minP = null #position of that node
+		var p = null #current position
+		#loop through all points in the path
+		for p1 in path.get_point_ids():
+			var p3
+			p3 = path.get_point_position(p1)
+			#loop though the remaining nodes
+			for p2 in nodes:
+				if p3.distance_to(p2) < minD:
+					minD = p3.distance_to(p2)
+					minP = p2
+					p = p3
+		var n = path.get_available_point_id()
+		path.add_point(n, minP)
+		path.connect_points(path.get_closest_point(p), n)
+		nodes.erase(minP)
+	return path
 			

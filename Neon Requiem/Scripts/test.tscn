@@ -222,6 +222,7 @@ offset_bottom = -20.0
 grow_horizontal = 1
 grow_vertical = 0
 size_flags_horizontal = 4
+metadata/_edit_use_anchors_ = true
 
 [node name="CooldownTimers" parent="CanvasLayer" instance=ExtResource("6_i00da")]
 anchors_preset = 3
@@ -235,3 +236,4 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
+metadata/_edit_use_anchors_ = true

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyIdle.gd" id="4_4lkf5"]
 [ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyFollow.gd" id="5_h2kdd"]
 [ext_resource type="Script" path="res://Scripts/Stats/HealthComponent.gd" id="6_t48s2"]
-[ext_resource type="PackedScene" uid="uid://5ojpb1xjautu" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
+[ext_resource type="PackedScene" uid="uid://c5thomb4wodpp" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rnh6i"]
 atlas = ExtResource("1_vor37")

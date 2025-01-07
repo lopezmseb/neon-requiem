@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://plwu5ldd86k4"]
+[gd_scene load_steps=6 format=3 uid="uid://b5us0xa5yq4k1"]
 
 [ext_resource type="Script" path="res://Scripts/Player/PlayerHealthBar.gd" id="1_kxgjn"]
 [ext_resource type="Texture2D" uid="uid://0hho4u1t8sph" path="res://Assets/UI/PlayerHealthBar/PlayerHealthBar_Empty.png" id="2_rhx3b"]

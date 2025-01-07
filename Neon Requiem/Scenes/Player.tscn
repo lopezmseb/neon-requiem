@@ -107,6 +107,8 @@ wait_time = 0.25
 one_shot = true
 
 [node name="MeleeCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 
 [node name="Gun" type="Node2D" parent="."]
 
@@ -122,3 +124,4 @@ script = ExtResource("3_2s3ow")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]
+[connection signal="timeout" from="MeleeCooldown" to="." method="_on_melee_cooldown_timeout"]

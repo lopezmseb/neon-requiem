@@ -8,8 +8,7 @@
 size = Vector2(4.12433, 16.1545)
 
 [node name="Sword" type="CharacterBody2D"]
-light_mask = 2
-visibility_layer = 15
+visibility_layer = 2
 rotation = 0.359538
 script = ExtResource("1_hq7k4")
 

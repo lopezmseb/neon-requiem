@@ -102,9 +102,11 @@ shape = SubResource("RectangleShape2D_kfq2m")
 wait_time = 3.0
 one_shot = true
 
-[node name="AttackCooldown" type="Timer" parent="."]
+[node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 0.25
 one_shot = true
+
+[node name="MeleeCooldown" type="Timer" parent="."]
 
 [node name="Gun" type="Node2D" parent="."]
 
@@ -119,4 +121,4 @@ texture = ExtResource("3_723uu")
 script = ExtResource("3_2s3ow")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
-[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]

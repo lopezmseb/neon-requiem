@@ -5,7 +5,7 @@ const speed = 100
 const dashSpeed: float = 50
 const bulletSpeed = 500.0
 var is_dash_ready: bool = true
-var is_attack_ready: bool = true
+var is_shoot_ready: bool = true
 
 
 const bulletPath = preload("res://Scenes/bullet.tscn")
@@ -29,8 +29,11 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("dash") && is_dash_ready:
 		dash()
 		
-	if Input.is_action_pressed("attack") && is_attack_ready:
+	if Input.is_action_pressed("shoot") && is_shoot_ready:
 		shoot()
+	
+	if Input.is_action_pressed("melee") && is_shoot_ready:
+		melee()
 
 func dash():
 	is_dash_ready = false
@@ -42,8 +45,8 @@ func _on_dash_cooldown_timeout():
 	is_dash_ready = true
 
 func shoot():
-	is_attack_ready = false
-	$AttackCooldown.start()
+	is_shoot_ready = false
+	$ShootCooldown.start()
 	var bullet = bulletPath.instantiate()
 	get_parent().add_child(bullet)
 	
@@ -54,7 +57,9 @@ func shoot():
 	var direction = (get_global_mouse_position() - bullet.position).normalized()
 	bullet.velocity = direction * bulletSpeed
 	bullet.rotation = direction.angle()
+	
+func melee():
+	print("melee")
 
-
-func _on_attack_cooldown_timeout():
-	is_attack_ready = true
+func _on_shoot_cooldown_timeout():
+	is_shoot_ready = true

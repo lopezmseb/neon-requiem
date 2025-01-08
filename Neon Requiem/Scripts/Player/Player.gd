@@ -71,7 +71,7 @@ func melee():
 	
 	# Set the bullet's velocity and rotation based on the direction to the mouse.
 	var direction = (get_global_mouse_position() - sword.position).normalized()
-#	sword.velocity = direction
+	#sword.velocity = direction
 	sword.rotation = direction.angle()
 
 func _on_shoot_cooldown_timeout():

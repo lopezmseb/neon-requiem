@@ -1,12 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=18 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
 [ext_resource type="Texture2D" uid="uid://bsg5k6o8v23am" path="res://Assets/TestAssets/CharacterSprites/sheets/DinoSprites - doux.png" id="2_yhugl"]
 [ext_resource type="Script" path="res://Scripts/Stats/HealthComponent.gd" id="3_2s3ow"]
 [ext_resource type="Texture2D" uid="uid://ckay72y2lp226" path="res://Assets/UI/PlayerReticle/PlayerReticle.png" id="3_723uu"]
-[ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="6_bw6ym"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.gd" id="7_2xrf5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -128,12 +126,6 @@ texture = ExtResource("3_723uu")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("3_2s3ow")
-
-[node name="ColorComponent" type="Node" parent="."]
-script = ExtResource("6_bw6ym")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-script = ExtResource("7_2xrf5")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://plwu5ldd86k4"]
+[gd_scene load_steps=6 format=3 uid="uid://b5us0xa5yq4k1"]
 
 [ext_resource type="Script" path="res://Scripts/Player/PlayerHealthBar.gd" id="1_kxgjn"]
 [ext_resource type="Texture2D" uid="uid://0hho4u1t8sph" path="res://Assets/UI/PlayerHealthBar/PlayerHealthBar_Empty.png" id="2_rhx3b"]
@@ -25,8 +25,10 @@ script = ExtResource("1_kxgjn")
 
 [node name="PlayerHealthBar" type="ProgressBar" parent="."]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = -1
+anchor_left = -0.0445312
 anchor_top = 1.0
+anchor_right = -0.0445312
 anchor_bottom = 1.0
 offset_top = -50.0
 offset_right = 476.0

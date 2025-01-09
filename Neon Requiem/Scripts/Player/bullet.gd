@@ -18,9 +18,13 @@ func _on_area_2d_body_entered(body):
 	var health = body.find_child("HealthComponent")
 	var body_color = body.find_child("ColorComponent")
 	
+	# If the object collided with has no ColorComponent, stop the function
+	if(body_color == null):
+		return
+	
 	# If the object does not have a health component, then it must be a wall
 	# therefore, delete projectile
-	if(health == null || body_color == null):
+	if(health == null):
 		queue_free()
 		return
 		

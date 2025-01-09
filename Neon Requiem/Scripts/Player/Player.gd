@@ -54,9 +54,8 @@ func shoot():
 	is_attack_ready = false
 	$AttackCooldown.start()
 	var bullet = bulletPath.instantiate()
-	#var bulletSprite := bullet.find_child("BulletSprite")
-	#bulletSprite.modulate = COLORS.OUTLINE_CLRS[colorComponent.color]
 	var bulletColor: ColorComponent = bullet.find_child("ColorComponent")
+	
 	if(bulletColor):
 		bulletColor.color = colorComponent.color
 		

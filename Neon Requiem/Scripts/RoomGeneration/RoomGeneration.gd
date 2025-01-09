@@ -36,9 +36,6 @@ func makeRooms():
 	# Wait for Rooms to Finish Moving
 	$RoomMovementWait.start()
 		
-func _draw():
-	for room in $Rooms.get_children():
-		draw_rect(Rect2(room.position - room.size, room.size * 2), Color(32,228,0), false)
 	
 func _process(delta):
 	queue_redraw()

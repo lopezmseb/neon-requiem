@@ -4,9 +4,11 @@ var Room = preload("res://Scenes/Room.tscn")
 # Members
 @onready var tileMap = $TileMap
 var player = preload("res://Scenes/Player.tscn")
+var enemy = preload("res://Scenes/BaseEnemy.tscn")
 var tileSize = 16
 var maxRooms = 30
 var minRooms = 20
+var maxEnemiesPerRoom = 5
 var minSize = 10
 var maxSize = 15
 var spread = 400
@@ -40,16 +42,35 @@ func makeRooms():
 func _process(delta):
 	queue_redraw()
 	
+func spawnEntities():
+	# Spawn Player
+	var playerObject: CharacterBody2D = player.instantiate()
+	
+	add_child(playerObject)
+	playerObject.position = startRoom.position
+	
+	# Spawn Enemies
+	for room in $Rooms.get_children():
+		#Do not spawn enemies in the Starting Room
+		if(room == startRoom):
+			continue;
+		
+		var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
+		var roomRect = collisionShape.shape.get_rect()
+		var numEnemies = randi() % maxEnemiesPerRoom
+		
+		for i in range(0, numEnemies):
+			var enemyObject = enemy.instantiate()
+			
+			add_child(enemyObject)
+			enemyObject.position = room.position
+		
+	
 # Test Feature: Remove on release	
 func _input(event):
 	#if event.is_action_pressed('ui_select'):
 	if event.is_action_pressed("ui_focus_next"):
-		var playerObject: CharacterBody2D = player.instantiate()
-		add_child(playerObject)
-		playerObject.position = startRoom.position
-		var camera: Camera2D = Camera2D.new()
-		camera.zoom = Vector2(3,3)
-		playerObject.add_child(camera)
+		spawnEntities()
 
 # On RoomMovementWait 
 func _on_room_movement_wait_timeout():

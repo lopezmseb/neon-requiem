@@ -8,10 +8,10 @@ var is_dash_ready: bool = true
 var is_shoot_ready: bool = true
 var is_melee_ready: bool = true
 var is_ability1_ready: bool = true
+var is_ability2_ready: bool = true
 
 const bulletPath = preload("res://Scenes/Bullet.tscn")
 const swordPath = preload("res://Scenes/Sword.tscn")
-const shotgunPath = preload("res://Scenes/Shotgun.tscn")
 
 @onready var animatedSprite = $AnimatedSprite2D
 	
@@ -40,6 +40,9 @@ func _physics_process(delta):
 		
 	if Input.is_action_pressed("Ability 1") && is_ability1_ready:
 		shotgun()
+		
+	if Input.is_action_pressed("Ability 2") && is_ability2_ready:
+		dashAttack()
 
 func dash():
 	is_dash_ready = false
@@ -87,6 +90,12 @@ func shotgun():
 
 		bullet.velocity = spread_direction * bulletSpeed
 		bullet.rotation = angle
+
+func dashAttack():
+	is_ability2_ready = false
+	$Ability2Cooldown.start()
+	dash()
+	melee()
 	
 func melee():
 	is_melee_ready = false
@@ -112,3 +121,7 @@ func _on_melee_cooldown_timeout():
 
 func _on_ability_1_cooldown_timeout():
 	is_ability1_ready = true;
+
+
+func _on_ability_2_cooldown_timeout():
+	is_ability2_ready = true;

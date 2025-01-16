@@ -114,6 +114,9 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
+[node name="Ability2Cooldown" type="Timer" parent="."]
+one_shot = true
+
 [node name="Gun" type="Node2D" parent="."]
 
 [node name="Aiming" type="Marker2D" parent="Gun"]
@@ -130,3 +133,4 @@ script = ExtResource("3_2s3ow")
 [connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]
 [connection signal="timeout" from="MeleeCooldown" to="." method="_on_melee_cooldown_timeout"]
 [connection signal="timeout" from="Ability1Cooldown" to="." method="_on_ability_1_cooldown_timeout"]
+[connection signal="timeout" from="Ability2Cooldown" to="." method="_on_ability_2_cooldown_timeout"]

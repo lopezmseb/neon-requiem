@@ -7,10 +7,11 @@ const bulletSpeed = 500.0
 var is_dash_ready: bool = true
 var is_shoot_ready: bool = true
 var is_melee_ready: bool = true
-
+var is_ability1_ready: bool = true
 
 const bulletPath = preload("res://Scenes/Bullet.tscn")
 const swordPath = preload("res://Scenes/Sword.tscn")
+const shotgunPath = preload("res://Scenes/Shotgun.tscn")
 
 @onready var animatedSprite = $AnimatedSprite2D
 	
@@ -36,6 +37,9 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("melee") && is_melee_ready:
 		melee()
+		
+	if Input.is_action_pressed("Ability 1") && is_ability1_ready:
+		shotgun()
 
 func dash():
 	is_dash_ready = false
@@ -60,6 +64,30 @@ func shoot():
 	bullet.velocity = direction * bulletSpeed
 	bullet.rotation = direction.angle()
 	
+func shotgun():
+	is_ability1_ready = false
+	$Ability1Cooldown.start()
+	
+	var bullet_count = 5
+	var spread_angle = 30
+	var shotgun_rotation = rotation_degrees
+
+	for i in range(bullet_count): 
+		var bullet = bulletPath.instantiate()
+		get_parent().add_child(bullet)
+		
+		bullet.position = $Gun/Aiming.global_position
+		
+		var base_direction = (get_global_mouse_position() - bullet.position).normalized()
+		
+		var spread_offset = -spread_angle + (spread_angle * 2) * randf()
+
+		var angle = base_direction.angle() + deg_to_rad(spread_offset)
+		var spread_direction = Vector2(cos(angle), sin(angle))
+
+		bullet.velocity = spread_direction * bulletSpeed
+		bullet.rotation = angle
+	
 func melee():
 	is_melee_ready = false
 	$MeleeCooldown.start()
@@ -71,7 +99,7 @@ func melee():
 	
 	# Set the bullet's velocity and rotation based on the direction to the mouse.
 	var direction = (get_global_mouse_position() - sword.position).normalized()
-	#sword.velocity = direction
+#	sword.velocity = direction
 	sword.rotation = direction.angle()
 
 func _on_shoot_cooldown_timeout():
@@ -80,3 +108,7 @@ func _on_shoot_cooldown_timeout():
 
 func _on_melee_cooldown_timeout():
 	is_melee_ready = true
+
+
+func _on_ability_1_cooldown_timeout():
+	is_ability1_ready = true;

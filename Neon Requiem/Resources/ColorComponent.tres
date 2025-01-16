@@ -3,5 +3,6 @@
 [ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="1_n762b"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_n762b")
 color = "DEFENSIVE"

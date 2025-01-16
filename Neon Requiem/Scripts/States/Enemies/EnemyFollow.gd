@@ -43,6 +43,7 @@ func ShootPlayer():
 		return
 	
 	bulletColor.color = colorComponent.color
+	bullet.source = get_instance_id()
 	get_tree().root.add_child(bullet)
 
 	# Position the bullet at the player's shooting point (Marker2D).
@@ -54,8 +55,8 @@ func ShootPlayer():
 	bullet.rotation = direction.angle()
 
 func switchColor():
-	var colorComponent: ColorComponent = get_owner().find_child("ColorComponent")
-	var sprite : AnimatedSprite2D =  get_owner().find_child("AnimatedSprite2D")
+	var colorComponent: ColorComponent = $"../../ColorComponent"
+	var sprite : AnimatedSprite2D =  $"../../AnimatedSprite2D"
 	# Check sprite and component exist, end if not
 	if(sprite == null || colorComponent == null):
 		return

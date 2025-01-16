@@ -54,6 +54,7 @@ func shoot():
 	is_attack_ready = false
 	$AttackCooldown.start()
 	var bullet = bulletPath.instantiate()
+	bullet.source = get_instance_id()
 	var bulletColor: ColorComponent = bullet.find_child("ColorComponent")
 	
 	if(bulletColor):

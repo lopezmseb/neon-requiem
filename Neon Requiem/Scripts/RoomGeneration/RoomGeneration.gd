@@ -3,6 +3,7 @@ var Room = preload("res://Scenes/Room.tscn")
 
 # Members
 @onready var tileMap = $TileMap
+var userInterface = preload("res://Scenes/UserInterface.tscn")
 var player = preload("res://Scenes/Player.tscn")
 var enemy = preload("res://Scenes/BaseEnemy.tscn")
 var tileSize = 16
@@ -49,6 +50,10 @@ func spawnEntities():
 	add_child(playerObject)
 	playerObject.position = startRoom.position
 	
+	# Add UI
+	var userInterfaceObject = userInterface.instantiate()
+	
+	add_child(userInterfaceObject)
 	# Spawn Enemies
 	for room in $Rooms.get_children():
 		#Do not spawn enemies in the Starting Room
@@ -97,7 +102,7 @@ func _on_room_movement_wait_timeout():
 func find_mst(nodes: Array):
 	#Prim's algorithm
 	path = AStar2D.new()
-	# TODO: Figure out why it crashes here sometimes lol
+
 	path.add_point(path.get_available_point_id(), nodes.pop_front())
 	
 	#repeat until no more node remains

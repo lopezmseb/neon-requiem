@@ -2,8 +2,12 @@ extends CharacterBody2D
 
 @onready var bulletSprite  = $BulletSprite
 @onready var colorComponent: ColorComponent = $ColorComponent
+var source = null
 
 const SPEED = 150
+
+func _init(source_id = null):
+	source = source_id
 
 func _ready():
 	bulletSprite.modulate = COLORS.OUTLINE_CLRS[colorComponent.color]
@@ -14,6 +18,10 @@ func _physics_process(delta):
 
 
 func _on_area_2d_body_entered(body):
+	# Check if collided with shooter
+	if(source == body.get_instance_id()):
+		return
+	
 	# Get Health Component
 	var health = body.find_child("HealthComponent")
 	var body_color = body.find_child("ColorComponent")

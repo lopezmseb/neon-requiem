@@ -1,6 +1,6 @@
 extends Camera2D
 
-@export var cameraMultiplier: float = 4
+@export var cameraMultiplier: float = 3
 func _process(delta):
 	var window_size = DisplayServer.window_get_size()
 	

@@ -193,5 +193,10 @@ show_behind_parent = true
 tile_set = SubResource("TileSet_0c54q")
 format = 2
 
+[node name="DebugCamera" type="Camera2D" parent="."]
+visible = false
+enabled = false
+zoom = Vector2(0.5, 0.5)
+
 [connection signal="timeout" from="RoomMovementWait" to="." method="_on_room_movement_wait_timeout"]
 [connection signal="timeout" from="MSTStart" to="." method="_on_mst_start_timeout"]

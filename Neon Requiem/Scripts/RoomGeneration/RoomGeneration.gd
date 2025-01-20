@@ -2,17 +2,19 @@ extends Node2D
 var Room = preload("res://Scenes/Room.tscn")
 
 # Members
+@export var debugEnabled: bool = false #Debug Only
+
 @onready var tileMap = $TileMap
 var userInterface = preload("res://Scenes/UserInterface.tscn")
 var player = preload("res://Scenes/Player.tscn")
 var enemy = preload("res://Scenes/BaseEnemy.tscn")
 var tileSize = 16
-var maxRooms = 30
-var minRooms = 20
+var maxRooms = 15
+var minRooms = 10
 var maxEnemiesPerRoom = 5
 var minSize = 10
 var maxSize = 15
-var spread = 400
+var spread = 200
 var roomPositions = []
 var path 
 var startRoom
@@ -23,6 +25,9 @@ const CULL = 0.5
 func _ready():
 	randomize()
 	makeRooms()
+	
+	if(debugEnabled):
+		$DebugCamera.enabled = true
 	
 # Generates A Random Number of Rooms into the scene
 func makeRooms():
@@ -35,6 +40,11 @@ func makeRooms():
 		
 		r.makeRoom(pos, Vector2(w,h) * tileSize)
 		$Rooms.add_child(r)
+		
+		if(debugEnabled):
+			var roomNumber: Label = Label.new()
+			roomNumber.text = "{room}".format({"room": i})
+			r.add_child(roomNumber)
 	
 	# Wait for Rooms to Finish Moving
 	$RoomMovementWait.start()
@@ -72,10 +82,20 @@ func spawnEntities():
 		
 	
 # Test Feature: Remove on release	
-func _input(event):
+#func _input(event):
 	#if event.is_action_pressed('ui_select'):
-	if event.is_action_pressed("ui_focus_next"):
-		spawnEntities()
+	#if event.is_action_pressed("ui_focus_next"):
+	#	spawnEntities()
+	
+func _draw():
+	
+	if path and debugEnabled:
+		for p in path.get_point_ids():
+			for c in path.get_point_connections(p):
+				var pp = path.get_point_position(p)
+				var cp = path.get_point_position(c)
+				draw_line(Vector2(pp.x, pp.y), Vector2(cp.x, cp.y), Color(1, 1, 0, 1), 15, true)
+	return
 
 # On RoomMovementWait 
 func _on_room_movement_wait_timeout():
@@ -157,17 +177,34 @@ func makeMap():
 		
 		var p = path.get_closest_point(room.position)
 		
-		for conn in path.get_point_connections(p):
+		var pointConnections = path.get_point_connections(p)
+		for conn in pointConnections:
 			if not conn in connections:
 				var start = tileMap.local_to_map(path.get_point_position(p))
 				var end = tileMap.local_to_map(path.get_point_position(conn))
 				
+				var roomNum = room.get_children()
+				print(roomNum)
 				carvePath(start,end)
 				
-			connections.append(conn)
+			connections.append(p)
 	
 	find_start_room()
 	find_end_room()
+	
+	if(debugEnabled):
+		var startText = Label.new()
+		startText.text = "Start"
+		startRoom.add_child(startText)
+		
+		var endText = Label.new()
+		endText.text = "End"
+		endRoom.add_child(endText)
+	
+
+	
+	# Spawn Entities
+	spawnEntities()
 
 func carvePath(pos1, pos2):
 	# Carve path between two points
@@ -188,10 +225,11 @@ func carvePath(pos1, pos2):
 		
 	for x in range(pos1.x, pos2.x, xDiff):
 		tileMap.set_cell(0, Vector2i(x, x_y.y), 1,Vector2i(0, 1), 0);
-		tileMap.set_cell(0, Vector2i(x, x_y.y + yDiff), 1, Vector2i(0, 1), 0);
+		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(0, 1), 0);
 	for y in range(pos1.y, pos2.y, yDiff):
 		tileMap.set_cell(0, Vector2i(y_x.x, y), 1,Vector2i(0, 1), 0);
-		tileMap.set_cell(0, Vector2i(y_x.x + xDiff, y), 1, Vector2i(0, 1), 0);
+		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(0, 1), 0);
+
 		
 
 func find_start_room():

@@ -11,7 +11,7 @@ var enemy = preload("res://Scenes/BaseEnemy.tscn")
 var tileSize = 16
 var maxRooms = 15
 var minRooms = 10
-var maxEnemiesPerRoom = 5
+var maxEnemiesPerRoom = 3
 var minSize = 10
 var maxSize = 15
 var spread = 200
@@ -19,6 +19,7 @@ var roomPositions = []
 var path 
 var startRoom
 var endRoom
+var UIObject
 
 const CULL = 0.5
 
@@ -26,8 +27,11 @@ func _ready():
 	randomize()
 	makeRooms()
 	
-	if(debugEnabled):
-		$DebugCamera.enabled = true
+func _input(event):
+	if event.is_action_pressed("ui_focus_next"):
+		var camera:Camera2D = $Player.find_child("Camera2D")
+		camera.enabled = !camera.enabled
+		debugEnabled = !debugEnabled
 	
 # Generates A Random Number of Rooms into the scene
 func makeRooms():
@@ -51,6 +55,22 @@ func makeRooms():
 		
 	
 func _process(delta):
+	
+	$DebugCamera.enabled = debugEnabled
+	
+	var enemyCount = $Enemies.get_children().size()
+	print("Enemy Count: {count}".format({"count" : enemyCount}))
+	
+	if(enemyCount == 0 && startRoom):
+		# Add Game Over Menu
+		var gameOver : Label = Label.new()
+		gameOver.text = "Game Over"
+		gameOver.scale = Vector2(5,5)
+
+		gameOver.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+		
+		UIObject.add_child(gameOver)
+	
 	queue_redraw()
 	
 func spawnEntities():
@@ -61,9 +81,9 @@ func spawnEntities():
 	playerObject.position = startRoom.position
 	
 	# Add UI
-	var userInterfaceObject = userInterface.instantiate()
+	UIObject = userInterface.instantiate()
 	
-	add_child(userInterfaceObject)
+	add_child(UIObject)
 	# Spawn Enemies
 	for room in $Rooms.get_children():
 		#Do not spawn enemies in the Starting Room
@@ -77,25 +97,8 @@ func spawnEntities():
 		for i in range(0, numEnemies):
 			var enemyObject = enemy.instantiate()
 			
-			add_child(enemyObject)
+			$Enemies.add_child(enemyObject)
 			enemyObject.position = room.position
-		
-	
-# Test Feature: Remove on release	
-#func _input(event):
-	#if event.is_action_pressed('ui_select'):
-	#if event.is_action_pressed("ui_focus_next"):
-	#	spawnEntities()
-	
-func _draw():
-	
-	if path and debugEnabled:
-		for p in path.get_point_ids():
-			for c in path.get_point_connections(p):
-				var pp = path.get_point_position(p)
-				var cp = path.get_point_position(c)
-				draw_line(Vector2(pp.x, pp.y), Vector2(cp.x, cp.y), Color(1, 1, 0, 1), 15, true)
-	return
 
 # On RoomMovementWait 
 func _on_room_movement_wait_timeout():
@@ -145,7 +148,6 @@ func find_mst(nodes: Array):
 		path.connect_points(path.get_closest_point(p), n)
 		nodes.erase(minP)
 	return path
-			
 			
 func makeMap():
 	# Create a Tile Map for generated rooms and path

@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="7_15nv6"]
 [ext_resource type="PackedScene" uid="uid://5ojpb1xjautu" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
 
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ulle7"]
 shader = ExtResource("2_ude0n")
 shader_parameter/line_color = Color(0.439216, 0.945098, 0.239216, 1)

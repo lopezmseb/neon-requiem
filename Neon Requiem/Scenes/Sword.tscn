@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://dmdbx4q0quyue"]
+
+[ext_resource type="Script" path="res://Sword.gd" id="1_hq7k4"]
+[ext_resource type="Script" path="res://Scripts/Stats/AttackComponent.gd" id="2_av381"]
+[ext_resource type="Texture2D" uid="uid://cvmd6iuwc2lnt" path="res://Assets/TestAssets/CharacterSprites/sword/File1.png" id="2_rif7n"]
+[ext_resource type="Texture2D" uid="uid://dw1x6p6jf0wa0" path="res://Assets/TestAssets/CharacterSprites/sword/File2.png" id="3_r7fjp"]
+[ext_resource type="Texture2D" uid="uid://c4blqdo2jat22" path="res://Assets/TestAssets/CharacterSprites/sword/File3.png" id="4_tfem0"]
+[ext_resource type="Texture2D" uid="uid://c1btmw1e3q82j" path="res://Assets/TestAssets/CharacterSprites/sword/File4.png" id="5_vpgfg"]
+[ext_resource type="Texture2D" uid="uid://helu81ppi4s8" path="res://Assets/TestAssets/CharacterSprites/sword/File5.png" id="6_hywl4"]
+[ext_resource type="Texture2D" uid="uid://dbsrewkmi8una" path="res://Assets/TestAssets/CharacterSprites/sword/File6.png" id="7_063nt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4s6c8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rif7n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_r7fjp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tfem0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vpgfg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hywl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_063nt")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nyh3"]
+size = Vector2(22.9087, 19.2995)
+
+[node name="Sword" type="CharacterBody2D"]
+visibility_layer = 2
+position = Vector2(0, -2)
+rotation = 0.359538
+script = ExtResource("1_hq7k4")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 0.359538
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_4s6c8")
+autoplay = "default"
+frame = 6
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 3
+visibility_layer = 3
+position = Vector2(14.864, -0.245487)
+rotation = 1.20428
+shape = SubResource("RectangleShape2D_0nyh3")
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+light_mask = 2
+visibility_layer = 15
+rotation = 0.359538
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+light_mask = 3
+visibility_layer = 3
+position = Vector2(13.5303, -5.26738)
+rotation = 0.837758
+shape = SubResource("RectangleShape2D_0nyh3")
+
+[node name="AttackComponent" type="Node" parent="."]
+script = ExtResource("2_av381")
+baseAttack = 20.0
+
+[connection signal="animation_finished" from="Sprite2D" to="." method="_on_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

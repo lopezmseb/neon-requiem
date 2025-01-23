@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b5us0xa5yq4k1" path="res://Scenes/PlayerHealthBar.tscn" id="4_x8xie"]
 [ext_resource type="PackedScene" path="res://Scenes/CooldownTimers.tscn" id="6_i00da"]
 
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ighu3"]
 texture = ExtResource("1_p7d7v")
 0:0/0 = 0

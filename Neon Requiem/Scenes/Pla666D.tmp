@@ -113,19 +113,8 @@ shape = SubResource("RectangleShape2D_kfq2m")
 wait_time = 3.0
 one_shot = true
 
-[node name="ShootCooldown" type="Timer" parent="."]
+[node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 0.25
-one_shot = true
-
-[node name="MeleeCooldown" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true
-
-[node name="Ability1Cooldown" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-
-[node name="Ability2Cooldown" type="Timer" parent="."]
 one_shot = true
 
 [node name="Gun" type="Node2D" parent="."]
@@ -147,7 +136,4 @@ script = ExtResource("6_bw6ym")
 script = ExtResource("7_2xrf5")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
-[connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]
-[connection signal="timeout" from="MeleeCooldown" to="." method="_on_melee_cooldown_timeout"]
-[connection signal="timeout" from="Ability1Cooldown" to="." method="_on_ability_1_cooldown_timeout"]
-[connection signal="timeout" from="Ability2Cooldown" to="." method="_on_ability_2_cooldown_timeout"]
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

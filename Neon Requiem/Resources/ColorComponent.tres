@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ColorComponent" load_steps=2 format=3 uid="uid://d1fs77th335fl"]
+
+[ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="1_n762b"]
+
+[resource]
+script = ExtResource("1_n762b")
+color = "DEFENSIVE"

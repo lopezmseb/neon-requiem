@@ -5,6 +5,7 @@ class_name HealthComponent
 @onready var currentHealth: float = MAX_HEALTH
 
 func damage(attack: AttackComponent):
+	
 	currentHealth -= attack.calculateDamage()
 	
 	# If health == 0 or lower, destroy the object.

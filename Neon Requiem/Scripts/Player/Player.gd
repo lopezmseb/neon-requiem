@@ -3,6 +3,7 @@ class_name Player
 
 const speed = 100
 const dashSpeed: float = 50
+const dashAttackSpeed: float = 25
 const bulletSpeed = 500.0
 var is_dash_ready: bool = true
 var is_shoot_ready: bool = true
@@ -94,7 +95,18 @@ func shotgun():
 func dashAttack():
 	is_ability2_ready = false
 	$Ability2Cooldown.start()
-	dash()
+
+	# Get the player's current position.
+	var position = global_position
+
+	# Calculate the direction to the mouse position.
+	var direction = (get_global_mouse_position() - position).normalized()
+
+	# Set the velocity for the dash.
+	velocity = direction * dashAttackSpeed * speed
+
+	# Move the player in the calculated direction.
+	move_and_slide()
 	melee()
 	
 func melee():

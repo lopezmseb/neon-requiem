@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://833p2gpb3bdv"]
+[gd_scene load_steps=6 format=3 uid="uid://833p2gpb3bdv"]
 
 [ext_resource type="Script" path="res://Scripts/RoomGeneration/RoomGeneration.gd" id="1_gykuq"]
 [ext_resource type="Texture2D" uid="uid://sktayqgcfgkn" path="res://Assets/TestAssets/TileMaps/minitileset.png" id="3_7ltda"]
-[ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="3_dhcqn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_88pxy"]
 
@@ -179,6 +178,7 @@ sources/1 = SubResource("TileSetAtlasSource_pavfy")
 
 [node name="RoomGeneration" type="Node2D"]
 script = ExtResource("1_gykuq")
+debugEnabled = null
 
 [node name="Rooms" type="Node" parent="."]
 
@@ -199,10 +199,6 @@ format = 2
 [node name="DebugCamera" type="Camera2D" parent="."]
 enabled = false
 zoom = Vector2(0.5, 0.5)
-
-[node name="UserInterface" parent="." instance=ExtResource("3_dhcqn")]
-
-[node name="LevelChangeTimer" type="Timer" parent="."]
 
 [connection signal="timeout" from="RoomMovementWait" to="." method="_on_room_movement_wait_timeout"]
 [connection signal="timeout" from="MSTStart" to="." method="_on_mst_start_timeout"]

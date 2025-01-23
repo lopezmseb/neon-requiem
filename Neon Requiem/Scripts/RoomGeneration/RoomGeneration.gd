@@ -3,23 +3,24 @@ var Room = preload("res://Scenes/Room.tscn")
 
 # Members
 @export var debugEnabled: bool = false #Debug Only
-
 @onready var tileMap = $TileMap
-var userInterface = preload("res://Scenes/UserInterface.tscn")
+@onready var fade : ColorRect = $UserInterface.find_child("Fade")
 var player = preload("res://Scenes/Player.tscn")
 var enemy = preload("res://Scenes/BaseEnemy.tscn")
+var playerObject : CharacterBody2D
 var tileSize = 16
 var maxRooms = 15
 var minRooms = 10
-var maxEnemiesPerRoom = 3
+var maxEnemiesPerRoom = 5
 var minSize = 10
 var maxSize = 15
 var spread = 200
 var roomPositions = []
+var level: int = 1
+var canChangeLevel : bool = false
 var path 
 var startRoom
 var endRoom
-var UIObject
 
 const CULL = 0.5
 
@@ -61,29 +62,23 @@ func _process(delta):
 	var enemyCount = $Enemies.get_children().size()
 	print("Enemy Count: {count}".format({"count" : enemyCount}))
 	
-	if(enemyCount == 0 && startRoom):
-		# Add Game Over Menu
-		var gameOver : Label = Label.new()
-		gameOver.text = "Game Over"
-		gameOver.scale = Vector2(5,5)
-
-		gameOver.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-		
-		UIObject.add_child(gameOver)
+	if(enemyCount == 0 && canChangeLevel):
+		canChangeLevel = false
+		level = level + 1
+		$UserInterface.levelCount = level
+		fade.visible = true
+		makeMap()
 	
 	queue_redraw()
 	
 func spawnEntities():
-	# Spawn Player
-	var playerObject: CharacterBody2D = player.instantiate()
-	
-	add_child(playerObject)
+	if(!playerObject):
+		# Spawn Player
+		playerObject = player.instantiate()
+		
+		add_child(playerObject)
 	playerObject.position = startRoom.position
 	
-	# Add UI
-	UIObject = userInterface.instantiate()
-	
-	add_child(UIObject)
 	# Spawn Enemies
 	for room in $Rooms.get_children():
 		#Do not spawn enemies in the Starting Room
@@ -99,6 +94,9 @@ func spawnEntities():
 			
 			$Enemies.add_child(enemyObject)
 			enemyObject.position = room.position
+	
+	canChangeLevel = true
+	fade.visible = false
 
 # On RoomMovementWait 
 func _on_room_movement_wait_timeout():
@@ -193,6 +191,7 @@ func makeMap():
 	
 	find_start_room()
 	find_end_room()
+	
 	
 	if(debugEnabled):
 		var startText = Label.new()

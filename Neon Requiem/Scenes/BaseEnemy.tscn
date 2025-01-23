@@ -17,6 +17,7 @@ shader_parameter/min_thickness = 0.0
 shader_parameter/max_thickness = 1.0
 shader_parameter/line_thickness = 1.0
 
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ulle7"]
 shader = ExtResource("2_ude0n")
 shader_parameter/line_color = Color(0.439216, 0.945098, 0.239216, 1)

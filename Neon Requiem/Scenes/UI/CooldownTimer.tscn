@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://Scripts/UI/CooldownTimerUI.gd" id="1_rgyo0"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x2vjm"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c12k3"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rs6ay"]
-bg_color = Color(1, 1, 1, 0.717647)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r5i3s"]
+bg_color = Color(1, 1, 1, 0.254902)
 
 [node name="CooldownTimer" type="ProgressBar"]
 anchors_preset = 3
@@ -20,17 +20,21 @@ offset_right = -1280.0
 offset_bottom = -720.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_styles/background = SubResource("StyleBoxFlat_x2vjm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_rs6ay")
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_c12k3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_r5i3s")
 fill_mode = 3
 show_percentage = false
 script = ExtResource("1_rgyo0")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 17.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true

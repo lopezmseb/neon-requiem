@@ -94,6 +94,13 @@ func shotgun():
 
 	for i in range(bullet_count): 
 		var bullet = bulletPath.instantiate()
+		var bulletColor = bullet.find_child("ColorComponent")
+		
+		if(bulletColor):
+			bulletColor.color = colorComponent.color
+			
+		bullet.source = get_instance_id()
+		
 		get_parent().add_child(bullet)
 		
 		bullet.position = $Gun/Aiming.global_position

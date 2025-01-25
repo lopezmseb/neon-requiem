@@ -114,7 +114,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="ShootCooldown" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.5
 one_shot = true
 
 [node name="MeleeCooldown" type="Timer" parent="."]

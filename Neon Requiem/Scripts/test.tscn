@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://577xd1d52p1t" path="res://Scenes/BaseEnemy.tscn" id="3_akghi"]
 [ext_resource type="Script" path="res://Scripts/Enemy/EnemySpawner.gd" id="4_6m008"]
 
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ighu3"]
 texture = ExtResource("1_p7d7v")
 0:0/0 = 0

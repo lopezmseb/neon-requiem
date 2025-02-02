@@ -16,8 +16,23 @@ const swordPath = preload("res://Scenes/Sword.tscn")
 
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var colorComponent = $ColorComponent
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+
+func _input(event):
+	return
+
 	
 func _physics_process(delta):
+	# Move Mouse if Using Controller
+	if(InputEventJoypadMotion):
+		var joystickAimingVector = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+		# TODO: Will need to figure out how to clamp this or rework entirely
+		var mouse_pos = get_viewport().get_mouse_position() + joystickAimingVector  * 800 * delta
+		Input.warp_mouse(mouse_pos)
+		
+	# Move Gun Reticle on Mouse Direction
 	$Gun.look_at(get_global_mouse_position())
 	
 	var moveDirection = Input.get_vector("left","right","up","down");

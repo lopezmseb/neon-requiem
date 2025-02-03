@@ -60,7 +60,7 @@ func _process(delta):
 	$DebugCamera.enabled = debugEnabled
 	
 	var enemyCount = $Enemies.get_children().size()
-	print("Enemy Count: {count}".format({"count" : enemyCount}))
+
 	
 	if(enemyCount == 0 && canChangeLevel):
 		canChangeLevel = false

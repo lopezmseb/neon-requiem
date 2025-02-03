@@ -19,13 +19,10 @@ const swordPath = preload("res://Scenes/Sword.tscn")
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
-
-func _input(event):
-	return
-
 	
 func _physics_process(delta):
 	# Move Mouse if Using Controller
+	# TODO: WASD is broken if controller connected
 	if(InputEventJoypadMotion):
 		var joystickAimingVector = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
 		# TODO: Will need to figure out how to clamp this or rework entirely
@@ -52,7 +49,6 @@ func _physics_process(delta):
 	if Input.is_action_pressed("shoot") && is_shoot_ready:
 		shoot()
 
-	
 	if Input.is_action_pressed("melee") && is_melee_ready:
 		melee()
 		

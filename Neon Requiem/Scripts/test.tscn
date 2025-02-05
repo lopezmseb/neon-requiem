@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://byw7abk88jgwq" path="res://Scenes/Player.tscn" id="2_3l062"]
 [ext_resource type="PackedScene" uid="uid://577xd1d52p1t" path="res://Scenes/BaseEnemy.tscn" id="3_akghi"]
 [ext_resource type="Script" path="res://Scripts/Enemy/EnemySpawner.gd" id="4_6m008"]
+[ext_resource type="PackedScene" uid="uid://b5us0xa5yq4k1" path="res://Scenes/PlayerHealthBar.tscn" id="4_x8xie"]
+[ext_resource type="PackedScene" uid="uid://26njbw8cwpfc" path="res://Scenes/CooldownTimers.tscn" id="6_i00da"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ighu3"]
 texture = ExtResource("1_p7d7v")

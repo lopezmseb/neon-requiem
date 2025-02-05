@@ -29,6 +29,10 @@ window/size/mode=2
 
 project/assembly_name="Neon-requiem"
 
+[gui]
+
+fonts/dynamic_fonts/use_oversampling=false
+
 [input]
 
 up={

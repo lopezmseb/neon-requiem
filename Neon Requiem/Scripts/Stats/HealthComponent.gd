@@ -19,4 +19,11 @@ func damage(attack: AttackComponent):
 
 func calcMaxHealth():
 	# Here we will run all health upgrades when implemented
-	return MAX_HEALTH
+	var maxHealth = MAX_HEALTH
+	for i in get_children():
+		var upgrade = i as UpgradeStrategy
+		
+		maxHealth = i.Apply(maxHealth)
+		
+	
+	return maxHealth

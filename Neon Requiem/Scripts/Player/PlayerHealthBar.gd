@@ -1,10 +1,8 @@
 extends Control
 class_name PlayerHealthBar
 
-@onready var player = get_tree().get_first_node_in_group("Player")
-@onready var healthComponent = player.find_child("HealthComponent")
-@onready var dashCooldown: Timer = player.find_child("DashCooldown")
-
+var player : Player
+var healthComponent : HealthComponent
 
 func setProgressBarValues(progressBar: ProgressBar, min, max, current):
 	progressBar.min_value = min
@@ -13,10 +11,17 @@ func setProgressBarValues(progressBar: ProgressBar, min, max, current):
 	
 
 func _ready():
-	setProgressBarValues($PlayerHealthBar, 0, healthComponent.MAX_HEALTH, healthComponent.currentHealth);
-	$PlayerHealthBar/RichTextLabel.text = "[center][b]{current}/{max}".format({"current": healthComponent.currentHealth, "max": healthComponent.MAX_HEALTH})
+	player = get_tree().get_first_node_in_group("Player")
+	if(player):
+		healthComponent = player.find_child("HealthComponent");
+		setProgressBarValues($PlayerHealthBar, 0, healthComponent.MAX_HEALTH, healthComponent.currentHealth);
+		$PlayerHealthBar/RichTextLabel.text = "[center][b]{current}/{max}".format({"current": healthComponent.currentHealth, "max": healthComponent.MAX_HEALTH})
 	
 func _process(delta):
-	$PlayerHealthBar.value = healthComponent.currentHealth
-	$PlayerHealthBar/RichTextLabel.text = "[center][b]{current}/{max}".format({"current": healthComponent.currentHealth, "max": healthComponent.MAX_HEALTH})
+	player = get_tree().get_first_node_in_group("Player")
+	if(player):
+		healthComponent = player.find_child("HealthComponent");
+		setProgressBarValues($PlayerHealthBar, 0, healthComponent.MAX_HEALTH, healthComponent.currentHealth);
+		$PlayerHealthBar.value = healthComponent.currentHealth
+		$PlayerHealthBar/RichTextLabel.text = "[center][b]{current}/{max}".format({"current": healthComponent.currentHealth, "max": healthComponent.MAX_HEALTH})
 	

@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://b1vlue38274fi"]
+[gd_scene load_steps=16 format=3 uid="uid://b1vlue38274fi"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Bullet.gd" id="1_t3mwa"]
 [ext_resource type="Texture2D" uid="uid://cvxl8563qh2jo" path="res://Assets/Projectiles/BaseBullet.png" id="2_6odcj"]
 [ext_resource type="Script" path="res://Scripts/Stats/AttackComponent.gd" id="3_lof4c"]
 [ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="4_r6537"]
+[ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="5_5brve"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w4a5u"]
 atlas = ExtResource("2_6odcj")
@@ -103,6 +104,9 @@ script = ExtResource("4_r6537")
 
 [node name="AttackComponent" type="Node" parent="."]
 script = ExtResource("3_lof4c")
+
+[node name="BulletAdditive" type="Node" parent="AttackComponent"]
+script = ExtResource("5_5brve")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

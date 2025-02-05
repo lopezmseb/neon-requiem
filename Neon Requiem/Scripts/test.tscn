@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dyf55hnqn1bgi"]
+[gd_scene load_steps=8 format=3 uid="uid://dyf55hnqn1bgi"]
 
 [ext_resource type="Texture2D" uid="uid://sktayqgcfgkn" path="res://Assets/TestAssets/TileMaps/minitileset.png" id="1_p7d7v"]
 [ext_resource type="PackedScene" uid="uid://byw7abk88jgwq" path="res://Scenes/Player.tscn" id="2_3l062"]
@@ -207,33 +207,3 @@ position = Vector2(217, 101)
 position = Vector2(632.75, 351)
 shape = SubResource("RectangleShape2D_ptw7s")
 disabled = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-process_mode = 3
-
-[node name="PlayerHealthBar" parent="CanvasLayer" instance=ExtResource("4_x8xie")]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_right = 0.0
-offset_left = 20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = -20.0
-grow_horizontal = 1
-grow_vertical = 0
-size_flags_horizontal = 4
-metadata/_edit_use_anchors_ = true
-
-[node name="CooldownTimers" parent="CanvasLayer" instance=ExtResource("6_i00da")]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-offset_left = -30.0
-offset_top = -20.0
-offset_right = -30.0
-offset_bottom = -20.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-metadata/_edit_use_anchors_ = true

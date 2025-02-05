@@ -12,7 +12,7 @@ func _process(delta):
 	pass
 
 func _on_new_game_pressed():
-	get_tree().change_scene_to_file("res://Scenes/TestScenes/RoomGeneration.tscn")
+	get_tree().change_scene_to_file("res://Scenes/TestScenes/GameLoop.tscn")
 
 func _on_settings_pressed():
 	#var settings = load().instance("settings scene")

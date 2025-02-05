@@ -1,19 +1,30 @@
 extends Node2D
-var Room = preload("res://Scenes/Room.tscn")
+class_name RoomGeneration
 
 # Members
+# Exported
+@export var debugEnabled: bool = false #Debug Only
+@export var player: Player = null
 @onready var tileMap = $TileMap
-var player = preload("res://Scenes/Player.tscn")
+
+var Room = preload("res://Scenes/Room.tscn")
+var enemy = preload("res://Scenes/BaseEnemy.tscn")
 var tileSize = 16
-var maxRooms = 30
-var minRooms = 20
+var maxRooms = 15
+var minRooms = 10
+var maxEnemiesPerRoom = 5
 var minSize = 10
 var maxSize = 15
-var spread = 400
+var spread = 200
 var roomPositions = []
+var level: int = 1
+var canChangeLevel : bool = false
 var path 
 var startRoom
 var endRoom
+
+signal level_generated
+signal level_cleared
 
 const CULL = 0.5
 
@@ -32,24 +43,54 @@ func makeRooms():
 		
 		r.makeRoom(pos, Vector2(w,h) * tileSize)
 		$Rooms.add_child(r)
+		
+		if(debugEnabled):
+			var roomNumber: Label = Label.new()
+			roomNumber.text = "{room}".format({"room": i})
+			r.add_child(roomNumber)
 	
 	# Wait for Rooms to Finish Moving
 	$RoomMovementWait.start()
 		
 	
 func _process(delta):
+	
+	$DebugCamera.enabled = debugEnabled
+	
+	var enemyCount = $Enemies.get_children().size()
+
+	
+	if(enemyCount == 0 && canChangeLevel):
+		canChangeLevel = false
+		level_cleared.emit()
+		#makeMap()
+	
 	queue_redraw()
 	
-# Test Feature: Remove on release	
-func _input(event):
-	#if event.is_action_pressed('ui_select'):
-	if event.is_action_pressed("ui_focus_next"):
-		var playerObject: CharacterBody2D = player.instantiate()
-		add_child(playerObject)
-		playerObject.position = startRoom.position
-		var camera: Camera2D = Camera2D.new()
-		camera.zoom = Vector2(3,3)
-		playerObject.add_child(camera)
+func spawnPlayer(player: Player):
+	player.position = startRoom.position
+	
+func spawnEntities(players: Array[Player]) -> void:
+	# Set Player to startRoom position
+	for player in players:
+		spawnPlayer(player)
+	# Spawn Enemies
+	for room in $Rooms.get_children():
+		#Do not spawn enemies in the Starting Room
+		if(room == startRoom):
+			continue;
+		
+		var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
+		var roomRect = collisionShape.shape.get_rect()
+		var numEnemies = randi() % maxEnemiesPerRoom
+		
+		for i in range(0, numEnemies):
+			var enemyObject = enemy.instantiate()
+			
+			$Enemies.add_child(enemyObject)
+			enemyObject.position = room.position
+	
+	canChangeLevel = true
 
 # On RoomMovementWait 
 func _on_room_movement_wait_timeout():
@@ -76,7 +117,7 @@ func _on_room_movement_wait_timeout():
 func find_mst(nodes: Array):
 	#Prim's algorithm
 	path = AStar2D.new()
-	# TODO: Figure out why it crashes here sometimes lol
+
 	path.add_point(path.get_available_point_id(), nodes.pop_front())
 	
 	#repeat until no more node remains
@@ -99,7 +140,6 @@ func find_mst(nodes: Array):
 		path.connect_points(path.get_closest_point(p), n)
 		nodes.erase(minP)
 	return path
-			
 			
 func makeMap():
 	# Create a Tile Map for generated rooms and path
@@ -131,17 +171,32 @@ func makeMap():
 		
 		var p = path.get_closest_point(room.position)
 		
-		for conn in path.get_point_connections(p):
+		var pointConnections = path.get_point_connections(p)
+		for conn in pointConnections:
 			if not conn in connections:
 				var start = tileMap.local_to_map(path.get_point_position(p))
 				var end = tileMap.local_to_map(path.get_point_position(conn))
 				
+				var roomNum = room.get_children()
 				carvePath(start,end)
 				
-			connections.append(conn)
+			connections.append(p)
 	
 	find_start_room()
 	find_end_room()
+	
+	
+	if(debugEnabled):
+		var startText = Label.new()
+		startText.text = "Start"
+		startRoom.add_child(startText)
+		
+		var endText = Label.new()
+		endText.text = "End"
+		endRoom.add_child(endText)
+
+	# Emit signal
+	level_generated.emit()
 
 func carvePath(pos1, pos2):
 	# Carve path between two points
@@ -162,10 +217,11 @@ func carvePath(pos1, pos2):
 		
 	for x in range(pos1.x, pos2.x, xDiff):
 		tileMap.set_cell(0, Vector2i(x, x_y.y), 1,Vector2i(0, 1), 0);
-		tileMap.set_cell(0, Vector2i(x, x_y.y + yDiff), 1, Vector2i(0, 1), 0);
+		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(0, 1), 0);
 	for y in range(pos1.y, pos2.y, yDiff):
 		tileMap.set_cell(0, Vector2i(y_x.x, y), 1,Vector2i(0, 1), 0);
-		tileMap.set_cell(0, Vector2i(y_x.x + xDiff, y), 1, Vector2i(0, 1), 0);
+		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(0, 1), 0);
+
 		
 
 func find_start_room():

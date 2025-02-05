@@ -8,8 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/States/Enemies/EnemyFollow.gd" id="5_h2kdd"]
 [ext_resource type="Script" path="res://Scripts/Stats/HealthComponent.gd" id="6_t48s2"]
 [ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="7_15nv6"]
-[ext_resource type="PackedScene" uid="uid://5ojpb1xjautu" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
-
+[ext_resource type="PackedScene" uid="uid://c5thomb4wodpp" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ulle7"]
 shader = ExtResource("2_ude0n")

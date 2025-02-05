@@ -13,3 +13,7 @@ func makeRoom(_pos, _size):
 	collisionShape.custom_solver_bias = 0.75
 	$CollisionShape2D.shape = collisionShape	
 	
+
+
+func _on_collision_shape_2d_child_entered_tree(node):
+	print("passed")

@@ -12,7 +12,16 @@ func _init(attack: float = DEFAULT_ATTACK):
 
 # Useless for now, but more useful when we have multipliers
 func calculateDamage():
-	return baseAttack * mult
+	var attack = baseAttack
+	
+	for i in get_children():
+		var upgrade = i as UpgradeStrategy
+		print(upgrade.Apply(attack))
+		attack = upgrade.Apply(attack)
+		
+	print(attack)
+	
+	return attack * mult
 	
 func updateMult(n_mult: float):
 	mult *= n_mult

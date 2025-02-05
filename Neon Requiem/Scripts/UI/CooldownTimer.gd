@@ -1,24 +1,44 @@
 extends Control
-class_name CooldownTimerUI
+class_name CooldownTimersController
 
-@onready var player = get_tree().get_first_node_in_group("Player")
-@onready var dashCooldown: Timer = player.find_child("DashCooldown")
+var player : Player
+var cooldowns = []
+var cooldownTimerScene = preload("res://Scenes/UI/CooldownTimer.tscn")
 
-func setProgressBarValues(progressBar: ProgressBar, min, max, current):
-	progressBar.min_value = min
-	progressBar.max_value = max
-	progressBar.value = current
+
 	
 func _ready():
-	# Cooldown
-	setProgressBarValues($DashCooldown, 0, dashCooldown.wait_time, dashCooldown.wait_time) 
+	player = get_tree().get_first_node_in_group("Player")
+	if(player):
+		# Cooldown
+		cooldowns = player.find_children("*Cooldown", "Timer")
+		for cooldown in cooldowns:
+			var cooldownObj = cooldownTimerScene.instantiate()
+			cooldownObj.setProgressBarValues(0, cooldown.wait_time, cooldown.wait_time)
+			$CooldownContainers.add_child(cooldownObj)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	# Cooldown
-	$DashCooldown.value = dashCooldown.time_left
-	if(!dashCooldown.is_stopped()):
-		$DashCooldown/RichTextLabel.text = "[center][b]{timeLeft}[/b][/center]".format(({"timeLeft": round(dashCooldown.time_left)}))
-	else:
-		$DashCooldown/RichTextLabel.text = ""
+	player = get_tree().get_first_node_in_group("Player")
+	if(player && cooldowns.size() == 0):
+		# Cooldown
+		cooldowns = player.find_children("*Cooldown", "Timer") as Array[Timer]
+		for cooldown in cooldowns:
+			var cooldownObj  = cooldownTimerScene.instantiate()
+			cooldownObj.setProgressBarValues(0, cooldown.wait_time, cooldown.wait_time)
+			$CooldownContainers.add_child(cooldownObj)
+
+	if(player && cooldowns.size()>0):
+		var cooldownObjs = $CooldownContainers.get_children()
+
+		for idx in $CooldownContainers.get_children().size():
+			var currCooldown = cooldowns[idx]
+			cooldownObjs[idx].setProgressBarValues(0, currCooldown.wait_time, currCooldown.wait_time)
+			cooldownObjs[idx].value = currCooldown.time_left
+			if(currCooldown.is_stopped()):
+				cooldownObjs[idx].updateTextLabel("")
+			else:
+				cooldownObjs[idx].updateTextLabel("[center][b]{timeLeft}[/b][/center]".format(({"timeLeft": round(currCooldown.time_left)})))
+				
+			

@@ -1,4 +1,5 @@
 extends Camera2D
+class_name PlayerCamera
 
 @export var cameraMultiplier: float = 3
 func _process(delta):

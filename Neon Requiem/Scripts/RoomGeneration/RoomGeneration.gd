@@ -1,13 +1,14 @@
 extends Node2D
-var Room = preload("res://Scenes/Room.tscn")
+class_name RoomGeneration
 
 # Members
+# Exported
 @export var debugEnabled: bool = false #Debug Only
+@export var player: Player = null
 @onready var tileMap = $TileMap
-@onready var fade : ColorRect = $UserInterface.find_child("Fade")
-var player = preload("res://Scenes/Player.tscn")
+
+var Room = preload("res://Scenes/Room.tscn")
 var enemy = preload("res://Scenes/BaseEnemy.tscn")
-var playerObject : CharacterBody2D
 var tileSize = 16
 var maxRooms = 15
 var minRooms = 10
@@ -22,17 +23,14 @@ var path
 var startRoom
 var endRoom
 
+signal level_generated
+signal level_cleared
+
 const CULL = 0.5
 
 func _ready():
 	randomize()
 	makeRooms()
-	
-func _input(event):
-	if event.is_action_pressed("ui_focus_next"):
-		var camera:Camera2D = $Player.find_child("Camera2D")
-		camera.enabled = !camera.enabled
-		debugEnabled = !debugEnabled
 	
 # Generates A Random Number of Rooms into the scene
 func makeRooms():
@@ -64,21 +62,18 @@ func _process(delta):
 	
 	if(enemyCount == 0 && canChangeLevel):
 		canChangeLevel = false
-		level = level + 1
-		$UserInterface.levelCount = level
-		fade.visible = true
-		makeMap()
+		level_cleared.emit()
+		#makeMap()
 	
 	queue_redraw()
 	
-func spawnEntities():
-	if(!playerObject):
-		# Spawn Player
-		playerObject = player.instantiate()
-		
-		add_child(playerObject)
-	playerObject.position = startRoom.position
+func spawnPlayer(player: Player):
+	player.position = startRoom.position
 	
+func spawnEntities(players: Array[Player]) -> void:
+	# Set Player to startRoom position
+	for player in players:
+		spawnPlayer(player)
 	# Spawn Enemies
 	for room in $Rooms.get_children():
 		#Do not spawn enemies in the Starting Room
@@ -96,7 +91,6 @@ func spawnEntities():
 			enemyObject.position = room.position
 	
 	canChangeLevel = true
-	fade.visible = false
 
 # On RoomMovementWait 
 func _on_room_movement_wait_timeout():
@@ -184,7 +178,6 @@ func makeMap():
 				var end = tileMap.local_to_map(path.get_point_position(conn))
 				
 				var roomNum = room.get_children()
-				print(roomNum)
 				carvePath(start,end)
 				
 			connections.append(p)
@@ -201,11 +194,9 @@ func makeMap():
 		var endText = Label.new()
 		endText.text = "End"
 		endRoom.add_child(endText)
-	
 
-	
-	# Spawn Entities
-	spawnEntities()
+	# Emit signal
+	level_generated.emit()
 
 func carvePath(pos1, pos2):
 	# Carve path between two points

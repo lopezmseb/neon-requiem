@@ -43,7 +43,7 @@ func ShootPlayer():
 		return
 	
 	bulletColor.color = colorComponent.color
-	bullet.source = get_instance_id()
+	bullet.source = "Enemy"
 	get_tree().root.add_child(bullet)
 
 	# Position the bullet at the player's shooting point (Marker2D).

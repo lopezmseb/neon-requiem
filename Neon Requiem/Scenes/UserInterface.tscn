@@ -32,6 +32,7 @@ offset_bottom = 30.0
 text = "Level: 1"
 
 [node name="Fade" type="ColorRect" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

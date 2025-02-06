@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dda7nun1tlr1m"
-path="res://.godot/imported/Enemy-Melee.png-b38b5b14ab7fcbab2b23c32e92434535.ctex"
+uid="uid://b0yrcvublky61"
+path="res://.godot/imported/BUILDINGS.png-55def9f22c556a3231dde8c8c995aecc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/Enemy-Melee.png"
-dest_files=["res://.godot/imported/Enemy-Melee.png-b38b5b14ab7fcbab2b23c32e92434535.ctex"]
+source_file="res://Assets/Menu/BUILDINGS.png"
+dest_files=["res://.godot/imported/BUILDINGS.png-55def9f22c556a3231dde8c8c995aecc.ctex"]
 
 [params]
 

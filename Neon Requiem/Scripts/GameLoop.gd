@@ -13,7 +13,7 @@ extends Control
 @onready var playerCamera = preload("res://Scripts/Player/PlayerCamera.gd")
 var level: int = 1
 var canChangeLevel : bool = false
-var maxEnemiesPerRoom = 2
+var maxEnemiesPerRoom = 5
 var players: Array[Player]
 var enemies: Array[Node]
 

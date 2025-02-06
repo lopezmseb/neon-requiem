@@ -28,7 +28,7 @@ fill_mode = 3
 show_percentage = false
 script = ExtResource("1_rgyo0")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Time" type="RichTextLabel" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -38,3 +38,17 @@ offset_top = 17.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
+
+[node name="KeyCode" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -59.0
+offset_top = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+bbcode_enabled = true
+text = "[right]Q"

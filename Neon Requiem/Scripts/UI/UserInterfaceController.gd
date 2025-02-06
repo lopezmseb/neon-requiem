@@ -1,9 +1,11 @@
 extends CanvasLayer
 
-@export var levelCount: int = 1
+@export var level: int = 1
 
 func _process(delta):
-	if(levelCount):
-		$Level.text = "Level: {level}".format({"level": levelCount})
+	if(level):
+		$Level.text = "Floor: {level}".format({"level": level})
 
-
+func setPlayer(player):
+	$PlayerHealthBar.player = player
+	$CooldownTimers.player = player

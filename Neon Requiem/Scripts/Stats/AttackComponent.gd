@@ -18,8 +18,6 @@ func calculateDamage():
 		var upgrade = i as UpgradeStrategy
 		print(upgrade.Apply(attack))
 		attack = upgrade.Apply(attack)
-		
-	print(attack)
 	
 	return attack * mult
 	

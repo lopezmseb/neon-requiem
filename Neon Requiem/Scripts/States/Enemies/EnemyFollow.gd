@@ -3,6 +3,7 @@ extends EnemyState
 var bulletPath = preload("res://Scenes/Bullet.tscn")
 @onready var gun = $"../../Gun"
 @onready var aiming = $"../../Gun/Aiming"
+
 var readyToAttack = true
 
 const bulletSpeed = 250.0
@@ -10,7 +11,7 @@ var rng = RandomNumberGenerator.new()
 
 func Physics_Update(delta):
 	animate.play("Run")
-	gun.look_at(player.position)
+	gun.look_at(player.global_position)
 	# Note: This approach is kinda buggy. Refactor into something better later
 	var playerDirection = player.global_position - enemy.global_position
 	
@@ -44,7 +45,10 @@ func ShootPlayer():
 	
 	bulletColor.color = colorComponent.color
 	bullet.source = "Enemy"
-	get_tree().root.add_child(bullet)
+	var parent = get_tree().get_nodes_in_group("Viewports")
+
+	if(parent.size() > 0):
+		parent[0].add_child(bullet)
 
 	# Position the bullet at the player's shooting point (Marker2D).
 	bullet.position = aiming.global_position

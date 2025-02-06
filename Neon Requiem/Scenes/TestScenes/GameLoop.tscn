@@ -28,9 +28,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="HBoxContainer/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/SubViewportContainer" groups=["Viewports"]]
 handle_input_locally = false
-size = Vector2i(1280, 720)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="HBoxContainer/SubViewportContainer/SubViewport"]
@@ -39,6 +39,8 @@ script = ExtResource("4_cxvdw")
 
 [node name="RoomGeneration" parent="HBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_q0fmw")]
 position = Vector2(52, 43)
+
+[node name="Enemies" type="Node" parent="HBoxContainer/SubViewportContainer/SubViewport"]
 
 [node name="UserInterface" parent="HBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("3_pv0yb")]
 

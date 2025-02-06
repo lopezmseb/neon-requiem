@@ -19,7 +19,6 @@ func _ready():
 	setProgressBarValues(0,1,1)
 	
 func _process(delta):
-	print(cooldownComponent)
 	if(cooldownComponent):
 		$KeyCode.text = "[right]{keyCode}".format({"keyCode":cooldownComponent.buttonCode[0 if player.playerController == -1 else 1]})
 		setProgressBarValues(0, cooldownComponent.wait_time, cooldownComponent.wait_time)

@@ -4,13 +4,20 @@ class_name Player
 # -1 == Mouse and Keyboard
 # >= 0 => Controller
 @export var playerController : int = -1
-const speed = 100
-const dashSpeed: float = 50
-const dashAttackSpeed: float = 25
-const bulletSpeed = 500.0
+const speed: float = 100
+const dashSpeed: float = 500
+
+var dash_duration: float = 0.2  # Dash lasts for 0.2 seconds
+var dash_timer: float = 0.0
+var dash_direction: Vector2 = Vector2.ZERO
+
+const bulletSpeed: float = 500.0
+
 var movementDirection : Vector2
 var shootingDirection : Vector2
+
 var is_dash_ready: bool = true
+var is_dashing: bool = false
 var is_shoot_ready: bool = true
 var is_melee_ready: bool = true
 var is_ability1_ready: bool = true
@@ -97,7 +104,20 @@ func _physics_process(delta):
 		handleKBInput(delta)
 		
 	$Gun.look_at(shootingDirection)	
-	velocity = movementDirection * speed
+	if is_dashing:
+		velocity = dash_direction * dashSpeed
+		dash_timer -= delta
+		if dash_timer <= 0:
+			is_dashing = false
+			velocity = Vector2.ZERO  # Reset velocity after dash
+	elif is_dashing:
+		velocity = dash_direction * dashSpeed
+		dash_timer -= delta
+		if dash_timer <= 0:
+			is_dashing = false
+			velocity = Vector2.ZERO  # Reset velocity after dash
+	else:
+		velocity = movementDirection * speed  # Normal movement
 		
 	if(velocity):
 		animatedSprite.play("Run")
@@ -114,12 +134,13 @@ func changeColor():
 	$AnimatedSprite2D.material.set("shader_parameter/line_color", COLORS.OUTLINE_CLRS[colorComponent.color])
 
 func dash():
-	is_dash_ready = false
-	
-	velocity = velocity * dashSpeed
-	move_and_slide()
-	
-	$DashCooldown.start()
+	$DashCooldown.start()  # Start cooldown timer
+	if is_dash_ready and not is_dashing:
+		is_dashing = true
+		is_dash_ready = false
+		dash_timer = dash_duration
+		dash_direction = movementDirection.normalized()  # Keep the dash direction consistent
+		
 
 func _on_dash_cooldown_timeout():
 	is_dash_ready = true
@@ -176,7 +197,7 @@ func shotgun():
 		bullet.rotation = angle
 
 func dashAttack():
-	is_ability2_ready = false
+	
 	$Ability2Cooldown.start()
 
 	# Get the player's current position.
@@ -186,11 +207,15 @@ func dashAttack():
 	var direction = (shootingDirection - position).normalized()
 
 	# Set the velocity for the dash.
-	velocity = direction * dashAttackSpeed * speed
+	if is_ability2_ready and not is_dashing:
+		is_ability2_ready = false
+		is_dashing = true
+		dash_timer = .1
+		dash_direction = direction.normalized()  # Keep the dash direction consistent
+		melee()
 
-	# Move the player in the calculated direction.
 	move_and_slide()
-	melee()
+	
 	
 func melee():
 	is_melee_ready = false

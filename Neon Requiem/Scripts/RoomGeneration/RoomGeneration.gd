@@ -8,17 +8,13 @@ class_name RoomGeneration
 @onready var tileMap = $TileMap
 
 var Room = preload("res://Scenes/Room.tscn")
-var enemy = preload("res://Scenes/BaseEnemy.tscn")
 var tileSize = 16
-var maxRooms = 15
-var minRooms = 10
-var maxEnemiesPerRoom = 5
+var maxRooms = 5
+var minRooms = 2
 var minSize = 10
 var maxSize = 15
 var spread = 200
 var roomPositions = []
-var level: int = 1
-var canChangeLevel : bool = false
 var path 
 var startRoom
 var endRoom
@@ -51,46 +47,35 @@ func makeRooms():
 	
 	# Wait for Rooms to Finish Moving
 	$RoomMovementWait.start()
+	
+func getRooms():
+	return $Rooms.get_children()
 		
 	
 func _process(delta):
-	
-	$DebugCamera.enabled = debugEnabled
-	
-	var enemyCount = $Enemies.get_children().size()
-
-	
-	if(enemyCount == 0 && canChangeLevel):
-		canChangeLevel = false
-		level_cleared.emit()
-		#makeMap()
-	
+	print($Rooms.get_children())
 	queue_redraw()
 	
-func spawnPlayer(player: Player):
-	player.position = startRoom.position
+func moveToNextLevel(level:int):
+	# Delete All Old Rooms
+	for i in $Rooms.get_children():
+		i.queue_free()
+	
+	makeRooms()
+	
+func spawnPlayer(player: Player, offset: float):
+	player.position = Vector2(startRoom.position.x + offset, startRoom.position.y)
+	
+func spawnEnemy(enemy, room):
+	enemy.position = room.position
 	
 func spawnEntities(players: Array[Player]) -> void:
 	# Set Player to startRoom position
+	var count = 0
 	for player in players:
-		spawnPlayer(player)
-	# Spawn Enemies
-	for room in $Rooms.get_children():
-		#Do not spawn enemies in the Starting Room
-		if(room == startRoom):
-			continue;
-		
-		var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
-		var roomRect = collisionShape.shape.get_rect()
-		var numEnemies = randi() % maxEnemiesPerRoom
-		
-		for i in range(0, numEnemies):
-			var enemyObject = enemy.instantiate()
-			
-			$Enemies.add_child(enemyObject)
-			enemyObject.position = room.position
-	
-	canChangeLevel = true
+		find_start_room()
+		spawnPlayer(player, count * 50 )
+		count = count + 1
 
 # On RoomMovementWait 
 func _on_room_movement_wait_timeout():
@@ -230,6 +215,7 @@ func find_start_room():
 		if room.position.x < min_x: 
 			startRoom = room
 			min_x = room.position.x
+			
 func find_end_room():
 	var max_x = -INF
 	for room in $Rooms.get_children():

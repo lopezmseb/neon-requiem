@@ -4,11 +4,10 @@ class_name CooldownTimersController
 var player : Player
 var cooldowns = []
 var cooldownTimerScene = preload("res://Scenes/UI/CooldownTimer.tscn")
-
-
+	
 	
 func _ready():
-	player = get_tree().get_first_node_in_group("Player")
+	#$CooldownContainers.size = DisplayServer.window_get_size()/10
 	if(player):
 		# Cooldown
 		cooldowns = player.find_children("*Cooldown", "Timer")
@@ -20,7 +19,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	player = get_tree().get_first_node_in_group("Player")
+	#$CooldownContainers.size = DisplayServer.window_get_size()
 	if(player && cooldowns.size() == 0):
 		# Cooldown
 		cooldowns = player.find_children("*Cooldown", "Timer") as Array[Timer]

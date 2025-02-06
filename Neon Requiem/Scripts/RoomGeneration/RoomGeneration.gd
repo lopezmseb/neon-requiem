@@ -53,7 +53,6 @@ func getRooms():
 		
 	
 func _process(delta):
-	print($Rooms.get_children())
 	queue_redraw()
 	
 func moveToNextLevel(level:int):

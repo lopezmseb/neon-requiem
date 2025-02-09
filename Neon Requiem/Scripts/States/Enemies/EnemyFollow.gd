@@ -13,22 +13,23 @@ func Physics_Update(delta):
 	animate.play("Run")
 	gun.look_at(player.global_position)
 	# Note: This approach is kinda buggy. Refactor into something better later
-	var playerDirection = player.global_position - enemy.global_position
-	
-	animate.flip_h = playerDirection.x < 0
-	
-	if(rng.randi_range(0,100) == 100):
-		# TODO: Fix All Enemies Switching Colors
-		switchColor()
+	if(player):
+		var playerDirection = player.global_position - enemy.global_position
+		
+		animate.flip_h = playerDirection.x < 0
+		
+		if(rng.randi_range(0,100) == 100):
+			# TODO: Fix All Enemies Switching Colors
+			switchColor()
 
-	if(playerDirection.length() > 200):
-		onNewState.emit(self, AvailableStates.Idle)
-	else:
-		# Follow Player
-		enemy.velocity = playerDirection.normalized() * speed
-		# Attack Player
-		if(readyToAttack):
-			ShootPlayer()
+		if(playerDirection.length() > 200):
+			onNewState.emit(self, AvailableStates.Idle)
+		else:
+			# Follow Player
+			enemy.velocity = playerDirection.normalized() * speed
+			# Attack Player
+			if(readyToAttack):
+				ShootPlayer()
 
 func ShootPlayer():
 	# Start Cooldown and stop from attacking
@@ -70,7 +71,20 @@ func switchColor():
 	sprite.material.set("shader_parameter/line_color", COLORS.OUTLINE_CLRS[colorComponent.color])
 
 
-
 func _on_attack_cooldown_timeout():
 	# Enable Attacking
 	readyToAttack = true
+
+
+func _on_area_2d_body_entered(body: Node2D):
+	if body is Player:
+		player = body
+		# This gets the distance from the body and the distance from the tracked player. It will start tracking whoever
+		# is nearer. Feels Better with it off? Might be work tweaking and seeing how it feels with more people later.
+		# Keeping in case we want it back
+		#else:
+		#	var distanceFromBody = abs(enemy.global_position - body.global_position)
+		#	var distanceFromPlayer = abs(enemy.global_position - player.global_position)
+		#	
+		#	if(distanceFromBody < distanceFromPlayer):
+		#		player = body

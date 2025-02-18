@@ -11,9 +11,10 @@ extends Control
 @onready var fade = $Fade
 @onready var enemiesNode = $HBoxContainer/SubViewportContainer/SubViewport/Enemies
 @onready var playerCamera = preload("res://Scripts/Player/PlayerCamera.gd")
+@onready var upgradeSelectionScreen = preload("res://Scenes/UI/UpgradeSelectScreen.tscn")
 var level: int = 1
 var canChangeLevel : bool = false
-var maxEnemiesPerRoom = 5
+var maxEnemiesPerRoom = 2
 var players: Array[Player]
 var enemies: Array[Node]
 
@@ -68,7 +69,6 @@ func _input(event):
 func _process(delta):
 	# Set Hbox to screensize
 	hbox.size = DisplayServer.window_get_size()
-	user_interface.level = level
 	
 	var enemyCount = enemiesNode.get_child_count()
 	
@@ -113,13 +113,25 @@ func _on_level_generated():
 	tween.tween_property(fade, 'color:a', 0, 1)
 	
 func level_cleared():
-	print("Level Cleared")
-	# Pick Upgrade
-	
 	# Fade Black
 	var tween = get_tree().create_tween()
 	tween.tween_property(fade, 'color:a', 1, 0.25)
 	
+	# Pick Upgrade
+	var upgradeScreen : UpgradeSelect = upgradeSelectionScreen.instantiate()
+	upgradeScreen.connect("endSelection", onUpgradeSelected)
+	
+	for i in players:
+		var upgrades : Array[UpgradeStrategy] = []
+		var playerUpgrades = i.find_children("*", "UpgradeStrategy")
+		while(upgrades.size() != 3):
+			var randomUpgrade = randf_range(0, playerUpgrades.size())
+			upgrades.append(playerUpgrades[randomUpgrade])
+		
+		upgradeScreen.upgrades = upgrades
+		add_child(upgradeScreen)
+	
+func onUpgradeSelected():
 	# Increase Level
 	level = level + 1
 	#Create Map

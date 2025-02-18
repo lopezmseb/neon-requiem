@@ -16,7 +16,6 @@ func calculateDamage():
 	
 	for i in get_children():
 		var upgrade = i as UpgradeStrategy
-		print(upgrade.Apply(attack))
 		attack = upgrade.Apply(attack)
 	
 	return attack * mult

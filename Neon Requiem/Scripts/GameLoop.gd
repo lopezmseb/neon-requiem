@@ -17,7 +17,8 @@ var canChangeLevel : bool = false
 var maxEnemiesPerRoom = 2
 var players: Array[Player]
 var enemies: Array[Node]
-
+var upgradeSelectedCount: float = 0
+var upgradeSelectScreen : UpgradeSelect = null
 func _ready():
 	# Set Hbox to screensize
 	hbox.size = DisplayServer.window_get_size()
@@ -118,25 +119,44 @@ func level_cleared():
 	tween.tween_property(fade, 'color:a', 1, 0.25)
 	
 	# Pick Upgrade
-	var upgradeScreen : UpgradeSelect = upgradeSelectionScreen.instantiate()
-	upgradeScreen.connect("endSelection", onUpgradeSelected)
+	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
+	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
 	
-	for i in players:
-		var upgrades : Array[UpgradeStrategy] = []
-		var playerUpgrades = i.find_children("*", "UpgradeStrategy")
-		while(upgrades.size() != 3):
-			var randomUpgrade = randf_range(0, playerUpgrades.size())
-			upgrades.append(playerUpgrades[randomUpgrade])
-		
-		upgradeScreen.upgrades = upgrades
-		add_child(upgradeScreen)
+	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
+	var selectedUpgrades : Array[UpgradeStrategy]  = []
+	
+	while(selectedUpgrades.size() != clampf(players.size(), 3, players.size() + 1)):
+		var randomUpgrade = randf_range(0, baseUpgrades.size())
+		selectedUpgrades.append(baseUpgrades.pop_at(randomUpgrade))
+			
+	upgradeSelectScreen.upgrades = selectedUpgrades
+	add_child(upgradeSelectScreen)
+
 	
 func onUpgradeSelected():
-	# Increase Level
-	level = level + 1
-	#Create Map
-	roomGen.moveToNextLevel(level)
+	upgradeSelectedCount = upgradeSelectedCount + 1
 	
-	
+	if(upgradeSelectedCount == players.size()):
+		# If UpgradeSelectScreen exists, remove it from tree and set it to null (for next level)
+		if(upgradeSelectScreen):
+			upgradeSelectScreen.queue_free()
+			upgradeSelectScreen = null
+		# Increase Level
+		level = level + 1
+		upgradeSelectedCount = 0
+		#Create Map
+		roomGen.moveToNextLevel(level)
+	else:
+		var currentPlayer = players[upgradeSelectedCount]
+		var oldUpgrades = upgradeSelectScreen.upgrades
+		var newPlayerUpgrades : Array[UpgradeStrategy] = []
+		
+		for i in oldUpgrades:
+			var currentPlayerUpgrades = currentPlayer.find_children("*", "UpgradeStrategy")
+			for j in currentPlayerUpgrades:
+				if(j.upgradeText == i.upgradeText):
+					newPlayerUpgrades.append(j)
+		
+		upgradeSelectScreen.upgrades = newPlayerUpgrades
 	
 	

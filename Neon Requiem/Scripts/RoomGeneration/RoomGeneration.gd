@@ -63,7 +63,8 @@ func moveToNextLevel(level:int):
 	makeRooms()
 	
 func spawnPlayer(player: Player, offset: float):
-	player.position = Vector2(startRoom.position.x + offset, startRoom.position.y)
+	if(is_instance_valid(startRoom)):
+		player.position = Vector2(startRoom.position.x + offset, startRoom.position.y)
 	
 func spawnEnemy(enemy, room):
 	enemy.position = room.position

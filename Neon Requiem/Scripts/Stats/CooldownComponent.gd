@@ -11,5 +11,5 @@ func changeTimerTime(new_time: float):
 	wait_time = new_time
 	
 func _process(delta):
-	wait_time = clampf($CooldownAdditiveReduction.Apply(baseWaitTime), 0 , 10)
+	wait_time = clampf($CooldownAdditiveReduction.Apply(baseWaitTime), 0.1 , 10)
 

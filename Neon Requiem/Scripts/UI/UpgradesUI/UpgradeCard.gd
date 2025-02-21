@@ -2,11 +2,12 @@ extends Control
 class_name UpgradeCard
 
 @export var upgradeStrategy: UpgradeStrategy = null
+@export var id : float = 0
 @onready var description: RichTextLabel = $ColorRect/Button/VBoxContainer/Description
 @onready var title: RichTextLabel = $ColorRect/Button/VBoxContainer/UpgradeTitle
 @onready var levelText = $ColorRect/Button/VBoxContainer/LevelAmount
 
-signal onClick
+signal onClick(upgradeStrategy: UpgradeStrategy, id: float)
 
 func _ready():
 
@@ -29,5 +30,5 @@ func _process(delta):
 
 func _on_button_pressed():
 	upgradeStrategy.OnPickup()
+	onClick.emit(upgradeStrategy, id)
 	queue_free()
-	onClick.emit()

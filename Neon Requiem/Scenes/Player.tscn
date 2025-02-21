@@ -167,6 +167,7 @@ script = ExtResource("7_2xrf5")
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")
+volume_db = -10.0
 bus = &"SFX"
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]

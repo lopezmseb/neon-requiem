@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dga40ispxfs62"]
+[gd_scene load_steps=9 format=3 uid="uid://dga40ispxfs62"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UpgradesUI/UpgradeCard.gd" id="1_mhn2u"]
 
@@ -12,6 +12,9 @@ default_font_size = 30
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ll6ku"]
 size = Vector2(400, 400)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_hs8s6"]
+specular_color = Color(0.34902, 0.309804, 0.101961, 1)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_snk4y"]
 size = Vector2(40, 40)
@@ -76,12 +79,13 @@ layout_mode = 2
 texture = SubResource("PlaceholderTexture2D_ll6ku")
 
 [node name="Level" type="HBoxContainer" parent="ColorRect/Button/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="ColorRect/Button/VBoxContainer/Level"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = SubResource("PlaceholderTexture2D_snk4y")
+texture = SubResource("CanvasTexture_hs8s6")
 
 [node name="TextureRect2" type="TextureRect" parent="ColorRect/Button/VBoxContainer/Level"]
 layout_mode = 2
@@ -102,6 +106,16 @@ texture = SubResource("PlaceholderTexture2D_snk4y")
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("PlaceholderTexture2D_snk4y")
+
+[node name="LevelAmount" type="RichTextLabel" parent="ColorRect/Button/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme = SubResource("Theme_5ltmm")
+bbcode_enabled = true
+text = "[center]Some Stuff About Upgrade IN Here"
+fit_content = true
+autowrap_mode = 0
 
 [node name="Description" type="RichTextLabel" parent="ColorRect/Button/VBoxContainer"]
 layout_mode = 2

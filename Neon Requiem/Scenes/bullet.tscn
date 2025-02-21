@@ -111,7 +111,7 @@ script = ExtResource("5_5brve")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_em8sl")
-volume_db = 22.106
+volume_db = 15.0
 bus = &"SFX"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

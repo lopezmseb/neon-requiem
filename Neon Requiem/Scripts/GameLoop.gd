@@ -76,9 +76,14 @@ func _process(delta):
 	if(enemyCount == 0 && canChangeLevel):
 		canChangeLevel = false
 		level_cleared()
+		
 	if Input.is_action_just_pressed("Menu"):
 		settings_menu.visible = true
 		get_tree().paused = true
+		await get_tree().process_frame  # Ensures UI updates before setting focus
+	
+		var close_button = $SettingsMenu/MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton
+		close_button.grab_focus()
 
 
 func _on_level_generated():

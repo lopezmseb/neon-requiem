@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cwuxgblo0jje2" path="res://Scenes/UI/settings_menu.tscn" id="7_yyu1d"]
 
 [node name="Menu" type="Control"]
+process_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,6 +51,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("4_jcs6e")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+process_mode = 1
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

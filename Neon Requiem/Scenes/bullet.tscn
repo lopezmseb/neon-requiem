@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/Stats/AttackComponent.gd" id="3_lof4c"]
 [ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="4_r6537"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="5_5brve"]
-[ext_resource type="AudioStream" uid="uid://olqja230x42p" path="res://Assets/Sound/SFX/laserShoot.wav" id="6_wlj7s"]
+[ext_resource type="AudioStream" uid="uid://d01vqm2drwj7c" path="res://Assets/Sound/SFX/shoot.wav" id="6_em8sl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w4a5u"]
 atlas = ExtResource("2_6odcj")
@@ -110,7 +110,8 @@ script = ExtResource("3_lof4c")
 script = ExtResource("5_5brve")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_wlj7s")
+stream = ExtResource("6_em8sl")
+volume_db = 22.106
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

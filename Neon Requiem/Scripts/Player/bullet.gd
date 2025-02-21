@@ -1,16 +1,28 @@
 extends CharacterBody2D
+class_name Bullet
 
 @onready var bulletSprite  = $BulletSprite
 @onready var colorComponent: ColorComponent = $ColorComponent
 var source = null
+var upgrades: Array[Node] = []
 
 const SPEED = 150
 
-func _init(source_type = null):
+func initialize(source_type = null, upgradeList: Array[Node] = []):
 	source = source_type
+	upgrades = upgradeList
+	
+	if($AttackComponent.get_child_count() == 0):
+		for i in upgradeList:
+			$AttackComponent.add_child(i)
+		
 
 func _ready():
 	bulletSprite.modulate = COLORS.OUTLINE_CLRS[colorComponent.color]
+	
+	if(upgrades.size() > 0):
+		for i in upgrades:
+			$AttackComponent.add_child(i.duplicate())
 
 func _physics_process(delta):
 	# Move the bullet and check for collisions

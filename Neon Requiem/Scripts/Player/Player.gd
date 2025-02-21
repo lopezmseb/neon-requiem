@@ -148,7 +148,9 @@ func _on_dash_cooldown_timeout():
 func shoot():
 	is_shoot_ready = false
 	$ShootCooldown.start()
-	var bullet = bulletPath.instantiate()
+	var bullet= bulletPath.instantiate()
+	var bulletUpgrades : Array[Node] = $BulletUpgrades.get_children()
+	bullet.upgrades = bulletUpgrades
 	bullet.source = "Player"
 	var bulletColor: ColorComponent = bullet.find_child("ColorComponent")
 	

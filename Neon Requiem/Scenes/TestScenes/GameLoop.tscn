@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b41rswdtvd10e"]
+[gd_scene load_steps=6 format=3 uid="uid://b41rswdtvd10e"]
 
 [ext_resource type="Script" path="res://Scripts/GameLoop.gd" id="1_a5ecp"]
 [ext_resource type="PackedScene" uid="uid://833p2gpb3bdv" path="res://Scenes/TestScenes/RoomGeneration.tscn" id="1_q0fmw"]
 [ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="3_pv0yb"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.gd" id="4_cxvdw"]
+[ext_resource type="AudioStream" uid="uid://b4yi0o5f878jr" path="res://Assets/Sound/Music/cyberpunk-music-277931.mp3" id="5_ywwyg"]
 
 [node name="GameLoop" type="Control"]
 layout_mode = 3
@@ -52,5 +53,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_ywwyg")
+autoplay = true
+bus = &"Music"
 
 [connection signal="level_generated" from="HBoxContainer/SubViewportContainer/SubViewport/RoomGeneration" to="." method="_on_level_generated"]

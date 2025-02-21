@@ -10,6 +10,7 @@ extends Control
 @onready var user_interface = $HBoxContainer/SubViewportContainer/SubViewport/UserInterface
 @onready var fade = $Fade
 @onready var enemiesNode = $HBoxContainer/SubViewportContainer/SubViewport/Enemies
+@onready var settings_menu = $SettingsMenu
 @onready var playerCamera = preload("res://Scripts/Player/PlayerCamera.gd")
 var level: int = 1
 var canChangeLevel : bool = false
@@ -75,6 +76,14 @@ func _process(delta):
 	if(enemyCount == 0 && canChangeLevel):
 		canChangeLevel = false
 		level_cleared()
+		
+	if Input.is_action_just_pressed("Menu"):
+		settings_menu.visible = true
+		get_tree().paused = true
+		await get_tree().process_frame  # Ensures UI updates before setting focus
+	
+		var close_button = $SettingsMenu/MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton
+		close_button.grab_focus()
 
 
 func _on_level_generated():

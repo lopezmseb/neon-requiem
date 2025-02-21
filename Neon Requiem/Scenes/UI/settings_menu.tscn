@@ -1,0 +1,109 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwuxgblo0jje2"]
+
+[ext_resource type="Texture2D" uid="uid://c1jeheo6lbgu8" path="res://Assets/Theme/settings.png" id="1_h3yw8"]
+[ext_resource type="Script" path="res://Scenes/UI/settings_menu.gd" id="1_hoxsw"]
+[ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="2_ed0ws"]
+[ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="3_1dscj"]
+
+[node name="SettingsMenu" type="Control"]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hoxsw")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.219608, 0, 0.329412, 0.898039)
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 600
+theme_override_constants/margin_top = 400
+theme_override_constants/margin_right = 600
+theme_override_constants/margin_bottom = 400
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2"]
+layout_mode = 2
+texture = ExtResource("1_h3yw8")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 200
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 24
+
+[node name="Music" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ed0ws")
+text = "Music "
+
+[node name="Music Slider" type="HSlider" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("3_1dscj")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SFX" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ed0ws")
+text = "SFX"
+
+[node name="SFX Slider" type="HSlider" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("3_1dscj")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="CloseButton" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme = ExtResource("3_1dscj")
+text = "  Close  "
+metadata/_edit_use_anchors_ = true
+
+[node name="QuitButton" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme = ExtResource("3_1dscj")
+text = "  Quit     
+"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="value_changed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/Music Slider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/SFX Slider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/QuitButton" to="." method="_on_button_pressed"]

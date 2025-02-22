@@ -3,6 +3,8 @@ class_name Bullet
 
 @onready var bulletSprite  = $BulletSprite
 @onready var colorComponent: ColorComponent = $ColorComponent
+@onready var audio_stream_player = $AudioStreamPlayer
+
 var source = null
 var upgrades: Array[Node] = []
 
@@ -19,7 +21,8 @@ func initialize(source_type = null, upgradeList: Array[Node] = []):
 
 func _ready():
 	bulletSprite.modulate = COLORS.OUTLINE_CLRS[colorComponent.color]
-	
+	audio_stream_player.pitch_scale = randf_range(0.9, 2)
+	audio_stream_player.play()
 	if(upgrades.size() > 0):
 		for i in upgrades:
 			$AttackComponent.add_child(i.duplicate())
@@ -45,6 +48,7 @@ func _on_area_2d_body_entered(body):
 	# If the object does not have a health component, then it must be a wall
 	# therefore, delete projectile
 	if(health == null):
+		await audio_stream_player.finished
 		queue_free()
 		return
 		
@@ -77,4 +81,5 @@ func _on_area_2d_body_entered(body):
 
 func _on_life_timeout():
 	# Once Timer runs out, delete projectile.
+	await audio_stream_player.finished
 	queue_free()

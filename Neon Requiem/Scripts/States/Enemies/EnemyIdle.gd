@@ -6,6 +6,7 @@ extends EnemyState
 var direction: Vector2
 var wanderingTime: float
 
+
 func RandomizeWander():
 	direction = Vector2(randf_range(-1, 1), randf_range(-1,1)).normalized()
 	wanderingTime = randf_range(minWanderingTime, maxWanderingTime)
@@ -24,9 +25,8 @@ func Physics_Update(delta):
 	if enemy:
 		enemy.velocity = direction * speed
 		animate.flip_h = enemy.velocity.x < 0
-		
-	var playerDirection = player.global_position - enemy.global_position
-	
-	if(playerDirection.length() < 100):
+
+
+func _on_area_2d_body_entered(body):
+	if body is Player:
 		onNewState.emit(self, AvailableStates.Follow)
-	

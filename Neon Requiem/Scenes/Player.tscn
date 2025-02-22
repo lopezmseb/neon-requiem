@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="6_otwx6"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.gd" id="7_2xrf5"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="11_nmywm"]
+[ext_resource type="AudioStream" uid="uid://1q6bjephb5cg" path="res://Assets/Sound/SFX/dash.mp3" id="10_yis84"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -189,6 +190,10 @@ script = ExtResource("7_2xrf5")
 
 [node name="BulletAdditiveUpgrade" type="Node" parent="BulletUpgrades"]
 script = ExtResource("11_nmywm")
+[node name="Dash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_yis84")
+volume_db = -10.0
+bus = &"SFX"
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]

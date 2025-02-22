@@ -28,6 +28,7 @@ const swordPath = preload("res://Scenes/Sword.tscn")
 
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var colorComponent = $ColorComponent
+@onready var dashSFX = $Dash
 
 func _ready():
 	pass
@@ -136,6 +137,7 @@ func changeColor():
 func dash():
 	$DashCooldown.start()  # Start cooldown timer
 	if is_dash_ready and not is_dashing:
+		dashSFX.play()
 		is_dashing = true
 		is_dash_ready = false
 		dash_timer = dash_duration
@@ -210,6 +212,7 @@ func dashAttack():
 
 	# Set the velocity for the dash.
 	if is_ability2_ready and not is_dashing:
+		dashSFX.play()
 		is_ability2_ready = false
 		is_dashing = true
 		dash_timer = .1

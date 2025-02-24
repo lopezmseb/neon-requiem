@@ -39,6 +39,7 @@ offset_right = -79.0
 offset_bottom = -154.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 2
 
 [node name="Turn" type="RichTextLabel" parent="."]
 layout_mode = 1

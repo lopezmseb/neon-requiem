@@ -32,40 +32,43 @@ func _ready():
 		if(subviewport):
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
+			
+func addPlayer():
+	var anotherPlayer : Player = playerScene.instantiate()
+	var container : SubViewportContainer = SubViewportContainer.new()
+	var subViewport = SubViewport.new()
+	var camera = Camera2D.new()
+	var playerInterface = UIScene.instantiate()
+	
+	# Player Config
+	anotherPlayer.playerController = 0
+	players.append(anotherPlayer)
+	# UI Config
+	playerInterface.setPlayer(anotherPlayer)
+	# Camera Config
+	camera.set_script(playerCamera)
+	# SubViewport Config 
+	subViewport.world_2d = mainViewport.world_2d
+	subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	# Container Config
+	container.stretch = true
+	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Add Children to Scene
+	subViewport.add_child(camera)
+	subViewport.add_child(playerInterface)
+	mainViewport.add_child(anotherPlayer)		
+	container.add_child(subViewport)
+	hbox.add_child(container)
+	# Remote Path to Camera
+	var remoteTransform := RemoteTransform2D.new()
+	remoteTransform.remote_path = camera.get_path()
+	anotherPlayer.add_child(remoteTransform)
+	# Spawn new Player into game
+	roomGen.spawnPlayer(anotherPlayer, 0)
 
 func _input(event):
 	if event.is_action_pressed("add_player"):
-		var anotherPlayer : Player = playerScene.instantiate()
-		var container : SubViewportContainer = SubViewportContainer.new()
-		var subViewport = SubViewport.new()
-		var camera = Camera2D.new()
-		var playerInterface = UIScene.instantiate()
-
-		# Player Config
-		anotherPlayer.playerController = 0
-		players.append(anotherPlayer)
-		# UI Config
-		playerInterface.setPlayer(anotherPlayer)
-		# Camera Config
-		camera.set_script(playerCamera)
-		# SubViewport Config 
-		subViewport.world_2d = mainViewport.world_2d
-		subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-		# Container Config
-		container.stretch = true
-		container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		# Add Children to Scene
-		subViewport.add_child(camera)
-		subViewport.add_child(playerInterface)
-		mainViewport.add_child(anotherPlayer)		
-		container.add_child(subViewport)
-		hbox.add_child(container)
-		# Remote Path to Camera
-		var remoteTransform := RemoteTransform2D.new()
-		remoteTransform.remote_path = camera.get_path()
-		anotherPlayer.add_child(remoteTransform)
-		# Spawn new Player into game
-		roomGen.spawnPlayer(anotherPlayer, 0)
+		addPlayer()
 		
 	
 func _process(delta):

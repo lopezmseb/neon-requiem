@@ -25,7 +25,9 @@ func _ready():
 		upgradeContainer.add_child(upgradeCard)
 		
 		upgradeScenes.append(upgradeCard)
-
+		
+		if(count == 1):
+			upgradeCard.grab_focus()
 	
 func _process(delta):
 	upgradeContainer.queue_redraw()	
@@ -38,12 +40,21 @@ func _process(delta):
 			count += 1
 	
 func _input(event):
+	if(event is InputEventJoypadButton):
+		if(event.button_index == JOY_BUTTON_DPAD_LEFT || event.button_index == JOY_BUTTON_DPAD_RIGHT and upgradeScenes.size() > 0 ):
+			print(event)
+			#upgradeScenes[0].grab_focus()
 	if(Input.is_key_pressed(KEY_DELETE)):
 		get_tree().reload_current_scene()
 		
 func onButtonPressed(upgradeStrategy, id):
+	print("onButtonPressed")
 	# Remove picked Upgrade
 	upgrades.remove_at(id)
 	upgradeScenes.remove_at(id)
+	if(upgradeScenes.size() > 0):
+		print(upgradeScenes)
+		
+		upgradeScenes[0].grab_focus()
 	
 	endSelection.emit()

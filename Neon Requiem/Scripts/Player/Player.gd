@@ -118,7 +118,7 @@ func _physics_process(delta):
 			is_dashing = false
 			velocity = Vector2.ZERO  # Reset velocity after dash
 	else:
-		velocity = movementDirection * speed  # Normal movement
+		velocity = movementDirection * $SpeedComponent.calculateSpeed()  # Normal movement
 		
 	if(velocity):
 		animatedSprite.play("Run")
@@ -150,7 +150,9 @@ func _on_dash_cooldown_timeout():
 func shoot():
 	is_shoot_ready = false
 	$ShootCooldown.start()
-	var bullet = bulletPath.instantiate()
+	var bullet= bulletPath.instantiate()
+	var bulletUpgrades : Array[Node] = $BulletUpgrades.get_children()
+	bullet.upgrades = bulletUpgrades
 	bullet.source = "Player"
 	var bulletColor: ColorComponent = bullet.find_child("ColorComponent")
 	
@@ -225,13 +227,13 @@ func melee():
 	$MeleeCooldown.start()
 	var sword = swordPath.instantiate()
 	get_parent().add_child(sword)
-	
+	var swordUpgrades : Array[Node] = $SwordUpgrades.get_children()
+	sword.upgrades = swordUpgrades
 	# Position the bullet at the player's shooting point (Marker2D).
 	sword.position = $Gun/Aiming.global_position
 	
 	# Set the bullet's velocity and rotation based on the direction to the mouse.
 	var direction = (shootingDirection - sword.position).normalized()
-#	sword.velocity = direction
 	sword.rotation = direction.angle()
 
 func _on_shoot_cooldown_timeout():

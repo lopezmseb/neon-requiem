@@ -1,0 +1,159 @@
+[gd_scene load_steps=9 format=3 uid="uid://dga40ispxfs62"]
+
+[ext_resource type="Script" path="res://Scripts/UI/UpgradesUI/UpgradeCard.gd" id="1_mhn2u"]
+[ext_resource type="Texture2D" uid="uid://dje7goep4inlm" path="res://Assets/UI/Upgrades/Bullet_damage.png" id="2_n7gn8"]
+
+[sub_resource type="Theme" id="Theme_g0uoy"]
+
+[sub_resource type="Theme" id="Theme_j0e1e"]
+default_font_size = 30
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_hs8s6"]
+specular_color = Color(0.34902, 0.309804, 0.101961, 1)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_snk4y"]
+size = Vector2(40, 40)
+
+[sub_resource type="Theme" id="Theme_5ltmm"]
+default_font_size = 25
+
+[sub_resource type="Theme" id="Theme_epc3m"]
+
+[node name="UpgradeCard" type="Button"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_mhn2u")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = -7.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+focus_next = NodePath(".")
+theme = SubResource("Theme_g0uoy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="UpgradeTitle" type="RichTextLabel" parent="Button/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = SubResource("Theme_j0e1e")
+bbcode_enabled = true
+text = "[center] Title"
+fit_content = true
+scroll_active = false
+autowrap_mode = 1
+
+[node name="UpgradeImage" type="TextureRect" parent="Button/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("2_n7gn8")
+
+[node name="Level" type="HBoxContainer" parent="Button/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Button/VBoxContainer/Level"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("CanvasTexture_hs8s6")
+
+[node name="TextureRect2" type="TextureRect" parent="Button/VBoxContainer/Level"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("PlaceholderTexture2D_snk4y")
+
+[node name="TextureRect3" type="TextureRect" parent="Button/VBoxContainer/Level"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("PlaceholderTexture2D_snk4y")
+
+[node name="TextureRect4" type="TextureRect" parent="Button/VBoxContainer/Level"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("PlaceholderTexture2D_snk4y")
+
+[node name="TextureRect5" type="TextureRect" parent="Button/VBoxContainer/Level"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("PlaceholderTexture2D_snk4y")
+
+[node name="LevelAmount" type="RichTextLabel" parent="Button/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme = SubResource("Theme_5ltmm")
+bbcode_enabled = true
+text = "[center]Some Stuff About Upgrade IN Here"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Description" type="RichTextLabel" parent="Button/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme = SubResource("Theme_5ltmm")
+bbcode_enabled = true
+text = "[center]Some Stuff About Upgrade IN Here"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Overlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.203922, 0.203922, 0.203922, 0.788235)
+
+[node name="Taken!" type="RichTextLabel" parent="Overlay"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_epc3m")
+text = "Taken!"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_pressed"]

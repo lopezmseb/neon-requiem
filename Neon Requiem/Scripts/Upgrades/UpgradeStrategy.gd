@@ -1,12 +1,15 @@
 extends Node
 class_name UpgradeStrategy
 
-@export var upgradeImage = ""
+@export_file("*.png") var upgradeImagePath
+@export var upgradeId: float
+@export var upgradeImage : CompressedTexture2D
+@export var upgradeTitle = ""
 @export var upgradeText = "Base"
-@export var count = 0
-	
+@export var level = 0
+
 func Apply(stat: float):
 	pass
 	
 func OnPickup():
-	count += 1
+	level += 1

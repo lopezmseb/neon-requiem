@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://chjxraoikmphb"]
+
+[ext_resource type="Script" path="res://Scripts/UI/UpgradeSelectScreen.gd" id="1_7re0p"]
+[ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="2_ip6pi"]
+[ext_resource type="Texture2D" uid="uid://43677synoxf3" path="res://Assets/UI/Upgrades/Bullet.png" id="3_il8dv"]
+[ext_resource type="Texture2D" uid="uid://crrvojxbn3eiw" path="res://Assets/UI/Upgrades/Health.png" id="3_rui1o"]
+[ext_resource type="Script" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="4_n5ruu"]
+[ext_resource type="Script" path="res://Scripts/Upgrades/CooldownUpgrades/CooldownAdditiveReduction.gd" id="5_uwgio"]
+[ext_resource type="Texture2D" uid="uid://c3spi13lartfw" path="res://Assets/UI/Cooldown/Melee_cooldown.png" id="6_x7e5o"]
+
+[sub_resource type="Theme" id="Theme_r2nu1"]
+default_font_size = 30
+
+[node name="UpgradeSelectScreen" type="Control" node_paths=PackedStringArray("upgrades")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7re0p")
+upgrades = [NodePath("BulletAdditiveUpgrade"), NodePath("HealthAdditiveUpgrade"), NodePath("CooldownAdditiveReduction")]
+
+[node name="Fade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="UpgradeContainer" type="HBoxContainer" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = 79.0
+offset_right = -79.0
+offset_bottom = -154.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+theme_override_constants/separation = 35
+
+[node name="Turn" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.875
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 65.9999
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_r2nu1")
+bbcode_enabled = true
+text = "[center]Player 1's Turn"
+fit_content = true
+
+[node name="BulletAdditiveUpgrade" type="Node" parent="."]
+script = ExtResource("2_ip6pi")
+upgradeImage = ExtResource("3_il8dv")
+
+[node name="HealthAdditiveUpgrade" type="Node" parent="."]
+script = ExtResource("4_n5ruu")
+upgradeImagePath = "res://Assets/UI/Upgrades/Health.png"
+upgradeImage = ExtResource("3_rui1o")
+
+[node name="CooldownAdditiveReduction" type="Node" parent="."]
+script = ExtResource("5_uwgio")
+upgradeImagePath = "res://Assets/UI/Upgrades/Dash.png"
+upgradeImage = ExtResource("6_x7e5o")

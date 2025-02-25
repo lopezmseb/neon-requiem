@@ -12,13 +12,15 @@ extends Control
 @onready var enemiesNode = $HBoxContainer/SubViewportContainer/SubViewport/Enemies
 @onready var settings_menu = $SettingsMenu
 @onready var playerCamera = preload("res://Scripts/Player/PlayerCamera.gd")
+@onready var upgradeSelectionScreen = preload("res://Scenes/UI/UpgradeSelectScreen.tscn")
 var save_path = "user://room.save"
 var level: int = 1
 var canChangeLevel : bool = false
 var maxEnemiesPerRoom = 5
 var players: Array[Player]
 var enemies: Array[Node]
-
+var upgradeSelectedCount: float = 0
+var upgradeSelectScreen : UpgradeSelect = null
 func _ready():
 	# Set Hbox to screensize
 	if FileAccess.file_exists(save_path):
@@ -35,47 +37,49 @@ func _ready():
 		if(subviewport):
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
+			
+func addPlayer():
+	var anotherPlayer : Player = playerScene.instantiate()
+	var container : SubViewportContainer = SubViewportContainer.new()
+	var subViewport = SubViewport.new()
+	var camera = Camera2D.new()
+	var playerInterface = UIScene.instantiate()
+	
+	# Player Config
+	anotherPlayer.playerController = 0
+	players.append(anotherPlayer)
+	# UI Config
+	playerInterface.setPlayer(anotherPlayer)
+	# Camera Config
+	camera.set_script(playerCamera)
+	# SubViewport Config 
+	subViewport.world_2d = mainViewport.world_2d
+	subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	# Container Config
+	container.stretch = true
+	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Add Children to Scene
+	subViewport.add_child(camera)
+	subViewport.add_child(playerInterface)
+	mainViewport.add_child(anotherPlayer)		
+	container.add_child(subViewport)
+	hbox.add_child(container)
+	# Remote Path to Camera
+	var remoteTransform := RemoteTransform2D.new()
+	remoteTransform.remote_path = camera.get_path()
+	anotherPlayer.add_child(remoteTransform)
+	# Spawn new Player into game
+	roomGen.spawnPlayer(anotherPlayer, 0)
 
 func _input(event):
 	if event.is_action_pressed("add_player"):
-		var anotherPlayer : Player = playerScene.instantiate()
-		var container : SubViewportContainer = SubViewportContainer.new()
-		var subViewport = SubViewport.new()
-		var camera = Camera2D.new()
-		var playerInterface = UIScene.instantiate()
-
-		# Player Config
-		anotherPlayer.playerController = 0
-		players.append(anotherPlayer)
-		# UI Config
-		playerInterface.setPlayer(anotherPlayer)
-		# Camera Config
-		camera.set_script(playerCamera)
-		# SubViewport Config 
-		subViewport.world_2d = mainViewport.world_2d
-		subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-		# Container Config
-		container.stretch = true
-		container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		# Add Children to Scene
-		subViewport.add_child(camera)
-		subViewport.add_child(playerInterface)
-		mainViewport.add_child(anotherPlayer)		
-		container.add_child(subViewport)
-		hbox.add_child(container)
-		# Remote Path to Camera
-		var remoteTransform := RemoteTransform2D.new()
-		remoteTransform.remote_path = camera.get_path()
-		anotherPlayer.add_child(remoteTransform)
-		# Spawn new Player into game
-		roomGen.spawnPlayer(anotherPlayer, 0)
+		addPlayer()
 		
 	
 func _process(delta):
 	# Set Hbox to screensize
 	hbox.size = DisplayServer.window_get_size()
-	user_interface.level = level
-	
+	$HBoxContainer/SubViewportContainer/SubViewport/UserInterface.level = level
 	var enemyCount = enemiesNode.get_child_count()
 	
 	if(enemyCount == 0 && canChangeLevel):
@@ -127,21 +131,52 @@ func _on_level_generated():
 	tween.tween_property(fade, 'color:a', 0, 1)
 	
 func level_cleared():
-	print("Level Cleared")
-	# Pick Upgrade
-	
 	# Fade Black
 	var tween = get_tree().create_tween()
 	tween.tween_property(fade, 'color:a', 1, 0.25)
 	
-	# Increase Level
-	level = level + 1
+	# Pick Upgrade
+	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
+	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
 	
-	var file = FileAccess.open(save_path, FileAccess.WRITE)
-	file.store_var(level)
-	#Create Map
-	roomGen.moveToNextLevel(level)
+	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
+	var selectedUpgrades : Array[UpgradeStrategy]  = []
 	
+	while(selectedUpgrades.size() != clampf(players.size(), 3, players.size() + 1)):
+		var randomUpgrade = randf_range(0, baseUpgrades.size())
+		selectedUpgrades.append(baseUpgrades.pop_at(randomUpgrade))
+			
+	upgradeSelectScreen.upgrades = selectedUpgrades
+	add_child(upgradeSelectScreen)
+
 	
+func onUpgradeSelected():
+	upgradeSelectedCount = upgradeSelectedCount + 1
 	
+	if(upgradeSelectedCount == players.size()):
+		# If UpgradeSelectScreen exists, remove it from tree and set it to null (for next level)
+		if(upgradeSelectScreen):
+			upgradeSelectScreen.queue_free()
+			upgradeSelectScreen = null
+		# Increase Level
+		level = level + 1
+	
+		var file = FileAccess.open(save_path, FileAccess.WRITE)
+		file.store_var(level)
+		upgradeSelectedCount = 0
+		#Create Map
+		roomGen.moveToNextLevel(level)
+	else:
+		var currentPlayer = players[upgradeSelectedCount]
+		var oldUpgrades = upgradeSelectScreen.upgrades
+		var newPlayerUpgrades : Array[UpgradeStrategy] = []
+		
+		for i in oldUpgrades:
+			var currentPlayerUpgrades = currentPlayer.find_children("*", "UpgradeStrategy")
+			for j in currentPlayerUpgrades:
+				if(j.upgradeId == i.upgradeId):
+					newPlayerUpgrades.append(j)
+		
+		upgradeSelectScreen.upgrades = newPlayerUpgrades
+		upgradeSelectScreen.currentPlayerNumber = upgradeSelectedCount + 1
 	

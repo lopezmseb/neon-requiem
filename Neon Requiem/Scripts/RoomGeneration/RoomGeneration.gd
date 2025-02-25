@@ -10,7 +10,7 @@ class_name RoomGeneration
 var Room = preload("res://Scenes/Room.tscn")
 var tileSize = 16
 var maxRooms = 10
-var minRooms = 6
+var minRooms = 5
 var minSize = 10
 var maxSize = 15
 var spread = 200
@@ -63,7 +63,8 @@ func moveToNextLevel(level:int):
 	makeRooms()
 	
 func spawnPlayer(player: Player, offset: float):
-	player.position = Vector2(startRoom.position.x + offset, startRoom.position.y)
+	if(is_instance_valid(startRoom)):
+		player.position = Vector2(startRoom.position.x + offset, startRoom.position.y)
 	
 func spawnEnemy(enemy, room):
 	enemy.position = room.position

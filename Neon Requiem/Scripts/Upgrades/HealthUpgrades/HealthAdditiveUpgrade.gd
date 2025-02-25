@@ -1,8 +1,12 @@
 extends AddToStatUpgrade
-class_name HealthAdditive 
+class_name HealthAdditiveUpgrade
 
-func _ready():
-	upgradeText = "Add ${health} to your max health!".format({"attack": pow(baseAdditive, count + 1)})
+var startingHealth = 100
+
+func _process(delta):
+	baseAdditive = 10
+	upgradeText = "Add {health} to your max health!\nCurrent Health: {currentAdd}".format({"health": baseAdditive, "currentAdd": Apply(startingHealth)})
+	upgradeTitle = "Health Up"
 
 func Apply(health: float):
-	return health + baseAdditive * count
+	return health + baseAdditive * level

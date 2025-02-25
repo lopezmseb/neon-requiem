@@ -7,6 +7,7 @@ class_name HealthComponent
 func damage(attack: AttackComponent):
 	
 	currentHealth -= attack.calculateDamage()
+	print("Damage", attack.calculateDamage())
 	
 	# If health == 0 or lower, destroy the object.
 	if(currentHealth <= 0):

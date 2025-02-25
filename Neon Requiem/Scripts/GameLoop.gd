@@ -22,6 +22,7 @@ var enemies: Array[Node]
 var upgradeSelectedCount: float = 0
 var upgradeSelectScreen : UpgradeSelect = null
 func _ready():
+	add_to_group("game_loop")
 	# Set Hbox to screensize
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ) 
@@ -94,7 +95,18 @@ func _process(delta):
 		var close_button = $SettingsMenu/MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton
 		close_button.grab_focus()
 
-
+func _on_player_death(player):
+	print(players)
+	
+	if players.is_empty():
+		print("empty")
+		game_over()
+	else:
+		players.erase(player)
+		
+func game_over():
+	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
+	
 func _on_level_generated():
 	if(players.size() == 0):
 		var player = playerScene.instantiate()

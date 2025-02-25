@@ -15,13 +15,8 @@ func upgradeStrategyFillInfo():
 		description.text = "[center]{description}".format({"description": upgradeStrategy.upgradeText})
 		title.text = "[center]{title}".format({"title":upgradeStrategy.upgradeTitle})
 		
-		if(upgradeStrategy.upgradeImagePath):
-			var image = Image.new()
-			var error = image.load(upgradeStrategy.upgradeImagePath)
-			if(error != OK):
-				print("Something Went Wrong!")
-			else:
-				$Button/VBoxContainer/UpgradeImage.texture = ImageTexture.create_from_image(image)
+		if(upgradeStrategy.upgradeImage):
+			$Button/VBoxContainer/UpgradeImage.texture = upgradeStrategy.upgradeImage
 		if(upgradeStrategy.level > 0):
 			levelText.text = "[center]Level {level}".format({"level": upgradeStrategy.level})
 		else:
@@ -52,7 +47,6 @@ func _on_pressed():
 	$Button.disabled = true
 
 func _on_mouse_entered():
-	print("Hello")
 	isHovering = true
 
 func _on_mouse_exit():

@@ -2,6 +2,7 @@ extends Control
 class_name UpgradeSelect
 
 @export var upgrades: Array[UpgradeStrategy] = []
+@export var currentPlayerNumber = 1
 @onready var upgradeContainer = $UpgradeContainer
 @onready var upgradeScene = preload("res://Scenes/UI/UpgradeCard.tscn")
 var upgradeScenes = []
@@ -32,6 +33,7 @@ func _ready():
 	
 func _process(delta):
 	upgradeContainer.queue_redraw()	
+	$Turn.text = "[center]Player {currentPlayer}'s Turn".format({"currentPlayer": currentPlayerNumber})
 	
 	var count = 0
 	for i in upgradeScenes:
@@ -41,17 +43,9 @@ func _process(delta):
 			count += 1
 	
 func _input(event):
-	if(event is InputEventJoypadButton):
-		if(event.button_index == JOY_BUTTON_DPAD_LEFT || event.button_index == JOY_BUTTON_DPAD_RIGHT and upgradeScenes.size() > 0 ):
-			print(event)
-			#upgradeScenes[0].grab_focus()
 	if(Input.is_key_pressed(KEY_DELETE)):
 		get_tree().reload_current_scene()
 		
 func onButtonPressed(upgradeStrategy, id):
-	print("onButtonPressed")
-	# Remove picked Upgrade
-	upgrades.remove_at(id)
-	upgradeScenes.remove_at(id)
 
 	endSelection.emit()

@@ -13,6 +13,7 @@ extends Control
 @onready var settings_menu = $SettingsMenu
 @onready var playerCamera = preload("res://Scripts/Player/PlayerCamera.gd")
 @onready var upgradeSelectionScreen = preload("res://Scenes/UI/UpgradeSelectScreen.tscn")
+var save_path = "user://room.save"
 var level: int = 1
 var canChangeLevel : bool = false
 var maxEnemiesPerRoom = 2
@@ -22,6 +23,10 @@ var upgradeSelectedCount: float = 0
 var upgradeSelectScreen : UpgradeSelect = null
 func _ready():
 	# Set Hbox to screensize
+	if FileAccess.file_exists(save_path):
+		var file = FileAccess.open(save_path, FileAccess.READ) 
+		level = file.get_var(level)
+		
 	hbox.size = DisplayServer.window_get_size()
 	# Set Pixel Style
 	var subviewports = find_children("SubViewport")
@@ -155,6 +160,9 @@ func onUpgradeSelected():
 			upgradeSelectScreen = null
 		# Increase Level
 		level = level + 1
+	
+		var file = FileAccess.open(save_path, FileAccess.WRITE)
+		file.store_var(level)
 		upgradeSelectedCount = 0
 		#Create Map
 		roomGen.moveToNextLevel(level)

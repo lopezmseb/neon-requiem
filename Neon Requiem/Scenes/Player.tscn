@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=37 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -21,6 +21,8 @@
 [ext_resource type="Script" path="res://Scripts/Upgrades/SpeedUpgrades/MovementSpeedUpgrade.gd" id="14_lwjg2"]
 [ext_resource type="Texture2D" uid="uid://crrvojxbn3eiw" path="res://Assets/UI/Upgrades/Health.png" id="14_n2ppx"]
 [ext_resource type="Texture2D" uid="uid://dje7goep4inlm" path="res://Assets/UI/Upgrades/Bullet_damage.png" id="17_l1s3k"]
+[ext_resource type="Texture2D" uid="uid://cdf8kpa6j6fxg" path="res://Assets/UI/Upgrades/Sword_damage.png" id="19_j4w3v"]
+[ext_resource type="Texture2D" uid="uid://u0xc8xj24372" path="res://Assets/UI/Upgrades/Speed_upgrade.png" id="23_v1wvv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -244,6 +246,7 @@ upgradeImage = ExtResource("17_l1s3k")
 script = ExtResource("11_tq7sg")
 baseAdditive = 2.5
 upgradeId = 7.0
+upgradeImage = ExtResource("19_j4w3v")
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")
@@ -256,6 +259,7 @@ script = ExtResource("13_lbtrs")
 [node name="MovementSpeedUpgrade" type="Node" parent="SpeedComponent"]
 script = ExtResource("14_lwjg2")
 upgradeId = 8.0
+upgradeImage = ExtResource("23_v1wvv")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]

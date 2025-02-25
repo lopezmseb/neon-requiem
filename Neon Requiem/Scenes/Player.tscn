@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=39 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]

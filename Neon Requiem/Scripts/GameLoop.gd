@@ -16,7 +16,7 @@ extends Control
 var save_path = "user://room.save"
 var level: int = 1
 var canChangeLevel : bool = false
-var maxEnemiesPerRoom = 2
+var maxEnemiesPerRoom = 5
 var players: Array[Player]
 var enemies: Array[Node]
 var upgradeSelectedCount: float = 0
@@ -79,7 +79,7 @@ func _input(event):
 func _process(delta):
 	# Set Hbox to screensize
 	hbox.size = DisplayServer.window_get_size()
-	
+	$HBoxContainer/SubViewportContainer/SubViewport/UserInterface.level = level
 	var enemyCount = enemiesNode.get_child_count()
 	
 	if(enemyCount == 0 && canChangeLevel):

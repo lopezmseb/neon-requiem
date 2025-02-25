@@ -26,6 +26,7 @@ func _ready():
 		
 		upgradeScenes.append(upgradeCard)
 		
+		
 		if(count == 1):
 			upgradeCard.grab_focus()
 	
@@ -52,9 +53,5 @@ func onButtonPressed(upgradeStrategy, id):
 	# Remove picked Upgrade
 	upgrades.remove_at(id)
 	upgradeScenes.remove_at(id)
-	if(upgradeScenes.size() > 0):
-		print(upgradeScenes)
-		
-		upgradeScenes[0].grab_focus()
-	
+
 	endSelection.emit()

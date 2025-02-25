@@ -1,12 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dga40ispxfs62"]
+[gd_scene load_steps=9 format=3 uid="uid://dga40ispxfs62"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UpgradesUI/UpgradeCard.gd" id="1_mhn2u"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lsedb"]
-border_color = Color(0, 0.909804, 0.945098, 1)
-
-[sub_resource type="Theme" id="Theme_0stpc"]
-Button/styles/focus = SubResource("StyleBoxFlat_lsedb")
 
 [sub_resource type="Theme" id="Theme_g0uoy"]
 
@@ -28,13 +22,19 @@ default_font_size = 25
 [sub_resource type="Theme" id="Theme_epc3m"]
 
 [node name="UpgradeCard" type="Button"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-theme = SubResource("Theme_0stpc")
+size_flags_horizontal = 6
+size_flags_vertical = 6
 script = ExtResource("1_mhn2u")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -153,5 +153,6 @@ grow_vertical = 2
 theme = SubResource("Theme_epc3m")
 text = "Taken!"
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_pressed"]

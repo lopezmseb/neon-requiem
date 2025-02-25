@@ -6,6 +6,7 @@ class_name UpgradeCard
 @onready var description: RichTextLabel = $Button/VBoxContainer/Description
 @onready var title: RichTextLabel = $Button/VBoxContainer/UpgradeTitle
 @onready var levelText = $Button/VBoxContainer/LevelAmount
+var isHovering = false
 
 signal onClick(upgradeStrategy: UpgradeStrategy, id: float)
 
@@ -17,21 +18,34 @@ func _ready():
 			levelText.text = "[center]Level {level}".format({"level": upgradeStrategy.level})
 		else:
 			levelText.text = "[center]Not Acquired"
+	
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exit)
 			
 func _process(delta):
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
+	size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pivot_offset = size/2
 	if(upgradeStrategy):
 		description.text = "[center]{description}".format({"description": upgradeStrategy.upgradeText})
 		title.text = "[center]{title}".format({"title":upgradeStrategy.upgradeTitle})
+	
 
-func _input(event):
-	if(Input.is_action_just_released("ui_accept") and has_focus()):
-		#_on_pressed()
-		pass
+	var tween = create_tween()
+	if(has_focus() or isHovering):
+		tween.tween_property($".", "scale",Vector2(1.025, 1.025), 0.2)
+	else:
+		tween.tween_property($".", "scale",Vector2(1, 1), 0.2)
 
 func _on_pressed():
 	upgradeStrategy.OnPickup()
 	onClick.emit(upgradeStrategy, id)
 	$Overlay.visible = true
 	$Button.disabled = true
+
+func _on_mouse_entered():
+	print("Hello")
+	isHovering = true
+
+func _on_mouse_exit():
+	isHovering = false

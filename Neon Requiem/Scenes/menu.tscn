@@ -72,7 +72,6 @@ focus_neighbor_top = NodePath("../Quit")
 text = "New Game"
 
 [node name="ContinueButton" type="Button" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "Continue"
 
@@ -97,5 +96,6 @@ visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="VBoxContainer/New GameButton" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

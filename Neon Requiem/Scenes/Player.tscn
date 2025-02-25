@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=27 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.gd" id="7_2xrf5"]
 [ext_resource type="AudioStream" uid="uid://1q6bjephb5cg" path="res://Assets/Sound/SFX/dash.mp3" id="10_yis84"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="11_nmywm"]
+[ext_resource type="Script" path="res://Scripts/Stats/SpeedComponent.gd" id="13_lbtrs"]
+[ext_resource type="Script" path="res://Scripts/Upgrades/SpeedUpgrades/MovementSpeedUpgrade.gd" id="14_lwjg2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -200,6 +202,12 @@ script = ExtResource("11_nmywm")
 stream = ExtResource("10_yis84")
 volume_db = -10.0
 bus = &"SFX"
+
+[node name="SpeedComponent" type="Node" parent="."]
+script = ExtResource("13_lbtrs")
+
+[node name="MovementSpeedUpgrade" type="Node" parent="SpeedComponent"]
+script = ExtResource("14_lwjg2")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]

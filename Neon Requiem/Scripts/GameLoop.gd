@@ -135,6 +135,7 @@ func level_cleared():
 	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
 	
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
+	print(baseUpgrades)
 	var selectedUpgrades : Array[UpgradeStrategy]  = []
 	
 	while(selectedUpgrades.size() != clampf(players.size(), 3, players.size() + 1)):

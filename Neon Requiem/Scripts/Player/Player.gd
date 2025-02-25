@@ -118,7 +118,7 @@ func _physics_process(delta):
 			is_dashing = false
 			velocity = Vector2.ZERO  # Reset velocity after dash
 	else:
-		velocity = movementDirection * speed  # Normal movement
+		velocity = movementDirection * $SpeedComponent.calculateSpeed()  # Normal movement
 		
 	if(velocity):
 		animatedSprite.play("Run")

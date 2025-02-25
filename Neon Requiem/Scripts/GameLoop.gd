@@ -97,12 +97,12 @@ func _process(delta):
 
 func _on_player_death(player):
 	print(players)
-	
+	players.erase(player)
 	if players.is_empty():
 		print("empty")
 		game_over()
-	else:
-		players.erase(player)
+
+		
 		
 func game_over():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")

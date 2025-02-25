@@ -35,9 +35,6 @@ func _ready():
 	var game_loop = get_tree().get_first_node_in_group("game_loop")
 	if game_loop:
 		healthComponent.health_depleted.connect(Callable(game_loop, "_on_player_death"))
-		print("Signal connected to: ", game_loop)
-	else:
-		print("Game loop node not found.")
 	#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
 func _input(event):

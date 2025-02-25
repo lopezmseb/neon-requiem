@@ -7,15 +7,17 @@ signal health_depleted(owner)
 @onready var currentHealth: float = MAX_HEALTH
 
 func damage(attack: AttackComponent):
-	
+	# If health == 0 or lower, destroy the object.
 	currentHealth -= attack.calculateDamage()
 	print("Damage", attack.calculateDamage())
 	
-	# If health == 0 or lower, destroy the object.
 	if(currentHealth <= 0):
 		var parent = get_parent()
 		health_depleted.emit(parent)
-		
+		parent.position = Vector2(999999,999999)
+		parent.visible = false
+
+
 		
 
 func _on_health_depleted(owner):

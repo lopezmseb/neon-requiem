@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dga40ispxfs62"]
+[gd_scene load_steps=12 format=3 uid="uid://dga40ispxfs62"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UpgradesUI/UpgradeCard.gd" id="1_mhn2u"]
 
@@ -7,6 +7,9 @@ border_color = Color(0, 0.909804, 0.945098, 1)
 
 [sub_resource type="Theme" id="Theme_0stpc"]
 Button/styles/focus = SubResource("StyleBoxFlat_lsedb")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0gc01"]
+border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Theme" id="Theme_g0uoy"]
 
@@ -34,7 +37,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = SubResource("Theme_0stpc")
+theme_override_constants/outline_size = 4
+theme_override_styles/focus = SubResource("StyleBoxFlat_0gc01")
 script = ExtResource("1_mhn2u")
 
 [node name="ColorRect" type="ColorRect" parent="."]

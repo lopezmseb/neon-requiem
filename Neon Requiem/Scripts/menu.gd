@@ -13,7 +13,11 @@ func _process(delta):
 
 
 func _on_new_game_pressed():
+	if FileAccess.file_exists("user://room.save"):
+		DirAccess.remove_absolute("user://room.save")
 	get_tree().change_scene_to_file("res://Scenes/TestScenes/GameLoop.tscn")
+	
+		
 
 func _on_settings_pressed():
 	settings_menu.visible = true
@@ -24,3 +28,7 @@ func _on_settings_pressed():
 	
 func _on_quit_pressed():
 	get_tree().quit()
+
+
+func _on_continue_button_pressed():
+	get_tree().change_scene_to_file("res://Scenes/TestScenes/GameLoop.tscn")

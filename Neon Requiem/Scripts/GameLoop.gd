@@ -12,6 +12,7 @@ extends Control
 @onready var enemiesNode = $HBoxContainer/SubViewportContainer/SubViewport/Enemies
 @onready var settings_menu = $SettingsMenu
 @onready var playerCamera = preload("res://Scripts/Player/PlayerCamera.gd")
+var save_path = "user://room.save"
 var level: int = 1
 var canChangeLevel : bool = false
 var maxEnemiesPerRoom = 5
@@ -20,6 +21,10 @@ var enemies: Array[Node]
 
 func _ready():
 	# Set Hbox to screensize
+	if FileAccess.file_exists(save_path):
+		var file = FileAccess.open(save_path, FileAccess.READ) 
+		level = file.get_var(level)
+		
 	hbox.size = DisplayServer.window_get_size()
 	# Set Pixel Style
 	var subviewports = find_children("SubViewport")
@@ -131,6 +136,9 @@ func level_cleared():
 	
 	# Increase Level
 	level = level + 1
+	
+	var file = FileAccess.open(save_path, FileAccess.WRITE)
+	file.store_var(level)
 	#Create Map
 	roomGen.moveToNextLevel(level)
 	

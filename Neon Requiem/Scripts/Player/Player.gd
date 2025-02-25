@@ -227,13 +227,13 @@ func melee():
 	$MeleeCooldown.start()
 	var sword = swordPath.instantiate()
 	get_parent().add_child(sword)
-	
+	var swordUpgrades : Array[Node] = $SwordUpgrades.get_children()
+	sword.upgrades = swordUpgrades
 	# Position the bullet at the player's shooting point (Marker2D).
 	sword.position = $Gun/Aiming.global_position
 	
 	# Set the bullet's velocity and rotation based on the direction to the mouse.
 	var direction = (shootingDirection - sword.position).normalized()
-#	sword.velocity = direction
 	sword.rotation = direction.angle()
 
 func _on_shoot_cooldown_timeout():

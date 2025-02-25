@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=28 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="6_otwx6"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.gd" id="7_2xrf5"]
 [ext_resource type="AudioStream" uid="uid://1q6bjephb5cg" path="res://Assets/Sound/SFX/dash.mp3" id="10_yis84"]
-[ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="11_nmywm"]
+[ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/SwordAdditiveUpgrade.gd" id="11_tq7sg"]
 [ext_resource type="Script" path="res://Scripts/Stats/SpeedComponent.gd" id="13_lbtrs"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/SpeedUpgrades/MovementSpeedUpgrade.gd" id="14_lwjg2"]
 
@@ -101,6 +101,19 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfq2m"]
 size = Vector2(15, 17)
 
+[sub_resource type="GDScript" id="GDScript_pkb8x"]
+script/source = "extends AddToStatUpgrade
+class_name BulletAdditiveUpgrade
+
+func _ready():
+	upgradeText = \"Add {attack} to your bullet damage\".format({\"attack\": baseAdditive * (level + 1)})
+	upgradeTitle = \"Bullet Damage Up\"
+
+func _process(delta):
+	upgradeText = \"Add {attack} to your bullet damage\".format({\"attack\": baseAdditive * (level + 1)})
+	upgradeTitle = \"Bullet Damage Up\"
+"
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 9
 script = ExtResource("1_2efai")
@@ -126,6 +139,7 @@ buttonCode = Array[String](["Space", "X"])
 script = ExtResource("5_eejht")
 ability = "Dash"
 baseAdditive = 0.25
+upgradeImagePath = "res://Assets/UI/Upgrades/Dash.png"
 
 [node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 0.5
@@ -137,6 +151,7 @@ buttonCode = Array[String](["M1", "RT"])
 script = ExtResource("5_eejht")
 ability = "Fire Rate"
 baseAdditive = 0.1
+upgradeImagePath = "res://Assets/UI/Upgrades/Bullet.png"
 
 [node name="MeleeCooldown" type="Timer" parent="."]
 wait_time = 0.5
@@ -148,6 +163,7 @@ buttonCode = Array[String](["M2", "L1"])
 script = ExtResource("5_eejht")
 ability = "Melee"
 baseAdditive = 0.1
+upgradeImagePath = "res://Assets/UI/Upgrades/Melee.png"
 
 [node name="Ability1Cooldown" type="Timer" parent="."]
 wait_time = 5.0
@@ -159,6 +175,7 @@ buttonCode = Array[String](["Q", "R1"])
 script = ExtResource("5_eejht")
 ability = "Ability 1"
 baseAdditive = 0.5
+upgradeImagePath = "res://Assets/UI/Upgrades/shotgun.png"
 
 [node name="Ability2Cooldown" type="Timer" parent="."]
 one_shot = true
@@ -169,6 +186,7 @@ buttonCode = Array[String](["E", "LT"])
 script = ExtResource("5_eejht")
 ability = "Ability 2"
 baseAdditive = 0.5
+upgradeImagePath = "res://Assets/UI/Upgrades/Dash_attack.png"
 
 [node name="Gun" type="Node2D" parent="."]
 
@@ -184,7 +202,7 @@ script = ExtResource("3_2s3ow")
 
 [node name="HealthAdditiveUpgrade" type="Node" parent="HealthComponent"]
 script = ExtResource("6_otwx6")
-baseAdditive = 10
+upgradeImagePath = "res://Assets/UI/Upgrades/Health.png"
 
 [node name="ColorComponent" type="Node" parent="."]
 script = ExtResource("6_bw6ym")
@@ -196,7 +214,15 @@ script = ExtResource("7_2xrf5")
 [node name="BulletUpgrades" type="Node" parent="."]
 
 [node name="BulletAdditiveUpgrade" type="Node" parent="BulletUpgrades"]
-script = ExtResource("11_nmywm")
+script = SubResource("GDScript_pkb8x")
+baseAdditive = 5.0
+upgradeImagePath = "res://Assets/UI/Upgrades/Bullet_damage.png"
+
+[node name="SwordUpgrades" type="Node" parent="."]
+
+[node name="SwordAdditiveUpgrade" type="Node" parent="SwordUpgrades"]
+script = ExtResource("11_tq7sg")
+baseAdditive = 2.5
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")

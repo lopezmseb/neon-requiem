@@ -1,11 +1,11 @@
 extends Node
 class_name UpgradeStrategy
 
-@export var upgradeImage = ""
+@export_file("*.png") var upgradeImagePath
 @export var upgradeTitle = ""
 @export var upgradeText = "Base"
 @export var level = 0
-	
+
 func Apply(stat: float):
 	pass
 	

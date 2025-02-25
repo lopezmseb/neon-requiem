@@ -1,9 +1,9 @@
 extends AddToStatUpgrade
 class_name HealthAdditiveUpgrade
 
-func _ready():
+func _process(delta):
 	baseAdditive = 10
-	upgradeText = "Add {health} to your max health!".format({"health": pow(baseAdditive, level + 1)})
+	upgradeText = "Add {health} to your max health!\nCurrent Stack: +{currentAdd}".format({"health": baseAdditive, "currentAdd": baseAdditive * level})
 	upgradeTitle = "Health Up"
 
 func Apply(health: float):

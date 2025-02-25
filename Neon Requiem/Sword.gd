@@ -4,10 +4,15 @@ extends CharacterBody2D
 const SPEED = 150
 
 @onready var audio_stream_player = $AudioStreamPlayer
+var upgrades: Array[Node] = []
 
 func _ready():
-		audio_stream_player.pitch_scale = randf_range(0.5, 1.5)
-		audio_stream_player.play()
+	audio_stream_player.pitch_scale = randf_range(0.5, 1.5)
+	audio_stream_player.play()
+	
+	if(upgrades.size() > 0):
+		for i in upgrades:
+			$AttackComponent.add_child(i.duplicate())	
 		
 		
 func _physics_process(delta):

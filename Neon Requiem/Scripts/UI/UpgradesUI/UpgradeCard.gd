@@ -10,26 +10,34 @@ var isHovering = false
 
 signal onClick(upgradeStrategy: UpgradeStrategy, id: float)
 
-func _ready():
+func upgradeStrategyFillInfo():
 	if(upgradeStrategy):
 		description.text = "[center]{description}".format({"description": upgradeStrategy.upgradeText})
 		title.text = "[center]{title}".format({"title":upgradeStrategy.upgradeTitle})
+		
+		if(upgradeStrategy.upgradeImagePath):
+			var image = Image.new()
+			var error = image.load(upgradeStrategy.upgradeImagePath)
+			if(error != OK):
+				print("Something Went Wrong!")
+			else:
+				$Button/VBoxContainer/UpgradeImage.texture = ImageTexture.create_from_image(image)
 		if(upgradeStrategy.level > 0):
 			levelText.text = "[center]Level {level}".format({"level": upgradeStrategy.level})
 		else:
 			levelText.text = "[center]Not Acquired"
+
+func _ready():
+	upgradeStrategyFillInfo()
 	
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exit)
+	#mouse_entered.connect(_on_mouse_entered)
+	#mouse_exited.connect(_on_mouse_exit)
 			
 func _process(delta):
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	pivot_offset = size/2
-	if(upgradeStrategy):
-		description.text = "[center]{description}".format({"description": upgradeStrategy.upgradeText})
-		title.text = "[center]{title}".format({"title":upgradeStrategy.upgradeTitle})
-	
+	upgradeStrategyFillInfo()
 
 	var tween = create_tween()
 	if(has_focus() or isHovering):

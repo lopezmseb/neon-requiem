@@ -1,5 +1,5 @@
 extends AddToStatUpgrade
-class_name BulletAdditiveUpgrade
+class_name BulletAttackUpgrade
 
 func _ready():
 	

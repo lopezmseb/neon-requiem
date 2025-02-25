@@ -1,14 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://dga40ispxfs62"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UpgradesUI/UpgradeCard.gd" id="1_mhn2u"]
+[ext_resource type="Texture2D" uid="uid://dje7goep4inlm" path="res://Assets/UI/Upgrades/Bullet_damage.png" id="2_n7gn8"]
 
 [sub_resource type="Theme" id="Theme_g0uoy"]
 
 [sub_resource type="Theme" id="Theme_j0e1e"]
 default_font_size = 30
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ll6ku"]
-size = Vector2(400, 400)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_hs8s6"]
 specular_color = Color(0.34902, 0.309804, 0.101961, 1)
@@ -80,8 +78,11 @@ scroll_active = false
 autowrap_mode = 1
 
 [node name="UpgradeImage" type="TextureRect" parent="Button/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
-texture = SubResource("PlaceholderTexture2D_ll6ku")
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("2_n7gn8")
 
 [node name="Level" type="HBoxContainer" parent="Button/VBoxContainer"]
 visible = false

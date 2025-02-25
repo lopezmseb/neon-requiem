@@ -1,12 +1,24 @@
 [gd_scene load_steps=6 format=3 uid="uid://chjxraoikmphb"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UpgradeSelectScreen.gd" id="1_7re0p"]
-[ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="3_r2wn4"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="4_n5ruu"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/CooldownUpgrades/CooldownAdditiveReduction.gd" id="5_uwgio"]
 
 [sub_resource type="Theme" id="Theme_r2nu1"]
 default_font_size = 30
+
+[sub_resource type="GDScript" id="GDScript_pkb8x"]
+script/source = "extends AddToStatUpgrade
+class_name BulletAdditiveUpgrade
+
+func _ready():
+	upgradeText = \"Add {attack} to your bullet damage\".format({\"attack\": baseAdditive * (level + 1)})
+	upgradeTitle = \"Bullet Damage Up\"
+
+func _process(delta):
+	upgradeText = \"Add {attack} to your bullet damage\".format({\"attack\": baseAdditive * (level + 1)})
+	upgradeTitle = \"Bullet Damage Up\"
+"
 
 [node name="UpgradeSelectScreen" type="Control" node_paths=PackedStringArray("upgrades")]
 layout_mode = 3
@@ -16,7 +28,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7re0p")
-upgrades = [NodePath("BulletAdditiveUpgrade"), NodePath("HealthAdditiveUpgrade"), NodePath("CooldownAdditiveReduction")]
+upgrades = [null, NodePath("HealthAdditiveUpgrade"), NodePath("CooldownAdditiveReduction")]
 
 [node name="Fade" type="ColorRect" parent="."]
 layout_mode = 1
@@ -58,10 +70,13 @@ text = "[center]Player 1's Turn"
 fit_content = true
 
 [node name="BulletAdditiveUpgrade" type="Node" parent="."]
-script = ExtResource("3_r2wn4")
+script = SubResource("GDScript_pkb8x")
+upgradeImagePath = "res://Assets/UI/Upgrades/Bullet_damage.png"
 
 [node name="HealthAdditiveUpgrade" type="Node" parent="."]
 script = ExtResource("4_n5ruu")
+upgradeImagePath = "res://Assets/UI/Upgrades/Health.png"
 
 [node name="CooldownAdditiveReduction" type="Node" parent="."]
 script = ExtResource("5_uwgio")
+upgradeImagePath = "res://Assets/UI/Upgrades/Dash.png"

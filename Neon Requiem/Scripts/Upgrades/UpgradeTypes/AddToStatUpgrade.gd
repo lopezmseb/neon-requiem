@@ -5,4 +5,4 @@ class_name AddToStatUpgrade
 
 
 func Apply(stat: float):
-	return stat + pow(baseAdditive, level)
+	return stat + baseAdditive*level

@@ -22,6 +22,7 @@ var is_shoot_ready: bool = true
 var is_melee_ready: bool = true
 var is_ability1_ready: bool = true
 var is_ability2_ready: bool = true
+var input_enabled: bool = true
 
 const bulletPath = preload("res://Scenes/Bullet.tscn")
 const swordPath = preload("res://Scenes/Sword.tscn")
@@ -29,47 +30,57 @@ const swordPath = preload("res://Scenes/Sword.tscn")
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var colorComponent = $ColorComponent
 @onready var dashSFX = $Dash
+@onready var healthComponent = $HealthComponent
 
 func _ready():
-	pass
+	var game_loop = get_tree().get_first_node_in_group("game_loop")
+	if game_loop:
+		healthComponent.health_depleted.connect(Callable(game_loop, "_on_player_death"))
 	#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
+func disable_input():
+	input_enabled = false
+
+func enable_input():
+	input_enabled = true
 	
 func _input(event):
-	if(event.device != playerController):
-		return
-	if(event is InputEventJoypadMotion):
-		movementDirection = Vector2(Input.get_joy_axis(playerController, JOY_AXIS_LEFT_X), Input.get_joy_axis(playerController, JOY_AXIS_LEFT_Y))
-		# TODO: Figure out how to deadzone sticks properly
-		if(abs(movementDirection.x) < 0.1 and abs(movementDirection.y) < 0.1):
-			movementDirection = Vector2.ZERO
-		
-		var rightX = Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_X)
-		var rightY = Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_Y)
-		var tempDir = Vector2(Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_X), Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_Y))
-		
-		if(abs(tempDir.x) > 0.1 || abs(tempDir.y) > 0.1):
-			shootingDirection = tempDir * 30 + position
-		
+	if input_enabled:
+		if(event.device != playerController):
+			return
+		if(event is InputEventJoypadMotion):
+			movementDirection = Vector2(Input.get_joy_axis(playerController, JOY_AXIS_LEFT_X), Input.get_joy_axis(playerController, JOY_AXIS_LEFT_Y))
+			# TODO: Figure out how to deadzone sticks properly
+			if(abs(movementDirection.x) < 0.1 and abs(movementDirection.y) < 0.1):
+				movementDirection = Vector2.ZERO
 			
-		var rightTrigger = Input.get_joy_axis(playerController, JOY_AXIS_TRIGGER_RIGHT);
-		
-		if(rightTrigger > 0.5 && is_shoot_ready):
-			shoot()
-		
-		var leftTrigger = Input.get_joy_axis(playerController, JOY_AXIS_TRIGGER_LEFT);
-		
-		if(leftTrigger > 0.5 && is_ability2_ready):
-			dashAttack()
+			var rightX = Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_X)
+			var rightY = Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_Y)
+			var tempDir = Vector2(Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_X), Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_Y))
+			
+			if(abs(tempDir.x) > 0.1 || abs(tempDir.y) > 0.1):
+				shootingDirection = tempDir * 30 + position
+			
+				
+			var rightTrigger = Input.get_joy_axis(playerController, JOY_AXIS_TRIGGER_RIGHT);
+			
+			if(rightTrigger > 0.5 && is_shoot_ready):
+				shoot()
+			
+			var leftTrigger = Input.get_joy_axis(playerController, JOY_AXIS_TRIGGER_LEFT);
+			
+			if(leftTrigger > 0.5 && is_ability2_ready):
+				dashAttack()
 
-	if(event is InputEventJoypadButton):
-		if(event.button_index == JOY_BUTTON_A && is_dash_ready):
-			dash()
-		if(event.button_index == JOY_BUTTON_RIGHT_SHOULDER && is_ability1_ready):
-			shotgun()
-		if(event.button_index == JOY_BUTTON_LEFT_SHOULDER && is_melee_ready):
-			melee()
-		if(event.button_index == JOY_BUTTON_Y && event.is_pressed()):
-			changeColor()
+		if(event is InputEventJoypadButton):
+			if(event.button_index == JOY_BUTTON_A && is_dash_ready):
+				dash()
+			if(event.button_index == JOY_BUTTON_RIGHT_SHOULDER && is_ability1_ready):
+				shotgun()
+			if(event.button_index == JOY_BUTTON_LEFT_SHOULDER && is_melee_ready):
+				melee()
+			if(event.button_index == JOY_BUTTON_Y && event.is_pressed()):
+				changeColor()
 
 	
 	
@@ -77,27 +88,28 @@ func _input(event):
 		
 func handleKBInput(delta):
 	# Move Gun Reticle on Mouse Direction
-	movementDirection = Input.get_vector("left","right","up","down");
-	shootingDirection = get_global_mouse_position()
-	if Input.is_action_just_pressed("dash") && is_dash_ready:
-		dash()
-		
-	if Input.is_action_pressed("shoot") && is_shoot_ready:
-		shoot()
+	if input_enabled:
+		movementDirection = Input.get_vector("left","right","up","down");
+		shootingDirection = get_global_mouse_position()
+		if Input.is_action_just_pressed("dash") && is_dash_ready:
+			dash()
+			
+		if Input.is_action_pressed("shoot") && is_shoot_ready:
+			shoot()
 
-	if Input.is_action_pressed("melee") && is_melee_ready:
-		melee()
-		
-	if Input.is_action_pressed("Ability 1") && is_ability1_ready:
-		shotgun()
-		
-	if Input.is_action_pressed("Ability 2") && is_ability2_ready:
-		dashAttack()
+		if Input.is_action_pressed("melee") && is_melee_ready:
+			melee()
+			
+		if Input.is_action_pressed("Ability 1") && is_ability1_ready:
+			shotgun()
+			
+		if Input.is_action_pressed("Ability 2") && is_ability2_ready:
+			dashAttack()
 
-		
-	if Input.is_action_just_pressed("change_color"): 
-		# TODO: Change Later
-		changeColor()
+			
+		if Input.is_action_just_pressed("change_color"): 
+			# TODO: Change Later
+			changeColor()
 
 	
 func _physics_process(delta):
@@ -127,8 +139,6 @@ func _physics_process(delta):
 		animatedSprite.play("Idle")
 	
 	move_and_slide()
-	
-		
 	
 func changeColor():
 	colorComponent.color = COLORS.OFFENSIVE if colorComponent.color == COLORS.DEFENSIVE else COLORS.DEFENSIVE; 

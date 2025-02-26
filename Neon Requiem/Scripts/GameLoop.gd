@@ -19,9 +19,11 @@ var canChangeLevel : bool = false
 var maxEnemiesPerRoom = 5
 var players: Array[Player]
 var enemies: Array[Node]
+var viewports: Array[Viewport]
 var upgradeSelectedCount: float = 0
 var upgradeSelectScreen : UpgradeSelect = null
 func _ready():
+	add_to_group("game_loop")
 	# Set Hbox to screensize
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ) 
@@ -33,7 +35,7 @@ func _ready():
 	
 	for i in subviewports:
 		var subviewport = i as SubViewport
-		
+		viewports.append(subviewport)
 		if(subviewport):
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
@@ -55,6 +57,7 @@ func addPlayer():
 	# SubViewport Config 
 	subViewport.world_2d = mainViewport.world_2d
 	subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	viewports.append(subViewport)
 	# Container Config
 	container.stretch = true
 	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -94,7 +97,29 @@ func _process(delta):
 		var close_button = $SettingsMenu/MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton
 		close_button.grab_focus()
 
+var dead_players = 0
 
+func _on_player_death(player):
+	
+	if(player in enemies):
+		player.queue_free()
+		enemies.erase(player)
+	else:
+		var index = players.find(player)
+		var UI = viewports[index].get_node("UserInterface")
+		var respawn = UI.get_node("Respawn")
+		respawn.visible = true
+		player.disable_input()
+		dead_players += 1
+	
+	if dead_players == players.size():
+		game_over()
+
+		
+		
+func game_over():
+	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
+	
 func _on_level_generated():
 	if(players.size() == 0):
 		var player = playerScene.instantiate()
@@ -134,10 +159,14 @@ func level_cleared():
 	# Fade Black
 	var tween = get_tree().create_tween()
 	tween.tween_property(fade, 'color:a', 1, 0.25)
-	
+
 	# Pick Upgrade
 	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
 	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
+	
+	#stop the shooting and abilities on upgrade screen
+	for player in players:
+		player.disable_input()
 	
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
 	var selectedUpgrades : Array[UpgradeStrategy]  = []
@@ -158,6 +187,17 @@ func onUpgradeSelected():
 		if(upgradeSelectScreen):
 			upgradeSelectScreen.queue_free()
 			upgradeSelectScreen = null
+			
+			# Make al players "Alive" again
+			var index = 0
+			for player in players:
+				var UI = viewports[index].get_node("UserInterface")
+				var respawn = UI.get_node("Respawn")
+				respawn.visible = false
+				player.position = Vector2(0,0)
+				player.visible = true
+				index += 1
+				player.enable_input()
 		# Increase Level
 		level = level + 1
 	

@@ -1,5 +1,5 @@
 extends CanvasLayer
-
+class_name UserInterface
 @export var level: int = 1
 
 func _process(delta):

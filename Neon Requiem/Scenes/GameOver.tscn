@@ -80,7 +80,6 @@ text = "Quit"
 stream = ExtResource("4_y7ks4")
 volume_db = -12.56
 autoplay = true
-stream_paused = true
 bus = &"Music"
 
 [connection signal="pressed" from="VBoxContainer/Restart" to="." method="_on_restart_pressed"]

@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Bullet
 
 @onready var bulletSprite  = $BulletSprite
 @onready var colorComponent: ColorComponent = $ColorComponent

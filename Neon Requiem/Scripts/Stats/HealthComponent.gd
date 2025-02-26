@@ -14,7 +14,6 @@ func damage(attack: AttackComponent):
 	if(currentHealth <= 0):
 		
 		var parent = get_parent()
-		print(parent.name)
 		if(parent is Player):
 			health_depleted.emit(parent)
 			parent.position = Vector2(999999,999999)

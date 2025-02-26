@@ -36,7 +36,6 @@ func _ready():
 	for i in subviewports:
 		var subviewport = i as SubViewport
 		viewports.append(subviewport)
-		print(viewports)
 		if(subviewport):
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
@@ -59,7 +58,6 @@ func addPlayer():
 	subViewport.world_2d = mainViewport.world_2d
 	subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 	viewports.append(subViewport)
-	print(viewports)
 	# Container Config
 	container.stretch = true
 	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -113,8 +111,6 @@ func _on_player_death(player):
 		respawn.visible = true
 		player.disable_input()
 		dead_players += 1
-
-	print("players", players.size() , "dead:", dead_players)
 	
 	if dead_players == players.size():
 		game_over()

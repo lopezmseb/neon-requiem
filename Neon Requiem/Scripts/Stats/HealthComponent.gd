@@ -12,17 +12,18 @@ func damage(attack: AttackComponent):
 	print("Damage", attack.calculateDamage())
 	
 	if(currentHealth <= 0):
+		
 		var parent = get_parent()
-		health_depleted.emit(parent)
-		parent.position = Vector2(999999,999999)
-		parent.visible = false
-
+		print(parent.name)
+		if(parent is Player):
+			health_depleted.emit(parent)
+			parent.position = Vector2(999999,999999)
+			parent.visible = false
+			currentHealth = MAX_HEALTH
+		else:
+			parent.queue_free()
 
 		
-
-func _on_health_depleted(owner):
-	# Handle the signal, using the `owner` object (which is the parent).
-	print("Health depleted for: ", owner.name)
 
 func calcMaxHealth():
 	# Here we will run all health upgrades when implemented

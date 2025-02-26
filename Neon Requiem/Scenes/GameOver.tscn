@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://h1hxcvwefpkx"]
+[gd_scene load_steps=5 format=3 uid="uid://h1hxcvwefpkx"]
 
 [ext_resource type="Script" path="res://Scripts/UI/GameOver.gd" id="1_0lmeg"]
 [ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="1_45enr"]
 [ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="2_5hduc"]
+[ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="4_y7ks4"]
 
 [node name="Node2D" type="Control"]
 layout_mode = 3
@@ -20,7 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.407843, 0, 0.494118, 0.745098)
+color = Color(0.407843, 0, 0.494118, 1)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
@@ -74,6 +75,13 @@ custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_y7ks4")
+volume_db = -12.56
+autoplay = true
+stream_paused = true
+bus = &"Music"
 
 [connection signal="pressed" from="VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

@@ -17,6 +17,7 @@ func _ready():
 			cooldownObj.initialize(cooldownComponent)
 			cooldownObj.player = player			
 			cooldownObj.setProgressBarValues(0, cooldown.wait_time, cooldown.wait_time)
+			
 			$CooldownContainers.add_child(cooldownObj)
 
 

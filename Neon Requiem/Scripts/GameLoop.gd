@@ -61,12 +61,17 @@ func addPlayer():
 	# Container Config
 	container.stretch = true
 	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
 	# Add Children to Scene
 	subViewport.add_child(camera)
 	subViewport.add_child(playerInterface)
+	
 	mainViewport.add_child(anotherPlayer)		
 	container.add_child(subViewport)
 	hbox.add_child(container)
+	subViewport.get_node("UserInterface/CooldownTimers").set_scale(Vector2(.5, .5))
+	subViewport.get_node("UserInterface/PlayerHealthBar").set_scale(Vector2(.9, .9))
+	update_grid() 
 	# Remote Path to Camera
 	var remoteTransform := RemoteTransform2D.new()
 	remoteTransform.remote_path = camera.get_path()
@@ -78,7 +83,28 @@ func _input(event):
 	if event.is_action_pressed("add_player"):
 		addPlayer()
 		
-	
+
+func update_grid():
+	var child_count = $HBoxContainer.get_child_count()  # Count number of children
+
+	# Iterate through each child (which are SubViewportContainers)
+	for sub_viewport_container in $HBoxContainer.get_children():
+		# Ensure this is a SubViewportContainer
+		if sub_viewport_container is SubViewportContainer:
+			# Set custom minimum size based on child_count
+			if child_count == 1:
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size())  # Full size
+			elif child_count == 2:
+				$HBoxContainer.set_columns(2)
+				$HBoxContainer/SubViewportContainer/SubViewport/UserInterface.get_node("CooldownTimers").set_scale(Vector2(.5,.5))
+				$HBoxContainer/SubViewportContainer/SubViewport/UserInterface.get_node("PlayerHealthBar").set_scale(Vector2(.9,.9))
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y)
+			elif child_count == 3:
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 2)
+			elif child_count == 4:
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 2)
+
+
 func _process(delta):
 	# Set Hbox to screensize
 	hbox.size = DisplayServer.window_get_size()

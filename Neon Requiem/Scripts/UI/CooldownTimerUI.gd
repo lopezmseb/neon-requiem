@@ -17,6 +17,8 @@ func updateTextLabel(newText: String):
 	
 func _ready():
 	setProgressBarValues(0,1,1)
+	var texture_path = "res://Assets/UI/Cooldown/"+cooldownComponent.name+".png"
+	$TextureRect.set_texture(load(texture_path))
 	
 func _process(delta):
 	if(cooldownComponent):

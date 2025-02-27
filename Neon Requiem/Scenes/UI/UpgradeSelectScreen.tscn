@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://chjxraoikmphb"]
+[gd_scene load_steps=8 format=3 uid="uid://chjxraoikmphb"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UpgradeSelectScreen.gd" id="1_7re0p"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="2_ip6pi"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://crrvojxbn3eiw" path="res://Assets/UI/Upgrades/Health.png" id="3_rui1o"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="4_n5ruu"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/CooldownUpgrades/CooldownAdditiveReduction.gd" id="5_uwgio"]
-[ext_resource type="Texture2D" uid="uid://c3spi13lartfw" path="res://Assets/UI/Cooldown/Melee_cooldown.png" id="6_x7e5o"]
 
 [sub_resource type="Theme" id="Theme_r2nu1"]
 default_font_size = 30
@@ -72,4 +71,3 @@ upgradeImage = ExtResource("3_rui1o")
 [node name="CooldownAdditiveReduction" type="Node" parent="."]
 script = ExtResource("5_uwgio")
 upgradeImagePath = "res://Assets/UI/Upgrades/Dash.png"
-upgradeImage = ExtResource("6_x7e5o")

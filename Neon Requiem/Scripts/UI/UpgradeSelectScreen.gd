@@ -10,11 +10,12 @@ signal endSelection
 
 
 func _ready():
+	
 	var tween = create_tween()
 	tween.tween_property($Fade, "color:a", 0.5, 1)
 	
 	var count = 0
-	
+	focus_mode = Control.FOCUS_ALL
 	for upgrade in upgrades:
 		var upgradeCard = upgradeScene.instantiate()
 		upgradeCard.upgradeStrategy = upgrade
@@ -34,7 +35,7 @@ func _ready():
 func _process(delta):
 	upgradeContainer.queue_redraw()	
 	$Turn.text = "[center]Player {currentPlayer}'s Turn".format({"currentPlayer": currentPlayerNumber})
-	
+	set_controller_device(currentPlayerNumber - 1)
 	var count = 0
 	for i in upgradeScenes:
 
@@ -49,3 +50,36 @@ func _input(event):
 func onButtonPressed(upgradeStrategy, id):
 
 	endSelection.emit()
+	
+func set_controller_device(device_id: int):
+	# Define directional mappings
+	var directions = {
+		"ui_left": { "button": 13, "axis": 0, "value": -1.0 },  # D-pad Left, Left Stick Left
+		"ui_right": { "button": 14, "axis": 0, "value": 1.0 },  # D-pad Right, Left Stick Right
+		"ui_up": { "button": 11, "axis": 1, "value": -1.0 },  # D-pad Up, Left Stick Up
+		"ui_down": { "button": 12, "axis": 1, "value": 1.0 }   # D-pad Down, Left Stick Down
+	}
+
+	# Loop through each direction and reassign input
+	for input_name in directions.keys():
+		# Remove the old mapping
+		InputMap.erase_action(input_name)
+		InputMap.add_action(input_name)
+
+		# Get direction settings
+		var data = directions[input_name]
+
+		# Create a new button event (D-pad)
+		var button_event = InputEventJoypadButton.new()
+		button_event.button_index = data.button  # D-pad button
+		button_event.device = device_id  # Assign to specific controller
+
+		# Create a new axis event (Analog Stick)
+		var axis_event = InputEventJoypadMotion.new()
+		axis_event.axis = data.axis  # Left Stick axis
+		axis_event.axis_value = data.value  # Direction (left/right/up/down)
+		axis_event.device = device_id  # Assign to specific controller
+
+		# Add new input mappings
+		InputMap.action_add_event(input_name, button_event)
+		InputMap.action_add_event(input_name, axis_event)

@@ -90,19 +90,22 @@ func update_grid():
 	# Iterate through each child (which are SubViewportContainers)
 	for sub_viewport_container in $HBoxContainer.get_children():
 		# Ensure this is a SubViewportContainer
-		if sub_viewport_container is SubViewportContainer:
+		if (sub_viewport_container is SubViewportContainer):
 			# Set custom minimum size based on child_count
-			if child_count == 1:
+			if (child_count == 1):
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size())  # Full size
-			elif child_count == 2:
+			elif (child_count == 2):
 				$HBoxContainer.set_columns(2)
 				$HBoxContainer/SubViewportContainer/SubViewport/UserInterface.get_node("CooldownTimers").set_scale(Vector2(.5,.5))
 				$HBoxContainer/SubViewportContainer/SubViewport/UserInterface.get_node("PlayerHealthBar").set_scale(Vector2(.9,.9))
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y)
-			elif child_count == 3:
+			elif (child_count == 3 || child_count == 4):
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 2)
-			elif child_count == 4:
-				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 2)
+			elif (child_count == 5 || child_count == 6):
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 3)
+			elif (child_count == 7 || child_count == 8):
+				$HBoxContainer.set_columns(3)
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 3, DisplayServer.window_get_size().y / 3)
 
 
 func _process(delta):

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="3_pv0yb"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.gd" id="4_cxvdw"]
 [ext_resource type="AudioStream" uid="uid://b4yi0o5f878jr" path="res://Assets/Sound/Music/cyberpunk-music-277931.mp3" id="5_ywwyg"]
-[ext_resource type="PackedScene" uid="uid://cwuxgblo0jje2" path="res://Scenes/UI/settings_menu.tscn" id="6_e1fsm"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/settings_menu.tscn" id="6_e1fsm"]
 
 [node name="GameLoop" type="Control"]
 layout_mode = 3

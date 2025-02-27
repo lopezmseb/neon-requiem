@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bxsn068gjqtlp" path="res://Assets/Menu/Title.png" id="4_jcs6e"]
 [ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="4_xrl2i"]
 [ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="6_1tbn7"]
-[ext_resource type="PackedScene" uid="uid://cwuxgblo0jje2" path="res://Scenes/UI/settings_menu.tscn" id="7_yyu1d"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/settings_menu.tscn" id="7_yyu1d"]
 
 [node name="Menu" type="Control"]
 process_mode = 1

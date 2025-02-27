@@ -1,11 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://833p2gpb3bdv"]
 
 [ext_resource type="Script" path="res://Scripts/RoomGeneration/RoomGeneration.gd" id="1_gykuq"]
+[ext_resource type="TileSet" uid="uid://dm8htohw1qv3n" path="res://Assets/TileSets/Dungeon.tres" id="2_13sk8"]
 [ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="3_dhcqn"]
-[ext_resource type="PackedScene" uid="uid://cfljccin2sbyg" path="res://Scenes/Respawn.tscn" id="4_54s8q"]
-
-[sub_resource type="TileSet" id="TileSet_0c54q"]
-physics_layer_0/collision_layer = 1
+[ext_resource type="PackedScene" path="res://Scenes/Respawn.tscn" id="4_54s8q"]
 
 [node name="RoomGeneration" type="Node2D"]
 script = ExtResource("1_gykuq")
@@ -23,7 +21,7 @@ one_shot = true
 
 [node name="TileMap" type="TileMap" parent="."]
 show_behind_parent = true
-tile_set = SubResource("TileSet_0c54q")
+tile_set = ExtResource("2_13sk8")
 format = 2
 
 [node name="DebugCamera" type="Camera2D" parent="."]

@@ -90,6 +90,9 @@ animate = NodePath("../../AnimatedSprite2D")
 [node name="AttackCooldown" type="Timer" parent="StateMachine/Attack"]
 wait_time = 2.0
 
+[node name="BurstTimer" type="Timer" parent="StateMachine/Attack"]
+wait_time = 0.5
+
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("7_bjisq")
 MAX_HEALTH = 500.0

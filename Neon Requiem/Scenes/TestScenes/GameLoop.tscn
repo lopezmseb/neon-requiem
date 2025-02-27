@@ -48,7 +48,6 @@ position = Vector2(52, 43)
 [node name="UserInterface" parent="HBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("3_pv0yb")]
 
 [node name="Fade" type="ColorRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

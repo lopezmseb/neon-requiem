@@ -195,8 +195,8 @@ func level_cleared():
 	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
 	
 	#stop the shooting and abilities on upgrade screen
-#	for player in players:
-#		player.disable_input()
+	for player in players:
+		player.disable_input()
 	
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
 	var selectedUpgrades : Array[UpgradeStrategy]  = []

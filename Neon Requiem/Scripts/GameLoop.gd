@@ -48,7 +48,7 @@ func addPlayer():
 	var playerInterface = UIScene.instantiate()
 	
 	# Player Config
-	anotherPlayer.playerController = 0
+	anotherPlayer.playerController = players.size()
 	players.append(anotherPlayer)
 	# UI Config
 	playerInterface.setPlayer(anotherPlayer)
@@ -155,6 +155,7 @@ func _on_level_generated():
 		var remoteTransform := RemoteTransform2D.new()
 		
 		remoteTransform.remote_path = mainCamera.get_path()
+		player.playerController = 0 if Input.get_connected_joypads().size() > 0 else -1
 		player.add_child(remoteTransform)
 		
 		user_interface.setPlayer(player)
@@ -234,6 +235,7 @@ func onUpgradeSelected():
 		file.store_var(level)
 		upgradeSelectedCount = 0
 		#Create Map
+		dead_players = 0
 		roomGen.moveToNextLevel(level)
 	else:
 		var currentPlayer = players[upgradeSelectedCount]

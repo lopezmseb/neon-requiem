@@ -32,6 +32,7 @@ func _ready():
 		if(count == 1):
 			upgradeCard.grab_focus()
 	
+	
 func _process(delta):
 	upgradeContainer.queue_redraw()	
 	$Turn.text = "[center]Player {currentPlayer}'s Turn".format({"currentPlayer": currentPlayerNumber})
@@ -43,12 +44,13 @@ func _process(delta):
 			i.upgradeStrategy = upgrades[count] 
 			count += 1
 	
+	
 func _input(event):
 	if(Input.is_key_pressed(KEY_DELETE)):
 		get_tree().reload_current_scene()
 		
 func onButtonPressed(upgradeStrategy, id):
-
+	set_controller_device(-1)
 	endSelection.emit()
 	
 func set_controller_device(device_id: int):

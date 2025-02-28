@@ -57,7 +57,9 @@ func set_controller_device(device_id: int):
 		"ui_left": { "button": 13, "axis": 0, "value": -1.0 },  # D-pad Left, Left Stick Left
 		"ui_right": { "button": 14, "axis": 0, "value": 1.0 },  # D-pad Right, Left Stick Right
 		"ui_up": { "button": 11, "axis": 1, "value": -1.0 },  # D-pad Up, Left Stick Up
-		"ui_down": { "button": 12, "axis": 1, "value": 1.0 }   # D-pad Down, Left Stick Down
+		"ui_down": { "button": 12, "axis": 1, "value": 1.0 },   # D-pad Down, Left Stick Down
+		"ui_accept": { "button": 0, "axis": null, "value": null },  # Typically A (Xbox) / Cross (PlayStation)
+		"ui_select": { "button": 1, "axis": null, "value": null } 
 	}
 
 	# Loop through each direction and reassign input
@@ -73,13 +75,13 @@ func set_controller_device(device_id: int):
 		var button_event = InputEventJoypadButton.new()
 		button_event.button_index = data.button  # D-pad button
 		button_event.device = device_id  # Assign to specific controller
-
-		# Create a new axis event (Analog Stick)
-		var axis_event = InputEventJoypadMotion.new()
-		axis_event.axis = data.axis  # Left Stick axis
-		axis_event.axis_value = data.value  # Direction (left/right/up/down)
-		axis_event.device = device_id  # Assign to specific controller
-
-		# Add new input mappings
 		InputMap.action_add_event(input_name, button_event)
-		InputMap.action_add_event(input_name, axis_event)
+		
+		
+		# Create a new axis event (Analog Stick)
+		if data.axis != null:
+			var axis_event = InputEventJoypadMotion.new()
+			axis_event.axis = data.axis
+			axis_event.axis_value = data.value
+			axis_event.device = device_id
+			InputMap.action_add_event(input_name, axis_event)

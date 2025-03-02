@@ -8,4 +8,3 @@ func _ready():
 # Function to assign a specific device ID to this UI element
 func assign_device(device_id: int):
 	assigned_device = device_id
-	print(name, "  is now assigned to device ", assigned_device)

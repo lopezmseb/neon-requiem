@@ -35,9 +35,8 @@ func handle_device(device_id: int, device_type: String):
 			file.seek_end()
 		else:
 			file = FileAccess.open(save_path, FileAccess.WRITE)
-		file.store_line(str(player_counter) + "," + device_type + "," + str(device_id))
+		file.store_line(str(player_counter) + "," + device_type + "," + str(device_id)+","+characters[player_counter])
 		
-		print("Assigned Player ", player_counter, " to ", device_type, " Device ID: ", device_id)
 		player_counter += 1
 		player_joined.emit(player_counter, device_id, device_type, characters[player_counter - 1])
 

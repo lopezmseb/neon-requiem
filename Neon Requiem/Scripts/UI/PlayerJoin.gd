@@ -16,7 +16,6 @@ func _process(delta):
 	pass
 
 func _on_player_joined(player_id: int, device_id: int, device_type: String, sprite: String):
-	print("New Player Joined! ID:", player_id, "Device:", device_type)
 	
 
 	# Instantiate PlayerCard
@@ -26,7 +25,7 @@ func _on_player_joined(player_id: int, device_id: int, device_type: String, spri
 	# Show character sprite
 	new_player.get_node("ColorRect/Character").visible = true
 	new_player.get_node("ColorRect/Character").texture = load(sprite)  
-
+	new_player.get_node("ColorRect/Name").text = sprite.get_file().get_basename()
 	# Assign device to the player
 	new_player.assign_device(device_id)
 
@@ -40,6 +39,7 @@ func _on_player_joined(player_id: int, device_id: int, device_type: String, spri
 	$Button.visible = true
 	$Button.grab_focus()
 	$Button.set_focus_mode(2)
+	
 
 func _on_button_pressed():
 	get_tree().change_scene_to_file("res://Scenes/TestScenes/GameLoop.tscn")

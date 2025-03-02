@@ -40,11 +40,8 @@ func _ready():
 		if(subviewport):
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
-	
 	read_player_data()
-		
-	
-		
+
 func read_player_data():
 	if FileAccess.file_exists(player_save):
 		var file = FileAccess.open(player_save, FileAccess.READ)
@@ -57,17 +54,14 @@ func read_player_data():
 				# Split the line by commas (assuming CSV format)
 				var data = line.split(",")
 
-				if data.size() == 3:  # Ensure the line has exactly 3 values
+				if data.size() == 4:  # Ensure the line has exactly 3 values
 					var player_counter = int(data[0])  # Convert player_counter to integer
 					var device_type = data[1]  # The device type is a string
 					var device_id = int(data[2])  # Convert device_id to integer
-
+					var sprite = data[3]
 		# Print or store these values for further processing
-					print("Saved Player", player_counter, "Device:", device_type, "Device ID:", device_id)
 					addPlayer(player_counter,device_type,device_id)
 		file.close()  # Close the file after reading
-	else:
-		print("Save file not found.")
 
 func addPlayer(player_counter: int, device_type: String, device_id: int):
 	

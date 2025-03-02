@@ -6,7 +6,7 @@ var level: int = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("game_loop")
-	
+	$VBoxContainer/Restart.grab_focus()
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ) 
 		level = file.get_var(level)

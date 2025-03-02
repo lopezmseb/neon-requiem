@@ -60,10 +60,10 @@ func read_player_data():
 					var device_id = int(data[2])  # Convert device_id to integer
 					var sprite = data[3]
 		# Print or store these values for further processing
-					addPlayer(player_counter,device_type,device_id)
+					addPlayer(player_counter,device_type,device_id, sprite)
 		file.close()  # Close the file after reading
 
-func addPlayer(player_counter: int, device_type: String, device_id: int):
+func addPlayer(player_counter: int, device_type: String, device_id: int, sprite: String):
 	
 	if(player_counter == 0):
 		var player = playerScene.instantiate()
@@ -72,6 +72,8 @@ func addPlayer(player_counter: int, device_type: String, device_id: int):
 		remoteTransform.remote_path = mainCamera.get_path()
 		player.playerController = device_id
 		player.add_child(remoteTransform)
+		var spritePath = "res://Assets/Characters/"+ sprite + "-sprite.png"
+#		player.get_node("AnimatedSprite2D").texture = load(spritePath)
 		
 		user_interface.setPlayer(player)
 		players.append(player)

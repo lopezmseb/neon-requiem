@@ -14,7 +14,7 @@ var device_to_player = {}  # Dictionary to store the device and corresponding pl
 var player_counter = 0  # Counter to assign player numbers
 var devices_seen = {}  # Dictionary to track devices and their type (keyboard or controller)
 
-var characters = ["res://Assets/Characters/Boss.png","res://Assets/Characters/Boss.png","res://Assets/Characters/Boss.png","res://Assets/Characters/Boss.png"]
+var characters = ["res://Assets/Characters/Jex.png","res://Assets/Characters/GRIM.png","res://Assets/Characters/Jex.png","res://Assets/Characters/GRIM.png"]
 
 
 func _input(event):
@@ -35,7 +35,7 @@ func handle_device(device_id: int, device_type: String):
 			file.seek_end()
 		else:
 			file = FileAccess.open(save_path, FileAccess.WRITE)
-		file.store_line(str(player_counter) + "," + device_type + "," + str(device_id)+","+characters[player_counter])
+		file.store_line(str(player_counter) + "," + device_type + "," + str(device_id)+","+characters[player_counter].get_file().get_basename())
 		
 		player_counter += 1
 		player_joined.emit(player_counter, device_id, device_type, characters[player_counter - 1])

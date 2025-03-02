@@ -29,8 +29,13 @@ func handle_device(device_id: int, device_type: String):
 	if device_id not in device_to_player:
 		device_to_player[device_id] = player_counter
 		devices_seen[device_id] = device_type
-		var file = FileAccess.open(save_path, FileAccess.WRITE)
-		file.store_var([player_counter,device_type,device_id ])
+		var file : FileAccess
+		if FileAccess.file_exists(save_path):
+			file = FileAccess.open(save_path, FileAccess.READ_WRITE)
+			file.seek_end()
+		else:
+			file = FileAccess.open(save_path, FileAccess.WRITE)
+		file.store_line(str(player_counter) + "," + device_type + "," + str(device_id))
 		
 		print("Assigned Player ", player_counter, " to ", device_type, " Device ID: ", device_id)
 		player_counter += 1

@@ -17,9 +17,7 @@ func _process(delta):
 
 func _on_player_joined(player_id: int, device_id: int, device_type: String, sprite: String):
 	print("New Player Joined! ID:", player_id, "Device:", device_type)
-	$Button.visible = true
-	$Button.grab_focus()
-	$Button.set_focus_mode(2)
+	
 
 	# Instantiate PlayerCard
 	var new_player = preload("res://Scenes/UI/PlayerCard.tscn").instantiate()
@@ -38,6 +36,10 @@ func _on_player_joined(player_id: int, device_id: int, device_type: String, spri
 		join_card.queue_free()
 	else:
 		$HBoxContainer.move_child(join_card, players)
+		
+	$Button.visible = true
+	$Button.grab_focus()
+	$Button.set_focus_mode(2)
 
 func _on_button_pressed():
 	get_tree().change_scene_to_file("res://Scenes/TestScenes/GameLoop.tscn")

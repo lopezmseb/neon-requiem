@@ -15,6 +15,8 @@ func _process(delta):
 func _on_new_game_pressed():
 	if FileAccess.file_exists("user://room.save"):
 		DirAccess.remove_absolute("user://room.save")
+	if FileAccess.file_exists("user://players.save"):
+		DirAccess.remove_absolute("user://players.save")
 	get_tree().change_scene_to_file("res://Scenes/UI/PlayerJoin.tscn")
 	
 		

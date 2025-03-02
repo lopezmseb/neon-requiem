@@ -231,7 +231,6 @@ func dashAttack():
 
 	move_and_slide()
 	
-	
 func melee():
 	is_melee_ready = false
 	$MeleeCooldown.start()

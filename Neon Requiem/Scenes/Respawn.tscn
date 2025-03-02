@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfljccin2sbyg"]
+[gd_scene load_steps=3 format=3 uid="uid://cfljccin2sbyg"]
 
+[ext_resource type="Script" path="res://Scripts/UI/PlayerJoin.gd" id="1_hdg2d"]
 [ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="1_ucefv"]
 
 [node name="Node2D" type="Control"]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_hdg2d")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

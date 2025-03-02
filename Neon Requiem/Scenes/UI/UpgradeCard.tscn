@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dga40ispxfs62"]
+[gd_scene load_steps=9 format=3 uid="uid://bg1qy7xjw6owb"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UpgradesUI/UpgradeCard.gd" id="1_mhn2u"]
 [ext_resource type="Texture2D" uid="uid://dje7goep4inlm" path="res://Assets/UI/Upgrades/Bullet_damage.png" id="2_n7gn8"]

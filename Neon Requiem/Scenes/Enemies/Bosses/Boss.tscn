@@ -88,10 +88,18 @@ enemy = NodePath("../..")
 animate = NodePath("../../AnimatedSprite2D")
 
 [node name="AttackCooldown" type="Timer" parent="StateMachine/Attack"]
-wait_time = 2.0
+wait_time = 4.0
 
 [node name="BurstTimer" type="Timer" parent="StateMachine/Attack"]
 wait_time = 0.5
+
+[node name="WaveWaitTime" type="Timer" parent="StateMachine/Attack"]
+wait_time = 0.2
+
+[node name="SpreadWaitTime" type="Timer" parent="StateMachine/Attack"]
+wait_time = 2.0
+
+[node name="TrackTimer" type="Timer" parent="StateMachine/Attack"]
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("7_bjisq")

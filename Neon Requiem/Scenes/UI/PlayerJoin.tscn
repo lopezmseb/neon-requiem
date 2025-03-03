@@ -60,5 +60,3 @@ text = "Ready"
 stream = ExtResource("4_is2ts")
 autoplay = true
 bus = &"Music"
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

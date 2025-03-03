@@ -6,9 +6,11 @@ var Max_Players = 4
 func _ready():
 	# Debugging
 	await get_tree().process_frame  # Ensure scene tree is built
-	fade_in_music()
+	
 	if join_card:
 		join_card.player_joined.connect(_on_player_joined)
+	if $"Menu Music":
+		fade_in_music()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

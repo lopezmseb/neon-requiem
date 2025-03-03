@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=75 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/Stats/CooldownComponent.gd" id="4_unu1y"]
 [ext_resource type="Texture2D" uid="uid://dl0ks6bigubnq" path="res://Assets/Characters/Volt-sprite.png" id="5_4kcgm"]
 [ext_resource type="Script" path="res://Scripts/Upgrades/CooldownUpgrades/CooldownAdditiveReduction.gd" id="5_eejht"]
+[ext_resource type="Texture2D" uid="uid://vgjdlhptv5br" path="res://Assets/Characters/Nyx-sprite.png" id="5_y4muu"]
 [ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="6_bw6ym"]
 [ext_resource type="Texture2D" uid="uid://b5gcpgy1x6h0j" path="res://Assets/UI/Upgrades/Dash.png" id="6_iqabo"]
 [ext_resource type="Texture2D" uid="uid://43677synoxf3" path="res://Assets/UI/Upgrades/Bullet.png" id="6_k1tej"]
@@ -63,6 +64,22 @@ region = Rect2(48, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5is5y"]
 atlas = ExtResource("3_7tcwy")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jsvi"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpyl5"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vq0j"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0koao"]
+atlas = ExtResource("5_y4muu")
 region = Rect2(72, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jdwid"]
@@ -137,6 +154,34 @@ region = Rect2(216, 0, 24, 24)
 atlas = ExtResource("3_7tcwy")
 region = Rect2(240, 0, 24, 24)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_cyuju"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6sof"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7c878"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(144, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nunr"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(168, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wmqn"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(192, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmspq"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(216, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aca02"]
+atlas = ExtResource("5_y4muu")
+region = Rect2(240, 0, 24, 24)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_l427x"]
 atlas = ExtResource("5_4kcgm")
 region = Rect2(96, 0, 24, 24)
@@ -199,6 +244,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"Idle-Jex",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jsvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpyl5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vq0j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0koao")
+}],
+"loop": true,
+"name": &"Idle-Nyx",
 "speed": 5.0
 }, {
 "frames": [{
@@ -272,6 +334,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_cyuju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6sof")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7c878")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nunr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2wmqn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmspq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aca02")
+}],
+"loop": true,
+"name": &"Run-Nyx",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_l427x")
 }, {
 "duration": 1.0,
@@ -321,7 +409,7 @@ script = ExtResource("1_2efai")
 material = SubResource("ShaderMaterial_nn6tn")
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_7wljc")
-animation = &"Idle-Volt"
+animation = &"Run-Nyx"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 1.5)

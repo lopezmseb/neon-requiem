@@ -176,14 +176,14 @@ func level_cleared():
 	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
 	
 	#stop the shooting and abilities on upgrade screen
-	for player in players:
-		player.disable_input()
+#	for player in players:
+#		player.disable_input()
 	
-	# Remove any existing bullets
-	var bullets = get_tree().root.find_children("*", "Bullet")
-	
-	for bullet in bullets:
-		bullet.queue_free()
+#	# Remove any existing bullets
+#	var bullets = get_tree().root.find_children("*", "Bullet")
+#
+#	for bullet in bullets:
+#		bullet.queue_free()
 	
 	# Start Upgrade Process
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")

@@ -135,7 +135,7 @@ func update_grid():
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size())  # Full size
 			elif (child_count == 2):
 				$HBoxContainer.set_columns(2)
-				user_interface.get_node("CooldownTimers").set_scale(Vector2(.5,.5))
+				user_interface.get_node("CooldownTimers").set_scale(Vector2(.4,.4))
 				user_interface.get_node("PlayerHealthBar").set_scale(Vector2(.9,.9))
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y)
 			elif (child_count == 3 || child_count == 4):

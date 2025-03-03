@@ -100,6 +100,7 @@ wait_time = 0.2
 wait_time = 2.0
 
 [node name="TrackTimer" type="Timer" parent="StateMachine/Attack"]
+wait_time = 0.2
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("7_bjisq")
@@ -111,7 +112,7 @@ script = ExtResource("8_spaym")
 [node name="Gun" type="Node2D" parent="."]
 
 [node name="Aiming" type="Marker2D" parent="Gun"]
-position = Vector2(15, 0)
+position = Vector2(38, 0)
 
 [node name="HealthBar" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("9_8u8i2")]
 anchors_preset = 0

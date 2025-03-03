@@ -12,46 +12,51 @@ func Enter():
 	animate.play("Idle")
 
 func Physics_Update(delta: float):
-	var attackToChoose = rng.randi_range(0,2)
+	var attackToChoose = rng.randi_range(0,3)
 	if(readyToAttack):
-		Track_Closest_Player()
-#		match attackToChoose:
-#			0:				
-#				Attack_All_Around()
-#			1: 				
-#				AAA_Burst()
-#			2:
-#				Spread_Attack()
-#				$SpreadWaitTime.start()
-#				await $SpreadWaitTime.timeout
-#				Spread_Attack(45)
+		match attackToChoose:
+			0:				
+				Attack_All_Around()
+			1: 				
+				AAA_Burst()
+			2:
+				Spread_Attack()
+				$SpreadWaitTime.start()
+				await $SpreadWaitTime.timeout
+				Spread_Attack(45)
+			3: 
+				Track_Closest_Player()
 
 func Track_Closest_Player():
-	var players = get_tree().root.find_children("*Player", "Player")
-	print(get_tree().root.find_children("*", "Player", true))
-	print("Players: ", players)
+	readyToAttack = false	
+	var players = get_tree().root.find_children("*", "Player", true, false)
+	
 	if(players.size() > 0):
 		var randomPlayer = rng.randi_range(0, players.size() - 1)
-		var playerToTrack = players[randomPlayer]
+		var playerToTrack = players[randomPlayer] as Player
 		var bulletAmount = 100
 		
-		for i in range(0, 100):
-			$AttackCooldown.start()
-		var bullet = bulletPath.instantiate()
-		get_tree().root.add_child(bullet)
+		for i in range(0, 20):
+			var bullet = bulletPath.instantiate()
+			add_child(bullet)
 
-		# Position the bullet at the player's shooting point (Marker2D).
-		bullet.position = aiming.position
-		bullet.source = "Enemy"
-		bullet.set_collision_layer_value(2, false)
-		bullet.set_collision_mask_value(2, false)
+			# Position the bullet at the player's shooting point (Marker2D).
+			bullet.position = enemy.global_position + (playerToTrack.global_position - enemy.global_position).normalized() * 50
+			bullet.source = "Enemy"
+			bullet.set_collision_layer_value(2, false)
+			bullet.set_collision_mask_value(2, false)
+			
+			# Set the bullet's velocity and rotation based on the direction to the mouse.\
+			var direction = (playerToTrack.global_position - enemy.position).normalized()
+			bullet.velocity = direction * bulletSpeed
+			bullet.rotation = direction.angle()
+			$TrackTimer.start()
+			await $TrackTimer.timeout
+		$AttackCooldown.start()
 		
-		# Set the bullet's velocity and rotation based on the direction to the mouse.\
-		var direction = (player.position - enemy.position).normalized()
-		bullet.velocity = direction * bulletSpeed
-		bullet.rotation = direction.angle()
-
 func Attack_All_Around(offset:float = 0.0):
+	readyToAttack = false
+	
 	var degrees = 360
 	var bulletAmount = 12
 	var degreeIncrease = degrees/bulletAmount
@@ -61,9 +66,8 @@ func Attack_All_Around(offset:float = 0.0):
 		var newPos = enemy.position + Vector2(cos(radian), sin(radian)) * 50
 		gun.look_at(newPos)
 		
-		$AttackCooldown.start()
 		var bullet = bulletPath.instantiate()
-		get_tree().root.add_child(bullet)
+		add_child(bullet)
 
 		# Position the bullet at the player's shooting point (Marker2D).
 		bullet.position = newPos
@@ -76,7 +80,7 @@ func Attack_All_Around(offset:float = 0.0):
 		bullet.velocity = direction * bulletSpeed
 		bullet.rotation = direction.angle()
 	
-	readyToAttack = false
+	$AttackCooldown.start()
 	
 func AAA_Burst():
 	for i in range(0,3):
@@ -101,9 +105,8 @@ func Spread_Attack(baseDegree: float = 0):
 				var newPos = enemy.position + Vector2(cos(radian), sin(radian)) * 50
 				gun.look_at(newPos)
 				
-				$AttackCooldown.start()
 				var bullet = bulletPath.instantiate()
-				get_tree().root.add_child(bullet)
+				add_child(bullet)
 
 				# Position the bullet at the player's shooting point (Marker2D).
 				bullet.position = newPos
@@ -118,9 +121,7 @@ func Spread_Attack(baseDegree: float = 0):
 		$WaveWaitTime.start()
 		await $WaveWaitTime.timeout
 	
-	
-		
-
+	$AttackCooldown.start()	
 
 func _on_attack_cooldown_timeout():
 	readyToAttack = true

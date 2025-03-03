@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b5us0xa5yq4k1" path="res://Scenes/PlayerHealthBar.tscn" id="1_rawx8"]
 [ext_resource type="Script" path="res://Scripts/UI/UserInterfaceController.gd" id="1_xewco"]
 [ext_resource type="PackedScene" uid="uid://26njbw8cwpfc" path="res://Scenes/CooldownTimers.tscn" id="2_k4ah3"]
-[ext_resource type="PackedScene" path="res://Scenes/Respawn.tscn" id="4_023vg"]
+[ext_resource type="PackedScene" uid="uid://cfljccin2sbyg" path="res://Scenes/Respawn.tscn" id="4_023vg"]
 
 [node name="UserInterface" type="CanvasLayer"]
 script = ExtResource("1_xewco")

@@ -4,6 +4,7 @@ class_name Player
 # -1 == Mouse and Keyboard
 # >= 0 => Controller
 @export var playerController : int = -1
+@export var playerName : String = ""
 const speed: float = 100
 const dashSpeed: float = 500
 
@@ -133,10 +134,10 @@ func _physics_process(delta):
 		velocity = movementDirection * $SpeedComponent.calculateSpeed()  # Normal movement
 		
 	if(velocity):
-		animatedSprite.play("Run")
+		animatedSprite.play("Run-" + playerName)
 		animatedSprite.flip_h = velocity.x <= 0
 	else:
-		animatedSprite.play("Idle")
+		animatedSprite.play("Idle-" + playerName)
 	
 	move_and_slide()
 	
@@ -230,7 +231,6 @@ func dashAttack():
 		melee()
 
 	move_and_slide()
-	
 	
 func melee():
 	is_melee_ready = false

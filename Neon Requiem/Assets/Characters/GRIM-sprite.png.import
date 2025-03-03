@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br6q1tsj02756"
-path="res://.godot/imported/cowboy.png-d68eb264fd32417da1696106677403b1.ctex"
+uid="uid://d03lfryf6wm2e"
+path="res://.godot/imported/GRIM-sprite.png-8c460e473cdf7a6602545b0d812f2cde.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/cowboy.png"
-dest_files=["res://.godot/imported/cowboy.png-d68eb264fd32417da1696106677403b1.ctex"]
+source_file="res://Assets/Characters/GRIM-sprite.png"
+dest_files=["res://.godot/imported/GRIM-sprite.png-8c460e473cdf7a6602545b0d812f2cde.ctex"]
 
 [params]
 

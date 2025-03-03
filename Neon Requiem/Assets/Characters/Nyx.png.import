@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br6q1tsj02756"
-path="res://.godot/imported/cowboy.png-d68eb264fd32417da1696106677403b1.ctex"
+uid="uid://dp6fgqnoq4570"
+path="res://.godot/imported/Nyx.png-25ff4a0929a7f066cc9ea8586e08cf30.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/cowboy.png"
-dest_files=["res://.godot/imported/cowboy.png-d68eb264fd32417da1696106677403b1.ctex"]
+source_file="res://Assets/Characters/Nyx.png"
+dest_files=["res://.godot/imported/Nyx.png-25ff4a0929a7f066cc9ea8586e08cf30.ctex"]
 
 [params]
 

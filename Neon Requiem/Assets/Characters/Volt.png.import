@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br6q1tsj02756"
-path="res://.godot/imported/cowboy.png-d68eb264fd32417da1696106677403b1.ctex"
+uid="uid://dq2hmd7j12qfh"
+path="res://.godot/imported/Volt.png-4ee11cc2629d7dc4dd266a5bce96bbc3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/cowboy.png"
-dest_files=["res://.godot/imported/cowboy.png-d68eb264fd32417da1696106677403b1.ctex"]
+source_file="res://Assets/Characters/Volt.png"
+dest_files=["res://.godot/imported/Volt.png-4ee11cc2629d7dc4dd266a5bce96bbc3.ctex"]
 
 [params]
 

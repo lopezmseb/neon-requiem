@@ -71,9 +71,8 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		
 		remoteTransform.remote_path = mainCamera.get_path()
 		player.playerController = device_id
+		player.playerName = sprite
 		player.add_child(remoteTransform)
-		var spritePath = "res://Assets/Characters/"+ sprite + "-sprite.png"
-#		player.get_node("AnimatedSprite2D").texture = load(spritePath)
 		
 		user_interface.setPlayer(player)
 		players.append(player)
@@ -88,6 +87,7 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		
 		# Player Config
 		anotherPlayer.playerController = device_id
+		anotherPlayer.playerName = sprite
 		players.append(anotherPlayer)
 		# UI Config
 		playerInterface.setPlayer(anotherPlayer)

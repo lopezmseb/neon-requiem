@@ -14,7 +14,7 @@ var device_to_player = {}  # Dictionary to store the device and corresponding pl
 var player_counter = 0  # Counter to assign player numbers
 var devices_seen = {}  # Dictionary to track devices and their type (keyboard or controller)
 
-var characters = ["res://Assets/Characters/Jex.png","res://Assets/Characters/GRIM.png","res://Assets/Characters/Jex.png","res://Assets/Characters/GRIM.png"]
+var characters = ["res://Assets/Characters/Jex.png","res://Assets/Characters/GRIM.png","res://Assets/Characters/Volt.png","res://Assets/Characters/GRIM.png"]
 
 
 func _input(event):

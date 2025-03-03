@@ -6,7 +6,7 @@ var Max_Players = 4
 func _ready():
 	# Debugging
 	await get_tree().process_frame  # Ensure scene tree is built
-
+	fade_in_music()
 	if join_card:
 		join_card.player_joined.connect(_on_player_joined)
 
@@ -43,3 +43,9 @@ func _on_player_joined(player_id: int, device_id: int, device_type: String, spri
 
 func _on_button_pressed():
 	get_tree().change_scene_to_file("res://Scenes/TestScenes/GameLoop.tscn")
+	
+func fade_in_music():
+	var tween = get_tree().create_tween()
+	$"Menu Music".volume_db = -40 
+	$"Menu Music".play()
+	tween.tween_property($"Menu Music", "volume_db", 0, 1) 

@@ -141,7 +141,7 @@ func makeMap():
 		
 	for x in range (topLeft.x, bottomRight.x):
 		for y in range(topLeft.y, bottomRight.y):
-			tileMap.set_cell(0, Vector2i(x, y), 1, Vector2i(0,0), 0)
+			tileMap.set_cell(0, Vector2i(x, y), 1, Vector2i(5,0), 0)
 
 			
 	var connections = []
@@ -152,7 +152,24 @@ func makeMap():
 		
 		for x in range(2, s.x * 2 - 1):
 			for y in range(2, s.y * 2 - 1):
-				tileMap.set_cell(0, Vector2i(ul.x + x, ul.y + y), 1, Vector2i(0, 2), 0)
+				var wallPosition = Vector2i(ul.x + x, ul.y + y)  # Convert local position to global tile coordinates
+
+				# Set normal edges
+				if x == 2:  # Left edge (270° rotation)
+					tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 0), 1)
+				elif x == s.x * 2 - 2:  # Right edge (90° rotation)
+					tileMap.set_cell(0, wallPosition , 1, Vector2i(0, 0), 3)
+				elif y == 2:  # Top edge (0° rotation)
+					tileMap.set_cell(0, wallPosition , 1, Vector2i(0, 0), 0)
+				
+				elif y == s.y * 2 - 2:  # Bottom edge (180° rotation)
+					tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 0), 2)
+					# Extend to left & right
+					
+				else:
+					# Fill interior floor tiles
+					tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 1), 0)
+
 		
 		var p = path.get_closest_point(room.position)
 		
@@ -188,24 +205,24 @@ func carvePath(pos1, pos2):
 	var xDiff = sign(pos2.x - pos1.x)
 	var yDiff = sign(pos2.y - pos1.y)
 	
-	if(xDiff == 0):
-		xDiff = pow(-1, randi()%2)
-	if(yDiff == 0):
-		yDiff = pow(-1, randi()%2)
+	if xDiff == 0:
+		xDiff = pow(-1, randi() % 2)
+	if yDiff == 0:
+		yDiff = pow(-1, randi() % 2)
 		
 	var x_y = pos1
 	var y_x = pos2
 
-	if(randi()%2) > 0:
+	if randi() % 2 > 0:
 		x_y = pos2
 		y_x = pos1
 		
 	for x in range(pos1.x, pos2.x, xDiff):
-		tileMap.set_cell(0, Vector2i(x, x_y.y), 1,Vector2i(0, 2), 0);
-		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(0, 2), 0);
+		tileMap.set_cell(0, Vector2i(x, x_y.y), 1,Vector2i(4, 1), 0);
+		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(4, 1), 0);
 	for y in range(pos1.y, pos2.y, yDiff):
-		tileMap.set_cell(0, Vector2i(y_x.x, y), 1,Vector2i(0, 2), 0);
-		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(0, 2), 0);
+		tileMap.set_cell(0, Vector2i(y_x.x, y), 1,Vector2i(4, 1), 0);
+		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(4, 1), 0);
 
 		
 

@@ -179,6 +179,13 @@ func level_cleared():
 	for player in players:
 		player.disable_input()
 	
+	# Remove any existing bullets
+	var bullets = get_tree().root.find_children("*", "Bullet")
+	
+	for bullet in bullets:
+		bullet.queue_free()
+	
+	# Start Upgrade Process
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
 	var selectedUpgrades : Array[UpgradeStrategy]  = []
 	

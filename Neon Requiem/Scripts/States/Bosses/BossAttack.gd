@@ -21,8 +21,14 @@ func Physics_Update(delta: float):
 				AAA_Burst()
 			2:
 				Spread_Attack()
-				$SpreadWaitTime.start()
-				await $SpreadWaitTime.timeout
+				if(is_instance_valid($SpreadWaitTime)):
+					$SpreadWaitTime.start()
+					await $SpreadWaitTime.timeout
+
+				# Get out if Boss died while waiting for timer
+				if(not is_instance_valid(self)):
+					return
+
 				Spread_Attack(45)
 			3: 
 				Track_Closest_Player()
@@ -50,8 +56,14 @@ func Track_Closest_Player():
 			var direction = (playerToTrack.global_position - enemy.position).normalized()
 			bullet.velocity = direction * bulletSpeed
 			bullet.rotation = direction.angle()
-			$TrackTimer.start()
-			await $TrackTimer.timeout
+			
+			if(is_instance_valid($TrackTimer)):
+				$TrackTimer.start()
+				await $TrackTimer.timeout
+
+			# Get out if Boss died while waiting for timer
+			if(not is_instance_valid(self)):
+					return
 		$AttackCooldown.start()
 		
 func Attack_All_Around(offset:float = 0.0):
@@ -84,9 +96,14 @@ func Attack_All_Around(offset:float = 0.0):
 	
 func AAA_Burst():
 	for i in range(0,3):
-		$BurstTimer.start()
 		Attack_All_Around(0 if i%2 == 1 else 15)
-		await $BurstTimer.timeout
+		if(is_instance_valid($BurstTimer)):
+			$BurstTimer.start()
+			await $BurstTimer.timeout
+
+		# Get out if Boss died while waiting for timer
+		if(not is_instance_valid(self)):
+			return
 		
 func Spread_Attack(baseDegree: float = 0):
 	readyToAttack = false
@@ -118,10 +135,21 @@ func Spread_Attack(baseDegree: float = 0):
 				var direction = (newPos - enemy.position).normalized()
 				bullet.velocity = direction * bulletSpeed
 				bullet.rotation = direction.angle()
-		$WaveWaitTime.start()
-		await $WaveWaitTime.timeout
+		
+		if(is_instance_valid($WaveWaitTime)):
+			$WaveWaitTime.start()
+			await $WaveWaitTime.timeout
+		# Get out if Boss died while waiting for timer
+		if(not is_instance_valid(self)):
+			return
 	
 	$AttackCooldown.start()	
+
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE:
+		for i in get_children():
+			var timer = i as Timer
+			timer.stop()
 
 func _on_attack_cooldown_timeout():
 	readyToAttack = true

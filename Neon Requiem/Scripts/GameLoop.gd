@@ -164,26 +164,29 @@ func _on_level_generated():
 		roomGen.spawnEntities(players)
 	canChangeLevel = true
 	var tween = get_tree().create_tween()
-	tween.tween_property(fade, 'color:a', 0, 1)
+	
+	tween.tween_property(fade, 'modulate:a', 0, 1)
+
+	await tween.finished
 	
 func level_cleared():
 	# Fade Black
 	var tween = get_tree().create_tween()
-	tween.tween_property(fade, 'color:a', 1, 0.25)
+	tween.tween_property(fade, 'modulate:a', 1, 0.25)
 
 	# Pick Upgrade
 	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
 	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
 	
 	#stop the shooting and abilities on upgrade screen
-#	for player in players:
-#		player.disable_input()
-	
-#	# Remove any existing bullets
-#	var bullets = get_tree().root.find_children("*", "Bullet")
-#
-#	for bullet in bullets:
-#		bullet.queue_free()
+	for player in players:
+		player.disable_input()
+
+	# Remove any existing bullets
+	var bullets = get_tree().root.find_children("*", "Bullet")
+
+	for bullet in bullets:
+		bullet.queue_free()
 	
 	# Start Upgrade Process
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")

@@ -22,6 +22,8 @@ func _process(delta):
 
 
 func _on_restart_pressed():
+	if FileAccess.file_exists("user://room.save"):
+		DirAccess.remove_absolute("user://room.save")
 	get_tree().change_scene_to_file("res://Scenes/TestScenes/GameLoop.tscn")
 
 

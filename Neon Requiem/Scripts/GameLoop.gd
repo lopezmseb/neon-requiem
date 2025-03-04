@@ -23,6 +23,7 @@ var enemies: Array[Node]
 var viewports: Array[Viewport]
 var upgradeSelectedCount: float = 0
 var upgradeSelectScreen : UpgradeSelect = null
+
 func _ready():
 	add_to_group("game_loop")
 	# Set Hbox to screensize
@@ -190,32 +191,43 @@ func game_over():
 	
 func _on_level_generated():
 	
-	# Spawn Enemies
-	for room in roomGen.getRooms():
-		#Do not spawn enemies in the Starting Room
-		if(room == roomGen.startRoom):
-			continue;
-		
-		var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
-		var roomRect = collisionShape.shape.get_rect()
-		var numEnemies = randi() % maxEnemiesPerRoom + 1
-		
-		for i in range(0, numEnemies):
-			var enemyObject = enemyScene.instantiate()
+	if(level % 5 == 0):
+		var room = roomGen.getRooms().filter(func(room): return room.name == "BossRoom").front()
+		if(room):
+			var roomMarker = room.find_child("BossStartingPosition") as Marker2D
+			var boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn").instantiate()
+			enemiesNode.add_child(boss)
+			roomGen.spawnEnemy(boss, "", roomMarker.global_position)
+	else:
+		# Spawn Enemies
+		for room in roomGen.getRooms():
+			#Do not spawn enemies in the Starting Room
+			if(room == roomGen.startRoom):
+				continue;
 			
-			enemiesNode.add_child(enemyObject)
-			roomGen.spawnEnemy(enemyObject, room)
-	
-	
-	roomGen.spawnEntities(players)
+			var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
+			var roomRect = collisionShape.shape.get_rect()
+			var numEnemies = randi() % maxEnemiesPerRoom + 1
+			
+			for i in range(0, numEnemies):
+				var enemyObject = enemyScene.instantiate()
+				
+				enemiesNode.add_child(enemyObject)
+				roomGen.spawnEnemy(enemyObject, room)
+		
+		
+		roomGen.spawnEntities(players)
 	canChangeLevel = true
 	var tween = get_tree().create_tween()
-	tween.tween_property(fade, 'color:a', 0, 1)
+	
+	tween.tween_property(fade, 'modulate:a', 0, 1)
+
+	await tween.finished
 	
 func level_cleared():
 	# Fade Black
 	var tween = get_tree().create_tween()
-	tween.tween_property(fade, 'color:a', 1, 0.25)
+	tween.tween_property(fade, 'modulate:a', 1, 0.25)
 
 	# Pick Upgrade
 	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
@@ -224,7 +236,14 @@ func level_cleared():
 	#stop the shooting and abilities on upgrade screen
 	for player in players:
 		player.disable_input()
+
+	# Remove any existing bullets
+	var bullets = get_tree().root.find_children("*", "Bullet")
+
+	for bullet in bullets:
+		bullet.queue_free()
 	
+	# Start Upgrade Process
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
 	var selectedUpgrades : Array[UpgradeStrategy]  = []
 	

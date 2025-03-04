@@ -156,19 +156,22 @@ func makeMap():
 
 				# Set normal edges
 				if x == 2:  # Left edge (270° rotation)
-					tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 0), 1)
+					if tileMap.get_cell_atlas_coords(0, wallPosition) == Vector2i(5, 0): 
+						tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 0), 1)
 				elif x == s.x * 2 - 2:  # Right edge (90° rotation)
-					tileMap.set_cell(0, wallPosition , 1, Vector2i(0, 0), 3)
+					if tileMap.get_cell_atlas_coords(0, wallPosition) == Vector2i(5, 0):  
+						tileMap.set_cell(0, wallPosition , 1, Vector2i(0, 0), 3)
 				elif y == 2:  # Top edge (0° rotation)
-					tileMap.set_cell(0, wallPosition , 1, Vector2i(0, 0), 0)
+					if tileMap.get_cell_atlas_coords(0, wallPosition) == Vector2i(5, 0): 
+						tileMap.set_cell(0, wallPosition , 1, Vector2i(0, 0), 0)
 				
 				elif y == s.y * 2 - 2:  # Bottom edge (180° rotation)
-					tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 0), 2)
+					if tileMap.get_cell_atlas_coords(0, wallPosition) == Vector2i(5, 0):  
+						tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 0), 2)
 					# Extend to left & right
 					
-				else:
-					# Fill interior floor tiles
-					tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 1), 0)
+				else: 
+						tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 1), 0)
 
 		
 		var p = path.get_closest_point(room.position)
@@ -218,11 +221,66 @@ func carvePath(pos1, pos2):
 		y_x = pos1
 		
 	for x in range(pos1.x, pos2.x, xDiff):
-		tileMap.set_cell(0, Vector2i(x, x_y.y), 1,Vector2i(4, 1), 0);
-		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(4, 1), 0);
+	# Carve the horizontal path (left or right)
+		tileMap.set_cell(0, Vector2i(x, x_y.y), 1, Vector2i(0, 1), 0)
+		if tileMap.get_cell_atlas_coords(0, Vector2i(x - 1, x_y.y)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(x - 1, x_y.y), 1, Vector2i(0, 0), 1)
+
+		# For horizontal movement (left or right), place tiles above and below
+		if xDiff > 0:  # Moving right
+			# Close the top side (place tile above)
+			if tileMap.get_cell_atlas_coords(0, Vector2i(x, x_y.y - 1)) == Vector2i(5, 0):
+				tileMap.set_cell(0, Vector2i(x, x_y.y - 1), 1, Vector2i(0, 0), 0)
+
+			# Close the bottom side (place tile below)
+			if tileMap.get_cell_atlas_coords(0, Vector2i(x, x_y.y + 2)) == Vector2i(5, 0):
+				tileMap.set_cell(0, Vector2i(x, x_y.y + 2), 1, Vector2i(0, 0), 2)
+		elif xDiff < 0:  # Moving right
+			# Close the top side (place tile above)
+			if tileMap.get_cell_atlas_coords(0, Vector2i(x, x_y.y - 2)) == Vector2i(5, 0):
+				tileMap.set_cell(0, Vector2i(x, x_y.y - 2), 1, Vector2i(0, 0), 0)
+
+			# Close the bottom side (place tile below)
+			if tileMap.get_cell_atlas_coords(0, Vector2i(x, x_y.y + 1)) == Vector2i(5, 0):
+				tileMap.set_cell(0, Vector2i(x, x_y.y  + 1), 1, Vector2i(0, 0), 2)
+
+		# Carve the adjacent path (1 coordinate down for left-right movement)
+		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(0, 1), 0)
+		if tileMap.get_cell_atlas_coords(0, Vector2i(x - 1, x_y.y + xDiff)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(x - 1, x_y.y + xDiff), 1, Vector2i(0, 0), 1)
+
 	for y in range(pos1.y, pos2.y, yDiff):
-		tileMap.set_cell(0, Vector2i(y_x.x, y), 1,Vector2i(4, 1), 0);
-		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(4, 1), 0);
+		# Carve the vertical path (up or down)
+		tileMap.set_cell(0, Vector2i(y_x.x, y), 1, Vector2i(0, 1), 0)
+		if tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x, y - 1)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(y_x.x, y - 1), 1, Vector2i(0, 0), 1)
+		# For vertical movement (up or down), place tiles to the left and right
+		if yDiff > 0:  # Moving up
+			# Close the left side (place tile to the left)
+			if tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x - 1, y)) == Vector2i(5, 0):
+				tileMap.set_cell(0, Vector2i(y_x.x - 1, y), 1, Vector2i(0, 0), 1)
+
+			# Close the right side (place tile to the right)
+			if tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x + 2, y)) == Vector2i(5, 0):
+				tileMap.set_cell(0, Vector2i(y_x.x + 2, y), 1, Vector2i(0, 0), 3)
+
+		elif yDiff < 0:  # Moving down
+			# Close the left side (place tile to the left)
+			if tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x - 2, y)) == Vector2i(5, 0):  # Different offset
+				tileMap.set_cell(0, Vector2i(y_x.x - 2, y), 1, Vector2i(0, 0), 1)
+
+			# Close the right side (place tile to the right)
+			if tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x + 1, y)) == Vector2i(5, 0):  # Different offset
+				tileMap.set_cell(0, Vector2i(y_x.x + 1, y), 1, Vector2i(0, 0), 3)
+
+		# Carve the adjacent path (1 coordinate left for up-down movement)
+		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(0, 1), 0)
+		if tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x, y - 1)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y - 1), 1, Vector2i(0, 0), 1)
+
+
+
+
 
 		
 

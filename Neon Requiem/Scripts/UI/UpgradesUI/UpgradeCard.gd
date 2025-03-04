@@ -44,6 +44,7 @@ func _on_pressed():
 	upgradeStrategy.OnPickup()
 	onClick.emit(upgradeStrategy, id)
 	$Overlay.visible = true
+	$".".disabled = true
 	$Button.disabled = true
 
 func _on_mouse_entered():

@@ -13,7 +13,8 @@ extends Control
 @onready var settings_menu = $SettingsMenu
 @onready var playerCamera = preload("res://Scripts/Player/PlayerCamera.gd")
 @onready var upgradeSelectionScreen = preload("res://Scenes/UI/UpgradeSelectScreen.tscn")
-var save_path = "user://room.save"
+var room_save = "user://room.save"
+var player_save = "user://players.save"
 var level: int = 1
 var canChangeLevel : bool = false
 var maxEnemiesPerRoom = 5
@@ -26,8 +27,8 @@ var upgradeSelectScreen : UpgradeSelect = null
 func _ready():
 	add_to_group("game_loop")
 	# Set Hbox to screensize
-	if FileAccess.file_exists(save_path):
-		var file = FileAccess.open(save_path, FileAccess.READ) 
+	if FileAccess.file_exists(room_save):
+		var file = FileAccess.open(room_save, FileAccess.READ) 
 		level = file.get_var(level)
 		
 	hbox.size = DisplayServer.window_get_size()
@@ -40,52 +41,117 @@ func _ready():
 		if(subviewport):
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
-			
-func addPlayer():
-	var anotherPlayer : Player = playerScene.instantiate()
-	var container : SubViewportContainer = SubViewportContainer.new()
-	var subViewport = SubViewport.new()
-	var camera = Camera2D.new()
-	var playerInterface = UIScene.instantiate()
-	
-	# Player Config
-	anotherPlayer.playerController = 0
-	players.append(anotherPlayer)
-	# UI Config
-	playerInterface.setPlayer(anotherPlayer)
-	# Camera Config
-	camera.set_script(playerCamera)
-	# SubViewport Config 
-	subViewport.world_2d = mainViewport.world_2d
-	subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-	viewports.append(subViewport)
-	# Container Config
-	container.stretch = true
-	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	# Add Children to Scene
-	subViewport.add_child(camera)
-	subViewport.add_child(playerInterface)
-	mainViewport.add_child(anotherPlayer)		
-	container.add_child(subViewport)
-	hbox.add_child(container)
-	# Remote Path to Camera
-	var remoteTransform := RemoteTransform2D.new()
-	remoteTransform.remote_path = camera.get_path()
-	anotherPlayer.add_child(remoteTransform)
-	# Spawn new Player into game
-	roomGen.spawnPlayer(anotherPlayer, 0)
+	read_player_data()
 
-func _input(event):
-	if event.is_action_pressed("add_player"):
-		addPlayer()
-	if Input.is_key_pressed(KEY_DELETE):
-		for i in enemiesNode.get_children():
-			i.queue_free()
+func read_player_data():
+	if FileAccess.file_exists(player_save):
+		var file = FileAccess.open(player_save, FileAccess.READ)
+
+	# Read all lines from the file
+		while file.eof_reached() == false:
+			var line = file.get_line().strip_edges() 
+			print(line) # Read and remove any extra whitespace
+			if line != "":
+				# Split the line by commas (assuming CSV format)
+				var data = line.split(",")
+
+				if data.size() == 4:  # Ensure the line has exactly 3 values
+					var player_counter = int(data[0])  # Convert player_counter to integer
+					var device_type = data[1]  # The device type is a string
+					var device_id = int(data[2])  # Convert device_id to integer
+					var sprite = data[3]
+		# Print or store these values for further processing
+					addPlayer(player_counter,device_type,device_id, sprite)
+		file.close()  # Close the file after reading
+
+func addPlayer(player_counter: int, device_type: String, device_id: int, sprite: String):
 	
+	if(player_counter == 0):
+		var player = playerScene.instantiate()
+		var remoteTransform := RemoteTransform2D.new()
+		
+		remoteTransform.remote_path = mainCamera.get_path()
+		player.playerController = device_id
+		player.playerName = sprite
+		player.add_child(remoteTransform)
+		
+		user_interface.setPlayer(player)
+		players.append(player)
+		
+		mainViewport.add_child(player)
+	else:
+		var anotherPlayer : Player = playerScene.instantiate()
+		var container : SubViewportContainer = SubViewportContainer.new()
+		var subViewport = SubViewport.new()
+		var camera = Camera2D.new()
+		var playerInterface = UIScene.instantiate()
+		
+		# Player Config
+		anotherPlayer.playerController = device_id
+		anotherPlayer.playerName = sprite
+		players.append(anotherPlayer)
+		# UI Config
+		playerInterface.setPlayer(anotherPlayer)
+		# Camera Config
+		camera.set_script(playerCamera)
+		# SubViewport Config 
+		subViewport.world_2d = mainViewport.world_2d
+		subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+		viewports.append(subViewport)
+		# Container Config
+		container.stretch = true
+		container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		
+		# Add Children to Scene
+		subViewport.add_child(camera)
+		subViewport.add_child(playerInterface)
+		
+		mainViewport.add_child(anotherPlayer)		
+		container.add_child(subViewport)
+		hbox.add_child(container)
+		subViewport.get_node("UserInterface/CooldownTimers").set_scale(Vector2(.5, .5))
+		subViewport.get_node("UserInterface/PlayerHealthBar").set_scale(Vector2(.9, .9))
+		update_grid() 
+		# Remote Path to Camera
+		var remoteTransform := RemoteTransform2D.new()
+		remoteTransform.remote_path = camera.get_path()
+		anotherPlayer.add_child(remoteTransform)
+		# Spawn new Player into game
+		roomGen.spawnPlayer(anotherPlayer, 0)
+
+#func _input(event):
+#	if event.is_action_pressed("add_player"):
+#		addPlayer()
+		
+
+func update_grid():
+	var child_count = $HBoxContainer.get_child_count()  # Count number of children
+
+	# Iterate through each child (which are SubViewportContainers)
+	for sub_viewport_container in $HBoxContainer.get_children():
+		# Ensure this is a SubViewportContainer
+		if (sub_viewport_container is SubViewportContainer):
+			# Set custom minimum size based on child_count
+			if (child_count == 1):
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size())  # Full size
+			elif (child_count == 2):
+				$HBoxContainer.set_columns(2)
+				user_interface.get_node("CooldownTimers").set_scale(Vector2(.4,.4))
+				user_interface.get_node("PlayerHealthBar").set_scale(Vector2(.9,.9))
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y)
+			elif (child_count == 3 || child_count == 4):
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 2)
+			elif (child_count == 5 || child_count == 6):
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 3)
+			elif (child_count == 7 || child_count == 8):
+				$HBoxContainer.set_columns(3)
+				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 3, DisplayServer.window_get_size().y / 3)
+
+
 func _process(delta):
 	# Set Hbox to screensize
 	hbox.size = DisplayServer.window_get_size()
-	$HBoxContainer/SubViewportContainer/SubViewport/UserInterface.level = level
+	user_interface.level = level
 	var enemyCount = enemiesNode.get_child_count()
 	
 	if(enemyCount == 0 && canChangeLevel):
@@ -124,17 +190,6 @@ func game_over():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
 	
 func _on_level_generated():
-	if(players.size() == 0):
-		var player = playerScene.instantiate()
-		var remoteTransform := RemoteTransform2D.new()
-		
-		remoteTransform.remote_path = mainCamera.get_path()
-		player.add_child(remoteTransform)
-		
-		user_interface.setPlayer(player)
-		players.append(player)
-		
-		mainViewport.add_child(player)
 	
 	if(level % 5 == 0):
 		var room = roomGen.getRooms().filter(func(room): return room.name == "BossRoom").front()
@@ -222,10 +277,11 @@ func onUpgradeSelected():
 		# Increase Level
 		level = level + 1
 	
-		var file = FileAccess.open(save_path, FileAccess.WRITE)
+		var file = FileAccess.open(room_save, FileAccess.WRITE)
 		file.store_var(level)
 		upgradeSelectedCount = 0
 		#Create Map
+		dead_players = 0
 		roomGen.moveToNextLevel(level)
 	else:
 		var currentPlayer = players[upgradeSelectedCount]

@@ -91,7 +91,10 @@ func handleKBInput(delta):
 	# Move Gun Reticle on Mouse Direction
 	if input_enabled:
 		movementDirection = Input.get_vector("left","right","up","down");
-		shootingDirection = get_global_mouse_position()
+		var camera = get_viewport().get_camera() as Camera2D
+		if camera:
+			var mouse_position = get_viewport().get_mouse_position()
+			var shootingDirection = camera.get_camera_transform().affine_inverse().xform(mouse_position)
 		if Input.is_action_just_pressed("dash") && is_dash_ready:
 			dash()
 			

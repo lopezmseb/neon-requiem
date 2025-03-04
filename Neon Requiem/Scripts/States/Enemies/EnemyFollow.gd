@@ -24,8 +24,8 @@ func Physics_Update(delta):
 
 		if(distance_to_player > 200):
 			onNewState.emit(self, AvailableStates.Idle)
-		elif distance_to_player <= 20:
-			enemy.velocity = -playerDirection.normalized() * (speed * 0.01)
+		elif distance_to_player <= 25:
+			enemy.velocity = -playerDirection.normalized() * (speed * 0.2)
 		else :
 			# Follow Player
 			enemy.velocity = playerDirection.normalized() * speed

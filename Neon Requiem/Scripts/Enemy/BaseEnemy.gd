@@ -16,7 +16,7 @@ func _on_health_component_entity_damaged(attack: float):
 	var startingPosition: Control = $HealthBar
 	number.position = startingPosition.position  - Vector2(-5,15)
 	number.text = str(attack)
-	number.z_index = 9999
+	number.z_index = 50
 	number.label_settings = LabelSettings.new()
 	
 	var color = "#FFF"
@@ -43,6 +43,6 @@ func _on_health_component_entity_damaged(attack: float):
 	
 	onDamage.emit(true)
 	number.queue_free()
-		
+
 	
 		

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/RoomGeneration/RoomGeneration.gd" id="1_gykuq"]
 [ext_resource type="Texture2D" uid="uid://sktayqgcfgkn" path="res://Assets/TestAssets/TileMaps/minitileset.png" id="3_7ltda"]
 [ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="3_dhcqn"]
-[ext_resource type="PackedScene" path="res://Scenes/Respawn.tscn" id="4_54s8q"]
+[ext_resource type="PackedScene" uid="uid://cfljccin2sbyg" path="res://Scenes/Respawn.tscn" id="4_54s8q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_88pxy"]
 

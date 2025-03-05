@@ -84,7 +84,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b3734")
 }],
-"loop": true,
+"loop": false,
 "name": &"Hurt",
 "speed": 5.0
 }, {
@@ -146,8 +146,6 @@ script = ExtResource("1_eknkv")
 material = SubResource("ShaderMaterial_ulle7")
 sprite_frames = SubResource("SpriteFrames_4vycq")
 animation = &"Hurt"
-frame = 1
-frame_progress = 0.736574
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vxlqs")
@@ -196,6 +194,7 @@ healthComponent = NodePath("../HealthComponent")
 [node name="DamageNumberStartinPosition" type="Node2D" parent="."]
 position = Vector2(0, -28)
 
+[connection signal="onDamage" from="." to="StateMachine/Follow" method="_on_base_enemy_on_damage"]
 [connection signal="body_entered" from="Area2D" to="StateMachine/Idle" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="Area2D" to="StateMachine/Follow" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="StateMachine/Follow/AttackCooldown" to="StateMachine/Follow" method="_on_attack_cooldown_timeout"]

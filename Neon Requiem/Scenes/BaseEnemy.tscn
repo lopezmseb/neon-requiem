@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://577xd1d52p1t"]
+[gd_scene load_steps=27 format=3 uid="uid://577xd1d52p1t"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/BaseEnemy.gd" id="1_eknkv"]
 [ext_resource type="Script" path="res://Scripts/States/StateMachine.gd" id="2_1hncl"]
@@ -16,6 +16,14 @@ shader_parameter/line_color = Color(0.439216, 0.945098, 0.239216, 1)
 shader_parameter/min_thickness = 0.0
 shader_parameter/max_thickness = 1.0
 shader_parameter/line_thickness = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mr715"]
+atlas = ExtResource("3_7n6kc")
+region = Rect2(264, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3734"]
+atlas = ExtResource("3_7n6kc")
+region = Rect2(240, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2fxcg"]
 atlas = ExtResource("3_7n6kc")
@@ -63,6 +71,23 @@ region = Rect2(240, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4vycq"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mr715")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3734")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mr715")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3734")
+}],
+"loop": false,
+"name": &"Hurt",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2fxcg")
@@ -120,8 +145,7 @@ script = ExtResource("1_eknkv")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_ulle7")
 sprite_frames = SubResource("SpriteFrames_4vycq")
-animation = &"Run"
-frame_progress = 0.682135
+animation = &"Hurt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vxlqs")
@@ -167,6 +191,11 @@ offset_bottom = -14.0
 scale = Vector2(0.110062, 0.110062)
 healthComponent = NodePath("../HealthComponent")
 
+[node name="DamageNumberStartinPosition" type="Node2D" parent="."]
+position = Vector2(0, -28)
+
+[connection signal="onDamage" from="." to="StateMachine/Follow" method="_on_base_enemy_on_damage"]
 [connection signal="body_entered" from="Area2D" to="StateMachine/Idle" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="Area2D" to="StateMachine/Follow" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="StateMachine/Follow/AttackCooldown" to="StateMachine/Follow" method="_on_attack_cooldown_timeout"]
+[connection signal="entity_damaged" from="HealthComponent" to="." method="_on_health_component_entity_damaged"]

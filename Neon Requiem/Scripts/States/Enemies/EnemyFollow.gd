@@ -1,6 +1,7 @@
 extends EnemyState
 
 var bulletPath = preload("res://Scenes/Bullet.tscn")
+var canPlayAnimation = true
 @onready var gun = $"../../Gun"
 @onready var aiming = $"../../Gun/Aiming"
 
@@ -10,7 +11,8 @@ const bulletSpeed = 250.0
 var rng = RandomNumberGenerator.new()
 
 func Physics_Update(delta):
-	animate.play("Run")
+	if(animate.animation_finished && canPlayAnimation):
+		animate.play("Run")
 	gun.look_at(player.global_position)
 	# Note: This approach is kinda buggy. Refactor into something better later
 	if(player):
@@ -91,3 +93,7 @@ func _on_area_2d_body_entered(body: Node2D):
 		#	
 		#	if(distanceFromBody < distanceFromPlayer):
 		#		player = body
+
+
+func _on_base_enemy_on_damage(allowAnimation: bool):
+	canPlayAnimation = allowAnimation

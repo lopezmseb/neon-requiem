@@ -16,7 +16,8 @@ func Enter():
 	
 func Update(delta):
 	if(wanderingTime > 0):
-		animate.play("Run")
+		if(animate.animation_finished):
+			animate.play("Run")
 		wanderingTime -= delta
 	else:
 		RandomizeWander()

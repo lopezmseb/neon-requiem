@@ -96,7 +96,6 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		# SubViewport Config 
 		subViewport.world_2d = mainViewport.world_2d
 		subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-		subViewport.get_viewport()
 		viewports.append(subViewport)
 		# Container Config
 		container.stretch = true

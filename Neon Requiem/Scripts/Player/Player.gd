@@ -61,7 +61,7 @@ func _input(event):
 			
 			if(abs(tempDir.x) > 0.1 || abs(tempDir.y) > 0.1):
 				shootingDirection = tempDir * 30 + position
-			
+				
 				
 			var rightTrigger = Input.get_joy_axis(playerController, JOY_AXIS_TRIGGER_RIGHT);
 			
@@ -91,9 +91,12 @@ func handleKBInput(delta):
 	# Move Gun Reticle on Mouse Direction
 	if input_enabled:
 		movementDirection = Input.get_vector("left","right","up","down");
-		var camera = get_viewport().get_visible_rect()
-		var mouse_world_position = camera.get_local_mouse_position()
-		shootingDirection = mouse_world_position 
+		var mouse_position = get_global_mouse_position()
+		print("Global Mouse Position:", mouse_position)
+		print("Position:", position)
+		
+		var temp = (mouse_position - position).normalized()
+		shootingDirection =(position + temp)
 		if Input.is_action_just_pressed("dash") && is_dash_ready:
 			dash()
 			
@@ -120,6 +123,7 @@ func _physics_process(delta):
 		handleKBInput(delta)
 		
 	$Gun.look_at(shootingDirection)	
+	
 	if is_dashing:
 		velocity = dash_direction * dashSpeed
 		dash_timer -= delta
@@ -179,7 +183,10 @@ func shoot():
 	
 	# Set the bullet's velocity and rotation based on the direction to the mouse.
 	var direction = (shootingDirection - bullet.position).normalized()
-	bullet.velocity = direction * bulletSpeed
+	if(playerController == -1):
+		bullet.velocity = -direction * bulletSpeed
+	else: 
+		bullet.velocity = direction * bulletSpeed
 	bullet.rotation = direction.angle()
 	
 func shotgun():

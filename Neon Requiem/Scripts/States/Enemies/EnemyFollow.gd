@@ -10,7 +10,8 @@ const bulletSpeed = 250.0
 var rng = RandomNumberGenerator.new()
 
 func Physics_Update(delta):
-	animate.play("Run")
+	if(animate.animation_finished):
+		animate.play("Run")
 	gun.look_at(player.global_position)
 	# Note: This approach is kinda buggy. Refactor into something better later
 	if(player):

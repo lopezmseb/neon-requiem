@@ -140,15 +140,7 @@ func _physics_process(delta):
 		animatedSprite.play("Idle-" + playerName)
 	
 	move_and_slide()
-	if get_parent().get_node("Sword"):
-		var sword = get_parent().get_node("Sword")
-		
-		var direction = (shootingDirection - sword.position).normalized()
-		var threshold = 0.3  
-		if direction.x <  -threshold:
-			sword.position = Vector2(position.x - 13, position.y)  # Follow the player
-		elif direction.x > threshold:
-			sword.position = Vector2(position.x + 13, position.y)
+
 		
 	
 func changeColor():
@@ -259,9 +251,11 @@ func melee():
 	if direction.x <  -threshold:
 		sword.get_node("Sprite2D").flip_h = true  # Flip when facing left
 		sword.rotation = direction.angle() + 3.14/2
+		sword.position = Vector2(position.x - 13, position.y)  # Follow the player
 	elif direction.x > threshold:
 		sword.get_node("Sprite2D").flip_h = false  # Normal when facing right
 		sword.rotation = direction.angle()
+		sword.position = Vector2(position.x + 13, position.y)
 
 
 func _on_shoot_cooldown_timeout():

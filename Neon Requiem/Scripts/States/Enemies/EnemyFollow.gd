@@ -19,10 +19,10 @@ func Physics_Update(delta):
 		var playerDirection = player.global_position - enemy.global_position
 		var distance_to_player = playerDirection.length()
 		animate.flip_h = playerDirection.x < 0
-		
-		if(rng.randi_range(0,100) == 100):
-			# TODO: Fix All Enemies Switching Colors
-			switchColor() 
+#
+#		if(rng.randi_range(0,100) == 100):
+#			# TODO: Fix All Enemies Switching Colors
+#			switchColor() 
 
 		if(distance_to_player > 200):
 			onNewState.emit(self, AvailableStates.Idle)

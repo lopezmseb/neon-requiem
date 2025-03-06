@@ -1,5 +1,7 @@
 extends Node
 
+const OFFENSIVE_SHADER : Shader = preload("res://Assets/Shaders/Offensive.gdshader")
+const DEFENSIVE_SHADER : Shader = preload("res://Assets/Shaders/Defensive.gdshader")
 # Colors
 const DEFENSIVE = "DEFENSIVE"
 const OFFENSIVE = "OFFENSIVE"
@@ -16,4 +18,6 @@ const MATCHUPS : Dictionary = {
 
 const OPPOSITE_MULTIPLIER = 0.5
 const SAME_MULTIPLIER = 1
+
+var enemyShader = DEFENSIVE_SHADER
 

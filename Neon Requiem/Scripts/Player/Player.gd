@@ -243,14 +243,14 @@ func melee():
 	sword.upgrades = swordUpgrades
 	# Position the bullet at the player's shooting point (Marker2D).
 	sword.position = $Gun/Aiming.global_position
-	
+	sword.z_index = 0 
 	# Set the bullet's velocity and rotation based on the direction to the mouse.
 	var direction = (shootingDirection - sword.position).normalized()
 	print(direction.y)
 	var threshold = 0.3  
 	if direction.x <  -threshold:
 		sword.get_node("Sprite2D").flip_h = true  # Flip when facing left
-		sword.rotation = direction.angle() + 3.14/2
+		sword.rotation = direction.angle() + 3.14
 		sword.position = Vector2(position.x - 13, position.y)  # Follow the player
 	elif direction.x > threshold:
 		sword.get_node("Sprite2D").flip_h = false  # Normal when facing right

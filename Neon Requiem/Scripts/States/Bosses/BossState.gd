@@ -3,7 +3,8 @@ class_name BossState
 
 var AvailableStates: Dictionary = {
 	Idle = "idle",
-	Attack = "attack"
+	Attack = "attack",
+	Death = "death"
 }
 
 @export var enemy: CharacterBody2D

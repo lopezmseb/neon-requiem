@@ -5,6 +5,7 @@ var bulletPath = preload("res://Scenes/Bullet.tscn")
 @onready var aiming = $"../../Gun/Aiming"
 
 var readyToAttack = true
+var isEnemyAlive = true
 
 const bulletSpeed = 250.0
 var rng = RandomNumberGenerator.new()
@@ -28,7 +29,7 @@ func Physics_Update(delta):
 			# Follow Player
 			enemy.velocity = playerDirection.normalized() * speed
 			# Attack Player
-			if(readyToAttack):
+			if(readyToAttack && isEnemyAlive):
 				ShootPlayer()
 
 func ShootPlayer():
@@ -88,3 +89,14 @@ func _on_area_2d_body_entered(body: Node2D):
 		#	
 		#	if(distanceFromBody < distanceFromPlayer):
 		#		player = body
+
+
+func _on_health_component_health_depleted(owner):
+	isEnemyAlive = false
+	enemy.visible = false
+	await get_tree().create_timer(1).timeout
+	for i in get_children():
+		var timer = i as Timer
+		timer.stop()
+		
+	owner.queue_free()

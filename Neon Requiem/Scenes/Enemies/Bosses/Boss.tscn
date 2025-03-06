@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://hb7isw645t1t"]
+[gd_scene load_steps=19 format=3 uid="uid://hb7isw645t1t"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/Bosses/Boss.gd" id="1_75vd1"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Defensive.gdshader" id="2_up4e3"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/States/Bosses/BossAttack.gd" id="6_tdji2"]
 [ext_resource type="Script" path="res://Scripts/Enemy/Bosses/StopTimer.gd" id="7_61e08"]
 [ext_resource type="Script" path="res://Scripts/Stats/HealthComponent.gd" id="7_bjisq"]
+[ext_resource type="Script" path="res://Scripts/States/Bosses/BossDeath.gd" id="8_gddqf"]
 [ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="8_spaym"]
 [ext_resource type="PackedScene" uid="uid://c5thomb4wodpp" path="res://Scenes/ObjectHealthBar.tscn" id="9_8u8i2"]
 
@@ -109,6 +110,9 @@ script = ExtResource("7_61e08")
 wait_time = 0.2
 script = ExtResource("7_61e08")
 
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("8_gddqf")
+
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("7_bjisq")
 MAX_HEALTH = 500.0
@@ -137,3 +141,4 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="Area2D" to="StateMachine/Idle" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="StateMachine/Attack/AttackCooldown" to="StateMachine/Attack" method="_on_attack_cooldown_timeout"]
+[connection signal="health_depleted" from="HealthComponent" to="StateMachine/Attack" method="_on_health_component_health_depleted"]

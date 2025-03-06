@@ -171,3 +171,4 @@ metadata/_edit_use_anchors_ = true
 [connection signal="body_entered" from="Area2D" to="StateMachine/Idle" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="Area2D" to="StateMachine/Follow" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="StateMachine/Follow/AttackCooldown" to="StateMachine/Follow" method="_on_attack_cooldown_timeout"]
+[connection signal="health_depleted" from="HealthComponent" to="StateMachine/Follow" method="_on_health_component_health_depleted"]

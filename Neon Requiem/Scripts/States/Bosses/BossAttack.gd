@@ -7,34 +7,43 @@ var rng: RandomNumberGenerator
 var readyToAttack = true
 const bulletSpeed = 500.0
 
+var isBossAlive = true
+
+func Await_Coroutine(timer: Timer):
+	print("Yielding Timer ", timer.name)
+	timer.start()
+	await timer.timeout
+	print(timer.name, " timeout done")
+	return true
+
+
 func Enter():
 	rng = RandomNumberGenerator.new()
 	animate.play("Idle")
 
 func Physics_Update(delta: float):
 	var attackToChoose = rng.randi_range(0,3)
-	if(readyToAttack):
+	if(readyToAttack && isBossAlive):
 		match attackToChoose:
-			0:				
+			0:
 				Attack_All_Around()
-			1: 				
+			1:
 				AAA_Burst()
 			2:
 				Spread_Attack()
 				if(is_instance_valid($SpreadWaitTime)):
-					$SpreadWaitTime.start()
-					await $SpreadWaitTime.timeout
+					var result = await Await_Coroutine($SpreadWaitTime)
 
 				# Get out if Boss died while waiting for timer
 				if(not is_instance_valid(self)):
 					return
 
 				Spread_Attack(45)
-			3: 
+			3:
 				Track_Closest_Player()
 
 func Track_Closest_Player():
-	readyToAttack = false	
+	readyToAttack = false
 	var players = get_tree().root.find_children("*", "Player", true, false)
 	
 	if(players.size() > 0):
@@ -58,12 +67,11 @@ func Track_Closest_Player():
 			bullet.rotation = direction.angle()
 			
 			if(is_instance_valid($TrackTimer)):
-				$TrackTimer.start()
-				await $TrackTimer.timeout
+				var result = await Await_Coroutine($TrackTimer)
 
 			# Get out if Boss died while waiting for timer
 			if(not is_instance_valid(self)):
-					return
+				return
 		$AttackCooldown.start()
 		
 func Attack_All_Around(offset:float = 0.0):
@@ -98,8 +106,7 @@ func AAA_Burst():
 	for i in range(0,3):
 		Attack_All_Around(0 if i%2 == 1 else 15)
 		if(is_instance_valid($BurstTimer)):
-			$BurstTimer.start()
-			await $BurstTimer.timeout
+			var result = await Await_Coroutine($BurstTimer)
 
 		# Get out if Boss died while waiting for timer
 		if(not is_instance_valid(self)):
@@ -118,7 +125,7 @@ func Spread_Attack(baseDegree: float = 0):
 			for j in range(0, bulletAmount):
 				var degreesToChange = (baseDegree + offset * x) + deviation * j
 				
-				var radian = deg_to_rad(degreesToChange) 
+				var radian = deg_to_rad(degreesToChange)
 				var newPos = enemy.position + Vector2(cos(radian), sin(radian)) * 50
 				gun.look_at(newPos)
 				
@@ -137,20 +144,29 @@ func Spread_Attack(baseDegree: float = 0):
 				bullet.rotation = direction.angle()
 		
 		if(is_instance_valid($WaveWaitTime)):
-			$WaveWaitTime.start()
-			await $WaveWaitTime.timeout
+			var result = await Await_Coroutine($WaveWaitTime)
 		# Get out if Boss died while waiting for timer
 		if(not is_instance_valid(self)):
 			return
 	
-	$AttackCooldown.start()	
+	$AttackCooldown.start()
 
-func _notification(what):
-	if what == NOTIFICATION_PREDELETE:
-		for i in get_children():
-			var timer = i as Timer
-			timer.stop()
-
+#func _notification(what):
+#	pass
+	
 func _on_attack_cooldown_timeout():
 	readyToAttack = true
 	
+
+
+func _on_health_component_health_depleted(owner):
+	isBossAlive = false
+	enemy.visible = false
+	await get_tree().create_timer(4).timeout
+	print(get_children())
+	for i in get_children():
+		if(i is Timer):
+			i.stop()
+	
+	owner.queue_free()
+

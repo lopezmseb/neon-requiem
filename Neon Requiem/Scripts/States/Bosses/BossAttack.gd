@@ -52,6 +52,8 @@ func Track_Closest_Player():
 		var bulletAmount = 100
 		
 		for i in range(0, 20):
+			if(not isBossAlive):
+				break
 			var bullet = bulletPath.instantiate()
 			add_child(bullet)
 
@@ -82,6 +84,8 @@ func Attack_All_Around(offset:float = 0.0):
 	var degreeIncrease = degrees/bulletAmount
 	
 	for i in range(0, bulletAmount):
+		if(not isBossAlive):
+			return
 		var radian = deg_to_rad((degreeIncrease * i) + offset)
 		var newPos = enemy.position + Vector2(cos(radian), sin(radian)) * 50
 		gun.look_at(newPos)
@@ -104,6 +108,8 @@ func Attack_All_Around(offset:float = 0.0):
 	
 func AAA_Burst():
 	for i in range(0,3):
+		if(not isBossAlive):
+			return
 		Attack_All_Around(0 if i%2 == 1 else 15)
 		if(is_instance_valid($BurstTimer)):
 			var result = await Await_Coroutine($BurstTimer)
@@ -123,6 +129,8 @@ func Spread_Attack(baseDegree: float = 0):
 		var deviation = maxSpread/bulletAmount
 		for x in range(0,4):
 			for j in range(0, bulletAmount):
+				if(not isBossAlive):
+					return
 				var degreesToChange = (baseDegree + offset * x) + deviation * j
 				
 				var radian = deg_to_rad(degreesToChange)
@@ -168,5 +176,5 @@ func _on_health_component_health_depleted(owner):
 		if(i is Timer):
 			i.stop()
 	
-	owner.queue_free()
+	onNewState.emit(self, AvailableStates.Death)
 

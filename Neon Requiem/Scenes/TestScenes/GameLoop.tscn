@@ -58,19 +58,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-process_mode = 3
-visible = false
-stream = ExtResource("5_ywwyg")
-autoplay = true
-bus = &"Music"
-
 [node name="SettingsMenu" parent="." instance=ExtResource("6_e1fsm")]
 visible = false
 layout_mode = 1
 
 [node name="BeatNotifier" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player")]
 script = ExtResource("8_f5ep2")
+bpm = 100.0
+beat_length = 0.6
 audio_stream_player = NodePath("../AudioStreamPlayer")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

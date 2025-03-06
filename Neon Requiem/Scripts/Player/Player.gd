@@ -140,6 +140,16 @@ func _physics_process(delta):
 		animatedSprite.play("Idle-" + playerName)
 	
 	move_and_slide()
+	if get_parent().get_node("Sword"):
+		var sword = get_parent().get_node("Sword")
+		
+		var direction = (shootingDirection - sword.position).normalized()
+		var threshold = 0.3  
+		if direction.x <  -threshold:
+			sword.position = Vector2(position.x - 13, position.y)  # Follow the player
+		elif direction.x > threshold:
+			sword.position = Vector2(position.x + 13, position.y)
+		
 	
 func changeColor():
 	colorComponent.color = COLORS.OFFENSIVE if colorComponent.color == COLORS.DEFENSIVE else COLORS.DEFENSIVE; 
@@ -244,7 +254,15 @@ func melee():
 	
 	# Set the bullet's velocity and rotation based on the direction to the mouse.
 	var direction = (shootingDirection - sword.position).normalized()
-	sword.rotation = direction.angle()
+	print(direction.y)
+	var threshold = 0.3  
+	if direction.x <  -threshold:
+		sword.get_node("Sprite2D").flip_h = true  # Flip when facing left
+		sword.rotation = direction.angle() + 3.14/2
+	elif direction.x > threshold:
+		sword.get_node("Sprite2D").flip_h = false  # Normal when facing right
+		sword.rotation = direction.angle()
+
 
 func _on_shoot_cooldown_timeout():
 	is_shoot_ready = true

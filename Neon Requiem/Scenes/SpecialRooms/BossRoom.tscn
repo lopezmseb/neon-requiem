@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b4i6xlkwi7ae0"]
 
 [ext_resource type="TileSet" uid="uid://dm8htohw1qv3n" path="res://Assets/TileSets/Dungeon.tres" id="1_q010m"]
-[ext_resource type="Script" path="res://Scripts/SpecialRooms/BossRoom.gd" id="2_rw6vx"]
+[ext_resource type="Script" uid="uid://jf4cnvex8jy1" path="res://Scripts/SpecialRooms/BossRoom.gd" id="2_rw6vx"]
 
 [node name="BossRoom" type="Node2D"]
 

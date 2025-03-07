@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://b41rswdtvd10e"]
 
-[ext_resource type="Script" path="res://Scripts/GameLoop.gd" id="1_a5ecp"]
+[ext_resource type="Script" uid="uid://ha4ko87xpcam" path="res://Scripts/GameLoop.gd" id="1_a5ecp"]
 [ext_resource type="PackedScene" uid="uid://833p2gpb3bdv" path="res://Scenes/TestScenes/RoomGeneration.tscn" id="1_q0fmw"]
 [ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="3_pv0yb"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.gd" id="4_cxvdw"]
+[ext_resource type="Script" uid="uid://vkd8f0r02u4y" path="res://Scripts/Player/PlayerCamera.gd" id="4_cxvdw"]
 [ext_resource type="AudioStream" uid="uid://b4yi0o5f878jr" path="res://Assets/Sound/Music/cyberpunk-music-277931.mp3" id="5_ywwyg"]
-[ext_resource type="Script" path="res://Scripts/Music/BeatSwitcher.gd" id="6_ctnvr"]
+[ext_resource type="Script" uid="uid://dlk5bcy1ap276" path="res://Scripts/Music/BeatSwitcher.gd" id="6_ctnvr"]
 [ext_resource type="PackedScene" uid="uid://cwuxgblo0jje2" path="res://Scenes/UI/settings_menu.tscn" id="6_e1fsm"]
-[ext_resource type="Script" path="res://addons/rhythm_notifier/rhythm_notifier.gd" id="8_f5ep2"]
+[ext_resource type="Script" uid="uid://mfdbby65312t" path="res://addons/rhythm_notifier/rhythm_notifier.gd" id="8_f5ep2"]
 
 [node name="GameLoop" type="Control"]
 layout_mode = 3
@@ -70,6 +70,7 @@ audio_stream_player = NodePath("../AudioStreamPlayer")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ywwyg")
+volume_db = -10.306
 script = ExtResource("6_ctnvr")
 
 [connection signal="level_generated" from="HBoxContainer/SubViewportContainer/SubViewport/RoomGeneration" to="." method="_on_level_generated"]

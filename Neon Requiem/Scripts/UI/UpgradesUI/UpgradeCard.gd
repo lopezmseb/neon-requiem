@@ -34,11 +34,11 @@ func _process(delta):
 	pivot_offset = size/2
 	upgradeStrategyFillInfo()
 
-	var tween = create_tween()
-	if(has_focus() or isHovering):
-		tween.tween_property($".", "scale",Vector2(1.025, 1.025), 0.2)
-	else:
-		tween.tween_property($".", "scale",Vector2(1, 1), 0.2)
+	#var tween = get_tree().create_tween()
+	#if(has_focus() or isHovering):
+		#tween.tween_property($".", "scale",Vector2(1.025, 1.025), 0.2)
+	#else:
+		#tween.tween_property($".", "scale",Vector2(1, 1), 0.2)
 
 func _on_pressed():
 	upgradeStrategy.OnPickup()

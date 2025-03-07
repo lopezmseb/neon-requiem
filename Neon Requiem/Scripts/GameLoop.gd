@@ -261,7 +261,7 @@ func onUpgradeSelected():
 	if(upgradeSelectedCount == players.size()):
 		# If UpgradeSelectScreen exists, remove it from tree and set it to null (for next level)
 		if(upgradeSelectScreen):
-			upgradeSelectScreen.queue_free()
+			upgradeSelectScreen.call_deferred("queue_free")
 			upgradeSelectScreen = null
 			
 			# Make al players "Alive" again

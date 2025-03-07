@@ -11,8 +11,8 @@ var Room = preload("res://Scenes/Room.tscn")
 var BossRoom = preload("res://Scenes/SpecialRooms/BossRoom.tscn")
 var Boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn")
 var tileSize = 16
-var maxRooms = 10
-var minRooms = 5
+var maxRooms = 3
+var minRooms = 2
 var minSize = 10
 var maxSize = 15
 var spread = 200
@@ -69,7 +69,7 @@ func moveToNextLevel(level:int):
 	
 	tileMap.clear()
 	
-	if(level%5 == 0):
+	if(level%2 == 0):
 		SpawnBossRoom()
 	else:
 		makeRooms()

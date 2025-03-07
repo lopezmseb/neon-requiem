@@ -191,7 +191,7 @@ func game_over():
 	
 func _on_level_generated():
 	
-	if(level % 5 == 0):
+	if(level % 2 == 0):
 		var room = roomGen.getRooms().filter(func(room): return room.name == "BossRoom").front()
 		if(room):
 			var roomMarker = room.find_child("BossStartingPosition") as Marker2D

@@ -1,6 +1,7 @@
 extends EnemyState
 
 var bulletPath = preload("res://Scenes/Bullet.tscn")
+var canPlayAnimation = true
 @onready var gun = $"../../Gun"
 @onready var aiming = $"../../Gun/Aiming"
 
@@ -10,26 +11,30 @@ const bulletSpeed = 250.0
 var rng = RandomNumberGenerator.new()
 
 func Physics_Update(delta):
-	animate.play("Run")
+	if(animate.animation_finished && canPlayAnimation):
+		animate.play("Run")
 	gun.look_at(player.global_position)
 	# Note: This approach is kinda buggy. Refactor into something better later
 	if(player):
 		var playerDirection = player.global_position - enemy.global_position
-		
+		var distance_to_player = playerDirection.length()
 		animate.flip_h = playerDirection.x < 0
-		
-		if(rng.randi_range(0,100) == 100):
-			# TODO: Fix All Enemies Switching Colors
-			switchColor()
+#
+#		if(rng.randi_range(0,100) == 100):
+#			# TODO: Fix All Enemies Switching Colors
+#			switchColor() 
 
-		if(playerDirection.length() > 200):
+		if(distance_to_player > 200):
 			onNewState.emit(self, AvailableStates.Idle)
-		else:
+		elif distance_to_player <= 25:
+			enemy.velocity = -playerDirection.normalized() * (speed * 0.2)
+		else :
 			# Follow Player
 			enemy.velocity = playerDirection.normalized() * speed
 			# Attack Player
 			if(readyToAttack):
 				ShootPlayer()
+		
 
 func ShootPlayer():
 	# Start Cooldown and stop from attacking
@@ -88,3 +93,7 @@ func _on_area_2d_body_entered(body: Node2D):
 		#	
 		#	if(distanceFromBody < distanceFromPlayer):
 		#		player = body
+
+
+func _on_base_enemy_on_damage(allowAnimation: bool):
+	canPlayAnimation = allowAnimation

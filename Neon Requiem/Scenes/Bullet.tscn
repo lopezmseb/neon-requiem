@@ -75,7 +75,7 @@ radius = 2.0
 
 [node name="Bullet" type="CharacterBody2D"]
 collision_layer = 8
-collision_mask = 3
+collision_mask = 7
 script = ExtResource("1_t3mwa")
 
 [node name="BulletSprite" type="AnimatedSprite2D" parent="."]
@@ -111,5 +111,4 @@ volume_db = 15.0
 bus = &"SFX"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="timeout" from="Life" to="." method="_on_life_timeout"]

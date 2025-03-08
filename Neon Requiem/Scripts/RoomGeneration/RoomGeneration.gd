@@ -238,22 +238,26 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 	var x_y = pos1
 	var y_x = pos2
 	
-#	if randi() % 2 > 0:
-#		x_y = pos2
-#		y_x = pos1
+	if randi() % 2 > 0:
+		x_y = pos2
+		y_x = pos1
 
 	# Carve horizontal path
 	for x in range(pos1.x, pos2.x, xDiff):
-	# Set the main tile
+		# Set the path tile
 		tileMap.set_cell(0, Vector2i(x, x_y.y), 1, Vector2i(0, 1))
+		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(0, 1))
+		#erase detail tiles on layer 1
+		tileMap.erase_cell(1, Vector2i(x, x_y.y + xDiff))
 		tileMap.erase_cell(1, Vector2i(x, x_y.y))
 
 		var left_pos = Vector2i(x - 1, x_y.y)
 		
 		if tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(5, 0):
 			tileMap.set_cell(0, left_pos, 1, Vector2i(0, 0))
+		
 			
-
+		# Handle different yDiff values (direction the path is generated)
 		var top_pos : Vector2i
 		var bottom_pos : Vector2i
 		if xDiff > 0:
@@ -263,83 +267,67 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 			top_pos = Vector2i(x, x_y.y - 2)
 			bottom_pos = Vector2i(x, x_y.y + 1)
 
-		# Check top and bottom positions for the target tile (5, 0)
+		# if prev tile is floor current tile is wall make it a corner
 		if tileMap.get_cell_atlas_coords(0, Vector2i(top_pos.x - 1, top_pos.y)) == Vector2i(0, 1) && tileMap.get_cell_atlas_coords(0, top_pos) == Vector2i(0, 0):
 			tileMap.set_cell(0, top_pos, 1, Vector2i(6, 0),1)
-		
+		# if next tile is floor current tile is wall make it a corner
 		elif tileMap.get_cell_atlas_coords(0, Vector2i(top_pos.x + 1, top_pos.y)) == Vector2i(0, 1) && tileMap.get_cell_atlas_coords(0, top_pos) == Vector2i(0, 0) :
 			tileMap.set_cell(0, top_pos, 1, Vector2i(6, 0),3)
 			
-		if tileMap.get_cell_atlas_coords(0, top_pos) == Vector2i(5, 0):
-			tileMap.set_cell(0, top_pos, 1, Vector2i(0, 0))
-			
-			
+		# if prev tile is floor current tile is wall make it a corner	
 		if tileMap.get_cell_atlas_coords(0, Vector2i(bottom_pos.x - 1, bottom_pos.y)) == Vector2i(0, 1) && tileMap.get_cell_atlas_coords(0, bottom_pos) == Vector2i(0, 0):
 			tileMap.set_cell(0, bottom_pos, 1, Vector2i(6, 0),2)
-		
+		# if next tile is floor current tile is wall make it a corner
 		elif tileMap.get_cell_atlas_coords(0, Vector2i(bottom_pos.x + 1, bottom_pos.y)) == Vector2i(0, 1) && tileMap.get_cell_atlas_coords(0, bottom_pos) == Vector2i(0, 0):
 			tileMap.set_cell(0, bottom_pos, 1, Vector2i(6, 0))
 		
-			
-		elif tileMap.get_cell_atlas_coords(0, bottom_pos) == Vector2i(5, 0):
+		# if tiles to top and buttom are black, place regular wall
+		if tileMap.get_cell_atlas_coords(0, bottom_pos) == Vector2i(5, 0):
 			tileMap.set_cell(0, bottom_pos, 1, Vector2i(0, 0), 2)
-
-		# Set the final tile at the position with xDiff applied
-		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(0, 1))
-		tileMap.erase_cell(1, Vector2i(x, x_y.y + xDiff))
+		if tileMap.get_cell_atlas_coords(0, top_pos) == Vector2i(5, 0):
+			tileMap.set_cell(0, top_pos, 1, Vector2i(0, 0))
+		
 
 	# Carve vertical path
 	for y in range(pos1.y, pos2.y, yDiff):
-		# Set the main tile
+		# Set the path tile
 		tileMap.set_cell(0, Vector2i(y_x.x, y), 1, Vector2i(0, 1))
 		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(0, 1))
+		# delete any detail tiles on layer 1 
 		tileMap.erase_cell(1, Vector2i(y_x.x, y))
 		tileMap.erase_cell(1, Vector2i(y_x.x + yDiff, y))
-
-		# Check if the tile above the current position is the target tile (5, 0)
-#		var above_pos = Vector2i(y_x.x, y - 1)
-#		if tileMap.get_cell_atlas_coords(0, above_pos) == Vector2i(5, 0):
-#			tileMap.set_cell(0, above_pos, 1, Vector2i(0, 0), 1)
 			
-		# Handle different yDiff values
+		# Handle different yDiff values (direction the path is generated)
 		var left_pos : Vector2i
 		var right_pos : Vector2i
+		
 		if yDiff > 0:
-			left_pos = Vector2i(y_x.x - 1, y)
+			left_pos = Vector2i(y_x.x - 1, y) 
 			right_pos = Vector2i(y_x.x + 2, y)
 		elif yDiff < 0:
 			left_pos = Vector2i(y_x.x - 2, y)
 			right_pos = Vector2i(y_x.x + 1, y)
 			
-		# Check above and below the left position
+		# if prev tile is floor current tile is wall make it a corner
 		if tileMap.get_cell_atlas_coords(0, Vector2i(left_pos.x, left_pos.y - 1)) == Vector2i(0, 1) and tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(0, 0):
 			tileMap.set_cell(0, left_pos, 1, Vector2i(6 ,0))
-
+		# if next tile is floor current tile is wall make it a corner
 		elif tileMap.get_cell_atlas_coords(0, Vector2i(left_pos.x, left_pos.y + 1)) == Vector2i(0, 1) and tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(0, 0):
 			tileMap.set_cell(0, left_pos, 1, Vector2i(6, 0),3)
 
-		# Check above and below the right position
+		# if prev tile is floor current tile is wall make it a corner
 		if tileMap.get_cell_atlas_coords(0, Vector2i(right_pos.x, right_pos.y - 1)) == Vector2i(0, 1) and tileMap.get_cell_atlas_coords(0, right_pos) == Vector2i(0, 0):
 			tileMap.set_cell(0, right_pos, 1, Vector2i(6, 0),2)
-
+		# if next tile is floor current tile is wall make it a corner
 		elif tileMap.get_cell_atlas_coords(0, Vector2i(right_pos.x, right_pos.y + 1)) == Vector2i(0, 1) and tileMap.get_cell_atlas_coords(0, right_pos) == Vector2i(0, 0):
 			tileMap.set_cell(0, right_pos, 1, Vector2i(6, 0),1)
 			
-		# Check left and right positions for the target tile (5, 0)
+		# if tiles to left and right are black, place regular wall
 		if tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(5, 0):
 			tileMap.set_cell(0, left_pos, 1, Vector2i(0, 0), 1)
 			
 		if tileMap.get_cell_atlas_coords(0, right_pos) == Vector2i(5, 0):
 			tileMap.set_cell(0, right_pos, 1, Vector2i(0, 0), 3)
-			
-
-		# Set the final tile with yDiff applied
-		
-
-		# Check if the tile above the final position is the target tile (5, 0)
-#		if tileMap.get_cell_atlas_coords(0, above_pos) == Vector2i(5, 0):
-#			tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y - 1), 1, Vector2i(0, 0), 1)
-
 
 func find_start_room():
 	var min_x = INF 

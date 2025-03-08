@@ -247,14 +247,23 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		# Set the path tile
 		tileMap.set_cell(0, Vector2i(x, x_y.y), 1, Vector2i(0, 1))
 		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(0, 1))
+		
+		if  tileMap.get_cell_atlas_coords(0, Vector2i(x + 1,  x_y.y + xDiff)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(x + 1,  x_y.y + xDiff), 1, Vector2i(0, 0), 3)
+		if  tileMap.get_cell_atlas_coords(0, Vector2i(x + 1, x_y.y)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(x + 1, x_y.y), 1, Vector2i(0, 0), 3)
+		if  tileMap.get_cell_atlas_coords(0, Vector2i(x - 1,  x_y.y + xDiff)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(x - 1,  x_y.y + xDiff), 1, Vector2i(0, 0), 1)
+		if  tileMap.get_cell_atlas_coords(0, Vector2i(x - 1, x_y.y)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(x - 1, x_y.y), 1, Vector2i(0, 0), 1)
 		#erase detail tiles on layer 1
 		tileMap.erase_cell(1, Vector2i(x, x_y.y + xDiff))
 		tileMap.erase_cell(1, Vector2i(x, x_y.y))
 
 		var left_pos = Vector2i(x - 1, x_y.y)
 		
-		if tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(5, 0):
-			tileMap.set_cell(0, left_pos, 1, Vector2i(0, 0))
+#		if tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(5, 0):
+#			tileMap.set_cell(0, left_pos, 1, Vector2i(0, 0))
 		
 			
 		# Handle different yDiff values (direction the path is generated)
@@ -293,6 +302,14 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		# Set the path tile
 		tileMap.set_cell(0, Vector2i(y_x.x, y), 1, Vector2i(0, 1))
 		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(0, 1))
+		if  tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x, y + 1)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(y_x.x, y + 1), 1, Vector2i(0, 0))
+		if  tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x + yDiff, y + 1)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y + 1), 1, Vector2i(0, 0))
+		if  tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x, y - 1)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(y_x.x, y - 1), 1, Vector2i(0, 0), 2)
+		if  tileMap.get_cell_atlas_coords(0, Vector2i(y_x.x + yDiff, y - 1)) == Vector2i(5, 0):
+			tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y - 1), 1, Vector2i(0, 0), 2)
 		# delete any detail tiles on layer 1 
 		tileMap.erase_cell(1, Vector2i(y_x.x, y))
 		tileMap.erase_cell(1, Vector2i(y_x.x + yDiff, y))

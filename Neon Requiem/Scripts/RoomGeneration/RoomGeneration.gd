@@ -210,7 +210,6 @@ func makeMap():
 	
 	find_start_room()
 	find_end_room()
-	clean_up()
 	
 	
 	if(debugEnabled):
@@ -224,69 +223,7 @@ func makeMap():
 
 	# Emit signal
 	level_generated.emit()
-var corners = [
-	{
-		"pattern":[
-			Vector2i(0, 1), Vector2i(0, 0), Vector2i(5, 0),
-			Vector2i(0, 1), Vector2i(0, 0), Vector2i(0, 0),
-			Vector2i(0, 1), Vector2i(0, 1), Vector2i(0, 1)
-		],
-		"tile": 0
-	},
-	{
-		"pattern":[
-			Vector2i(0, 1), Vector2i(0, 1), Vector2i(0, 1),
-			Vector2i(0, 1), Vector2i(0, 0), Vector2i(0, 0),
-			Vector2i(0, 1), Vector2i(0, 0), Vector2i(5, 0)
-		],
-		"tile": 1
-	},
-	{
-		"pattern":[
-			Vector2i(5, 0), Vector2i(0, 0), Vector2i(0, 1),
-			Vector2i(0, 0), Vector2i(0, 0), Vector2i(0, 1),
-			Vector2i(0, 1), Vector2i(0, 1), Vector2i(0, 1)
-		],
-		"tile": 2
-	},
-	{
-		"pattern":[
-			Vector2i(0, 1), Vector2i(0, 1), Vector2i(0, 1),
-			Vector2i(0, 0), Vector2i(0, 0), Vector2i(0, 1),
-			Vector2i(5, 0), Vector2i(0, 0), Vector2i(0, 1)
-		],
-		"tile": 3
-	},
-	
-]
 
-func findCorner(position: Vector2i):
-	var surrounding_cells = tileMap.get_surrounding_cells(position)
-	# Iterate through each pattern to check if it matches
-	for pattern_info in corners:
-		var target_pattern = pattern_info["pattern"]
-		var matching_tile = pattern_info["tile"]
-		
-		# Check if the surrounding tiles match the pattern
-		var pattern_match = true
-		var pattern_length = len(target_pattern)
-
-		# Check if the surrounding cells match the pattern
-		for i in range(pattern_length):
-			if i >= surrounding_cells.size():
-				pattern_match = false
-				break  # Stop checking if the pattern is broken
-			var cell_pos = surrounding_cells[i]
-			var current_tile = tileMap.get_cell_atlas_coords(0, cell_pos)
-			if current_tile != target_pattern[i]:
-				pattern_match = false
-				break  # Stop checking if the pattern is broken
-
-		# If the pattern matches, place the corresponding tile
-		if pattern_match:
-			print("MATCH FOUND")
-			tileMap.set_cell(0, position, 1, Vector2i(4, 0), 0)
-			break  # Stop checking other patterns once a match is found
 
 func carvePath(pos1: Vector2i, pos2: Vector2i):
 	# Determine direction of movement
@@ -300,9 +237,7 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 
 	var x_y = pos1
 	var y_x = pos2
-
-	tileMap.set_cell(0, pos1, 1, Vector2i(4, 1))
-	tileMap.set_cell(0, pos2, 1, Vector2i(4, 1))
+	
 #	if randi() % 2 > 0:
 #		x_y = pos2
 #		y_x = pos1
@@ -312,16 +247,9 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 	# Set the main tile
 		tileMap.set_cell(0, Vector2i(x, x_y.y), 1, Vector2i(0, 1))
 		tileMap.erase_cell(1, Vector2i(x, x_y.y))
-#		if x >= pos2.x:
-#			tileMap.set_cell(0, Vector2i(x + 1, x_y.y), 1, Vector2i(4, 1),0)
-#			tileMap.set_cell(0, Vector2i(x + 1, x_y.y + xDiff ), 1, Vector2i(4, 1),0)
-#		if x == pos1.x:
-#			tileMap.set_cell(0, Vector2i(x - 1, x_y.y), 1, Vector2i(4, 1),0)
-#			tileMap.set_cell(0, Vector2i(x - 1, x_y.y - xDiff ), 1, Vector2i(4, 1),0)
 
-		
-		# Check if the tile at the left of the current position is the target tile (5, 0)
 		var left_pos = Vector2i(x - 1, x_y.y)
+		
 		if tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(5, 0):
 			tileMap.set_cell(0, left_pos, 1, Vector2i(0, 0))
 			
@@ -336,32 +264,43 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 			bottom_pos = Vector2i(x, x_y.y + 1)
 
 		# Check top and bottom positions for the target tile (5, 0)
+		if tileMap.get_cell_atlas_coords(0, Vector2i(top_pos.x - 1, top_pos.y)) == Vector2i(0, 1) && tileMap.get_cell_atlas_coords(0, top_pos) == Vector2i(0, 0):
+			tileMap.set_cell(0, top_pos, 1, Vector2i(6, 0),1)
+		
+		elif tileMap.get_cell_atlas_coords(0, Vector2i(top_pos.x + 1, top_pos.y)) == Vector2i(0, 1) && tileMap.get_cell_atlas_coords(0, top_pos) == Vector2i(0, 0) :
+			tileMap.set_cell(0, top_pos, 1, Vector2i(6, 0),3)
+			
 		if tileMap.get_cell_atlas_coords(0, top_pos) == Vector2i(5, 0):
 			tileMap.set_cell(0, top_pos, 1, Vector2i(0, 0))
 			
-		
-		if tileMap.get_cell_atlas_coords(0, bottom_pos) == Vector2i(5, 0):
-			tileMap.set_cell(0, bottom_pos, 1, Vector2i(0, 0), 2)
 			
+		if tileMap.get_cell_atlas_coords(0, Vector2i(bottom_pos.x - 1, bottom_pos.y)) == Vector2i(0, 1) && tileMap.get_cell_atlas_coords(0, bottom_pos) == Vector2i(0, 0):
+			tileMap.set_cell(0, bottom_pos, 1, Vector2i(6, 0),2)
 		
+		elif tileMap.get_cell_atlas_coords(0, Vector2i(bottom_pos.x + 1, bottom_pos.y)) == Vector2i(0, 1) && tileMap.get_cell_atlas_coords(0, bottom_pos) == Vector2i(0, 0):
+			tileMap.set_cell(0, bottom_pos, 1, Vector2i(6, 0))
+		
+			
+		elif tileMap.get_cell_atlas_coords(0, bottom_pos) == Vector2i(5, 0):
+			tileMap.set_cell(0, bottom_pos, 1, Vector2i(0, 0), 2)
+
 		# Set the final tile at the position with xDiff applied
 		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(0, 1))
 		tileMap.erase_cell(1, Vector2i(x, x_y.y + xDiff))
 
-
-	# Carve vertical path
 	# Carve vertical path
 	for y in range(pos1.y, pos2.y, yDiff):
 		# Set the main tile
 		tileMap.set_cell(0, Vector2i(y_x.x, y), 1, Vector2i(0, 1))
+		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(0, 1))
 		tileMap.erase_cell(1, Vector2i(y_x.x, y))
+		tileMap.erase_cell(1, Vector2i(y_x.x + yDiff, y))
 
 		# Check if the tile above the current position is the target tile (5, 0)
-		var above_pos = Vector2i(y_x.x, y - 1)
-		if tileMap.get_cell_atlas_coords(0, above_pos) == Vector2i(5, 0):
-			tileMap.set_cell(0, above_pos, 1, Vector2i(0, 0), 1)
+#		var above_pos = Vector2i(y_x.x, y - 1)
+#		if tileMap.get_cell_atlas_coords(0, above_pos) == Vector2i(5, 0):
+#			tileMap.set_cell(0, above_pos, 1, Vector2i(0, 0), 1)
 			
-
 		# Handle different yDiff values
 		var left_pos : Vector2i
 		var right_pos : Vector2i
@@ -371,7 +310,21 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		elif yDiff < 0:
 			left_pos = Vector2i(y_x.x - 2, y)
 			right_pos = Vector2i(y_x.x + 1, y)
+			
+		# Check above and below the left position
+		if tileMap.get_cell_atlas_coords(0, Vector2i(left_pos.x, left_pos.y - 1)) == Vector2i(0, 1) and tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(0, 0):
+			tileMap.set_cell(0, left_pos, 1, Vector2i(6 ,0))
 
+		elif tileMap.get_cell_atlas_coords(0, Vector2i(left_pos.x, left_pos.y + 1)) == Vector2i(0, 1) and tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(0, 0):
+			tileMap.set_cell(0, left_pos, 1, Vector2i(6, 0),3)
+
+		# Check above and below the right position
+		if tileMap.get_cell_atlas_coords(0, Vector2i(right_pos.x, right_pos.y - 1)) == Vector2i(0, 1) and tileMap.get_cell_atlas_coords(0, right_pos) == Vector2i(0, 0):
+			tileMap.set_cell(0, right_pos, 1, Vector2i(6, 0),2)
+
+		elif tileMap.get_cell_atlas_coords(0, Vector2i(right_pos.x, right_pos.y + 1)) == Vector2i(0, 1) and tileMap.get_cell_atlas_coords(0, right_pos) == Vector2i(0, 0):
+			tileMap.set_cell(0, right_pos, 1, Vector2i(6, 0),1)
+			
 		# Check left and right positions for the target tile (5, 0)
 		if tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(5, 0):
 			tileMap.set_cell(0, left_pos, 1, Vector2i(0, 0), 1)
@@ -381,27 +334,11 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 			
 
 		# Set the final tile with yDiff applied
-		tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y), 1, Vector2i(0, 1))
-		tileMap.erase_cell(1, Vector2i(y_x.x + yDiff, y))
+		
 
 		# Check if the tile above the final position is the target tile (5, 0)
-		if tileMap.get_cell_atlas_coords(0, above_pos) == Vector2i(5, 0):
-			tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y - 1), 1, Vector2i(0, 0), 1)
-			
-		# Call findCorner for the current position
-		
-
-
-
-		
-func clean_up():
-	var fullRectangle = Rect2()
-	var topLeft = tileMap.local_to_map(fullRectangle.position)
-	var bottomRight = tileMap.local_to_map(fullRectangle.end)
-		
-	for x in range (topLeft.x, bottomRight.x):
-		for y in range(topLeft.y, bottomRight.y):
-			findCorner(Vector2i(x, y))
+#		if tileMap.get_cell_atlas_coords(0, above_pos) == Vector2i(5, 0):
+#			tileMap.set_cell(0, Vector2i(y_x.x + yDiff, y - 1), 1, Vector2i(0, 0), 1)
 
 
 func find_start_room():

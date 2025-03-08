@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cj2y5f76aa0bn"]
 
-[ext_resource type="Script" path="res://Scripts/RoomGeneration/Room.gd" id="1_eaiyk"]
+[ext_resource type="Script" uid="uid://dcythyesiq2bl" path="res://Scripts/RoomGeneration/Room.gd" id="1_eaiyk"]
 
 [node name="Room" type="RigidBody2D"]
 lock_rotation = true

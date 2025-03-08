@@ -21,7 +21,7 @@ func damage(attack: AttackComponent):
 			parent.visible = false
 			currentHealth = MAX_HEALTH
 		else:
-			parent.queue_free()
+			health_depleted.emit(parent)
 
 		
 

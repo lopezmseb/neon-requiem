@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ch68ecfhckwp"]
 
-[ext_resource type="Script" path="res://Scripts/UI/PlayerJoin.gd" id="1_4yxcu"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/JoinCard.tscn" id="2_myxct"]
+[ext_resource type="Script" uid="uid://bxngbwpp8pigj" path="res://Scripts/UI/PlayerJoin.gd" id="1_4yxcu"]
+[ext_resource type="PackedScene" uid="uid://23iipgggdjmy" path="res://Scenes/UI/JoinCard.tscn" id="2_myxct"]
 [ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="3_nd2l3"]
 [ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="4_is2ts"]
 

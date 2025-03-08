@@ -8,9 +8,11 @@ class_name RoomGeneration
 @onready var tileMap = $TileMap
 
 var Room = preload("res://Scenes/Room.tscn")
+var BossRoom = preload("res://Scenes/SpecialRooms/BossRoom.tscn")
+var Boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn")
 var tileSize = 16
-var maxRooms = 10
-var minRooms = 5
+var maxRooms = 3
+var minRooms = 2
 var minSize = 10
 var maxSize = 15
 var spread = 200
@@ -55,19 +57,32 @@ func getRooms():
 func _process(delta):
 	queue_redraw()
 	
+func SpawnBossRoom():
+	var room = BossRoom.instantiate()
+	$Rooms.add_child(room)
+	level_generated.emit()
+	
 func moveToNextLevel(level:int):
 	# Delete All Old Rooms
 	for i in $Rooms.get_children():
 		i.queue_free()
 	
-	makeRooms()
+	tileMap.clear()
+	
+	if(level%2 == 0):
+		SpawnBossRoom()
+	else:
+		makeRooms()
 	
 func spawnPlayer(player: Player, offset: float):
 	if(is_instance_valid(startRoom)):
 		player.position = Vector2(startRoom.position.x + offset, startRoom.position.y)
 	
-func spawnEnemy(enemy, room):
-	enemy.position = room.position
+func spawnEnemy(enemy, room, position = null):
+	if(position):
+		enemy.position = position
+	else:
+		enemy.position = room.position
 	
 func spawnEntities(players: Array[Player]) -> void:
 	# Set Player to startRoom position

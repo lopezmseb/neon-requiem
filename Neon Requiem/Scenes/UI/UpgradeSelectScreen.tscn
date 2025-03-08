@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://chjxraoikmphb"]
 
-[ext_resource type="Script" path="res://Scripts/UI/UpgradeSelectScreen.gd" id="1_7re0p"]
-[ext_resource type="Script" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="2_ip6pi"]
+[ext_resource type="Script" uid="uid://cbv3raxfm6ety" path="res://Scripts/UI/UpgradeSelectScreen.gd" id="1_7re0p"]
+[ext_resource type="Script" uid="uid://bg40lfg4qm5j2" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="2_ip6pi"]
 [ext_resource type="Texture2D" uid="uid://43677synoxf3" path="res://Assets/UI/Upgrades/Bullet.png" id="3_il8dv"]
 [ext_resource type="Texture2D" uid="uid://crrvojxbn3eiw" path="res://Assets/UI/Upgrades/Health.png" id="3_rui1o"]
-[ext_resource type="Script" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="4_n5ruu"]
-[ext_resource type="Script" path="res://Scripts/Upgrades/CooldownUpgrades/CooldownAdditiveReduction.gd" id="5_uwgio"]
+[ext_resource type="Script" uid="uid://mjr2numl6hk4" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="4_n5ruu"]
+[ext_resource type="Script" uid="uid://cg0amubqr7uyp" path="res://Scripts/Upgrades/CooldownUpgrades/CooldownAdditiveReduction.gd" id="5_uwgio"]
 
 [sub_resource type="Theme" id="Theme_r2nu1"]
 default_font_size = 30
@@ -20,7 +20,7 @@ grow_vertical = 2
 script = ExtResource("1_7re0p")
 upgrades = [NodePath("BulletAdditiveUpgrade"), NodePath("HealthAdditiveUpgrade"), NodePath("CooldownAdditiveReduction")]
 
-[node name="Fade" type="ColorRect" parent="."]
+[node name="Fade_Upgrade" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

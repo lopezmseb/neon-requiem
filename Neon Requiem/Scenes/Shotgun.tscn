@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cwfw10rn80bwt"]
 
-[ext_resource type="Script" path="res://Shotgun.gd" id="1_savb4"]
+[ext_resource type="Script" uid="uid://dhfkmg4jeurlt" path="res://Shotgun.gd" id="1_savb4"]
 
 [node name="Shotgun" type="CharacterBody2D"]
 script = ExtResource("1_savb4")

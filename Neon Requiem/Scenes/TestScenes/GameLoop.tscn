@@ -70,6 +70,7 @@ audio_stream_player = NodePath("../AudioStreamPlayer")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ywwyg")
+bus = &"Music"
 script = ExtResource("6_ctnvr")
 
 [connection signal="level_generated" from="HBoxContainer/SubViewportContainer/SubViewport/RoomGeneration" to="." method="_on_level_generated"]

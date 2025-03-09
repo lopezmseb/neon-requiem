@@ -49,7 +49,6 @@ func read_player_data():
 	# Read all lines from the file
 		while file.eof_reached() == false:
 			var line = file.get_line().strip_edges() 
-			print(line) # Read and remove any extra whitespace
 			if line != "":
 				# Split the line by commas (assuming CSV format)
 				var data = line.split(",")
@@ -59,7 +58,6 @@ func read_player_data():
 					var device_type = data[1]  # The device type is a string
 					var device_id = int(data[2])  # Convert device_id to integer
 					var sprite = data[3]
-		# Print or store these values for further processing
 					addPlayer(player_counter,device_type,device_id, sprite)
 		file.close()  # Close the file after reading
 

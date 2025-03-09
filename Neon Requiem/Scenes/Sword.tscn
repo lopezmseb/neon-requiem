@@ -8,60 +8,62 @@
 [ext_resource type="Texture2D" uid="uid://c1btmw1e3q82j" path="res://Assets/TestAssets/CharacterSprites/sword/File4.png" id="5_vpgfg"]
 [ext_resource type="Texture2D" uid="uid://helu81ppi4s8" path="res://Assets/TestAssets/CharacterSprites/sword/File5.png" id="6_hywl4"]
 [ext_resource type="Texture2D" uid="uid://dbsrewkmi8una" path="res://Assets/TestAssets/CharacterSprites/sword/File6.png" id="7_063nt"]
-[ext_resource type="Texture2D" uid="uid://4x4wgravi02h" path="res://Assets/Characters/Weapons/pixil-frame-0 (34).png" id="8_xtelb"]
-[ext_resource type="Texture2D" uid="uid://bvi14s5tnju70" path="res://Assets/Characters/Weapons/pixil-frame-0 (35).png" id="9_mhew3"]
+[ext_resource type="Texture2D" uid="uid://bvi14s5tnju70" path="res://Assets/Characters/Weapons/Sword.png" id="9_0ju1k"]
 [ext_resource type="AudioStream" uid="uid://bys7xs1whtwv2" path="res://Assets/Sound/SFX/slash.wav" id="9_rhi3v"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6ytjg"]
+load_path = "res://.godot/imported/pixil-frame-0 (34).png-9c199a53dc7e22c063fc884074f05fb8.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1mfx"]
-atlas = ExtResource("8_xtelb")
+atlas = SubResource("CompressedTexture2D_6ytjg")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d1kr5"]
-atlas = ExtResource("8_xtelb")
+atlas = SubResource("CompressedTexture2D_6ytjg")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tb5la"]
-atlas = ExtResource("8_xtelb")
+atlas = SubResource("CompressedTexture2D_6ytjg")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fny8c"]
-atlas = ExtResource("8_xtelb")
+atlas = SubResource("CompressedTexture2D_6ytjg")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6sv5w"]
-atlas = ExtResource("8_xtelb")
+atlas = SubResource("CompressedTexture2D_6ytjg")
 region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rl5qn"]
-atlas = ExtResource("8_xtelb")
+atlas = SubResource("CompressedTexture2D_6ytjg")
 region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jncqv"]
-atlas = ExtResource("9_mhew3")
+atlas = ExtResource("9_0ju1k")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_codru"]
-atlas = ExtResource("9_mhew3")
+atlas = ExtResource("9_0ju1k")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tcyw4"]
-atlas = ExtResource("9_mhew3")
+atlas = ExtResource("9_0ju1k")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sv70k"]
-atlas = ExtResource("9_mhew3")
+atlas = ExtResource("9_0ju1k")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vg0y2"]
-atlas = ExtResource("9_mhew3")
+atlas = ExtResource("9_0ju1k")
 region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_acy6e"]
-atlas = ExtResource("9_mhew3")
+atlas = ExtResource("9_0ju1k")
 region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_myjfc"]
-atlas = ExtResource("9_mhew3")
+atlas = ExtResource("9_0ju1k")
 region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4s6c8"]

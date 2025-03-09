@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4x4wgravi02h"
-path="res://.godot/imported/pixil-frame-0 (34).png-9c199a53dc7e22c063fc884074f05fb8.ctex"
+uid="uid://bvi14s5tnju70"
+path="res://.godot/imported/Sword.png-1b8168ccb892b7359e293bc5e37e78bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/Weapons/pixil-frame-0 (34).png"
-dest_files=["res://.godot/imported/pixil-frame-0 (34).png-9c199a53dc7e22c063fc884074f05fb8.ctex"]
+source_file="res://Assets/Characters/Weapons/Sword.png"
+dest_files=["res://.godot/imported/Sword.png-1b8168ccb892b7359e293bc5e37e78bf.ctex"]
 
 [params]
 

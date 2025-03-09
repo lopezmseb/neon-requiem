@@ -139,7 +139,7 @@ class _Rhythm:
 		if not valid_interval or too_late:
 			last_frame_interval = null
 		elif last_frame_interval != current_interval:
-			interval_changed.emit(current_interval)
+#			interval_changed.emit(current_interval)
 			last_frame_interval = current_interval
 
 

@@ -41,14 +41,6 @@ func _ready():
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
 	read_player_data()
-	
-	await wait_for_room_gen()
-
-func wait_for_room_gen():
-	while not roomGen:
-		await get_tree().process_frame  # Wait for next frame
-	print("roomGen is now ready!")
-	
 
 func read_player_data():
 	if FileAccess.file_exists(player_save):

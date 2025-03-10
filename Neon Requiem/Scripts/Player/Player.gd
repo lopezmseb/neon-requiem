@@ -238,13 +238,8 @@ func melee():
 
 	# Instantiate the sword and set it as a child of the player
 	var sword = swordPath.instantiate()
-	var currentPlayer: Player
-	for player in get_parent().get_children():
-		if player is Player and player.playerController == playerController:
-			currentPlayer = player
-			currentPlayer.add_child(sword)
-			print("Child found")
-			break  # Add the sword as a child of the player
+	add_child(sword)
+	
 	await get_tree().process_frame
 	# Apply upgrades to the sword
 	var swordUpgrades : Array[Node] = $SwordUpgrades.get_children()
@@ -253,7 +248,7 @@ func melee():
 	# Position the sword based on the player's position and movement
 	sword.position = to_local($Gun/Aiming.global_position)
 	# Calculate the direction to the shooting position (mouse)
-	var direction = (shootingDirection - currentPlayer.position).normalized()
+	var direction = (shootingDirection - position).normalized()
 	print("direction ", direction.x)
 
 	if direction.x <= 0:

@@ -12,7 +12,6 @@
 [ext_resource type="AudioStream" uid="uid://bys7xs1whtwv2" path="res://Assets/Sound/SFX/slash.wav" id="9_rhi3v"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6ytjg"]
-load_path = "res://.godot/imported/pixil-frame-0 (34).png-9c199a53dc7e22c063fc884074f05fb8.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1mfx"]
 atlas = SubResource("CompressedTexture2D_6ytjg")

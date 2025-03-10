@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br6q1tsj02756"
-path="res://.godot/imported/Cowboy.png-3633bf1cb266d161b94fe90938425feb.ctex"
+uid="uid://bvi14s5tnju70"
+path="res://.godot/imported/Sword.png-1b8168ccb892b7359e293bc5e37e78bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/Cowboy.png"
-dest_files=["res://.godot/imported/Cowboy.png-3633bf1cb266d161b94fe90938425feb.ctex"]
+source_file="res://Assets/Characters/Weapons/Sword.png"
+dest_files=["res://.godot/imported/Sword.png-1b8168ccb892b7359e293bc5e37e78bf.ctex"]
 
 [params]
 

@@ -235,16 +235,31 @@ func dashAttack():
 func melee():
 	is_melee_ready = false
 	$MeleeCooldown.start()
+
+	# Instantiate the sword and set it as a child of the player
 	var sword = swordPath.instantiate()
-	get_parent().add_child(sword)
+	add_child(sword)
+	
+	await get_tree().process_frame
+	# Apply upgrades to the sword
 	var swordUpgrades : Array[Node] = $SwordUpgrades.get_children()
 	sword.upgrades = swordUpgrades
-	# Position the bullet at the player's shooting point (Marker2D).
-	sword.position = $Gun/Aiming.global_position
-	
-	# Set the bullet's velocity and rotation based on the direction to the mouse.
-	var direction = (shootingDirection - sword.position).normalized()
-	sword.rotation = direction.angle()
+
+	# Position the sword based on the player's position and movement
+	sword.position = to_local($Gun/Aiming.global_position)
+	# Calculate the direction to the shooting position (mouse)
+	var direction = (shootingDirection - position).normalized()
+	print("direction ", direction.x)
+
+	if direction.x <= 0:
+		sword.get_node("Sprite2D").flip_v = true
+		sword.rotation = direction.angle()
+		sword.position = to_local($Gun/Aiming.global_position)
+		print("if")
+	else:
+		sword.rotation = direction.angle()
+		sword.position = to_local($Gun/Aiming.global_position)
+		print("else")
 
 func _on_shoot_cooldown_timeout():
 	is_shoot_ready = true

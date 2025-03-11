@@ -11,5 +11,3 @@ func updateColor(new_color: String):
 	
 func getColor():
 	return color
-
-

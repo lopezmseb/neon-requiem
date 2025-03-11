@@ -139,7 +139,7 @@ class _Rhythm:
 		if not valid_interval or too_late:
 			last_frame_interval = null
 		elif last_frame_interval != current_interval:
-#			interval_changed.emit(current_interval)
+			interval_changed.emit(current_interval)
 			last_frame_interval = current_interval
 
 
@@ -218,7 +218,7 @@ func emit_beat():
 	beat.emit()
 
 func _ready():
-	beats(1.0).connect(emit_beat)
+	beats(1.0).connect(beat.emit)
 
 
 # If not stopped, recalculate track position and emit any appropriate signals.

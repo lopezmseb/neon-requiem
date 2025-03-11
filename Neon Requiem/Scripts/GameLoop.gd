@@ -23,6 +23,7 @@ var enemies: Array[Node]
 var viewports: Array[Viewport]
 var upgradeSelectedCount: float = 0
 var upgradeSelectScreen : UpgradeSelect = null
+
 func _ready():
 	add_to_group("game_loop")
 	# Set Hbox to screensize
@@ -40,7 +41,7 @@ func _ready():
 		if(subviewport):
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
-	read_player_data()
+	
 
 func read_player_data():
 	if FileAccess.file_exists(player_save):
@@ -62,7 +63,7 @@ func read_player_data():
 		file.close()  # Close the file after reading
 
 func addPlayer(player_counter: int, device_type: String, device_id: int, sprite: String):
-	
+
 	if(player_counter == 0):
 		var player = playerScene.instantiate()
 		var remoteTransform := RemoteTransform2D.new()
@@ -159,14 +160,14 @@ func _process(delta):
 		settings_menu.visible = true
 		get_tree().paused = true
 		await get_tree().process_frame  # Ensures UI updates before setting focus
-	
+
 		var close_button = $SettingsMenu/MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton
 		close_button.grab_focus()
 
 var dead_players = 0
 
 func _on_player_death(player):
-	
+
 	if(player in enemies):
 		player.queue_free()
 		enemies.erase(player)
@@ -182,12 +183,15 @@ func _on_player_death(player):
 		game_over()
 
 		
-		
-func game_over():
+func ToGameOver():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
+
+func game_over():
+	call_deferred("ToGameOver")	
 	
 func _on_level_generated():
-	
+	if(players.size() == 0):
+		read_player_data()
 	# Spawn Enemies
 	for room in roomGen.getRooms():
 		#Do not spawn enemies in the Starting Room
@@ -207,13 +211,20 @@ func _on_level_generated():
 	
 	roomGen.spawnEntities(players)
 	canChangeLevel = true
-	var tween = get_tree().create_tween()
-	tween.tween_property(fade, 'color:a', 0, 1)
+	call_deferred("fadeOut")
+	
+func fadeOut():
+	var tween = create_tween()
+	tween.tween_property(fade, 'modulate:a', 0, 0.25)
+	
+	
+func fadeIn():
+	# Fade Black
+	var tween = create_tween()
+	tween.tween_property(fade, 'modulate:a', 1, 0.25)
 	
 func level_cleared():
-	# Fade Black
-	var tween = get_tree().create_tween()
-	tween.tween_property(fade, 'color:a', 1, 0.25)
+	call_deferred("fadeIn")
 
 	# Pick Upgrade
 	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
@@ -245,7 +256,7 @@ func onUpgradeSelected():
 			
 			# Make al players "Alive" again
 			var index = 0
-			for player in players:
+			for player in players:				
 				var UI = viewports[index].get_node("UserInterface")
 				var respawn = UI.get_node("Respawn")
 				respawn.visible = false
@@ -253,6 +264,7 @@ func onUpgradeSelected():
 				player.visible = true
 				index += 1
 				player.enable_input()
+							
 		# Increase Level
 		level = level + 1
 	

@@ -179,9 +179,6 @@ sources/1 = SubResource("TileSetAtlasSource_pavfy")
 [node name="RoomGeneration" type="Node2D"]
 script = ExtResource("1_gykuq")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.6, 0.6)
-
 [node name="Rooms" type="Node" parent="."]
 
 [node name="Enemies" type="Node" parent="."]
@@ -199,12 +196,7 @@ tile_set = SubResource("TileSet_0c54q")
 format = 2
 layer_0/z_index = -1
 layer_1/name = "details"
-layer_1/enabled = true
-layer_1/modulate = Color(1, 1, 1, 1)
-layer_1/y_sort_enabled = false
-layer_1/y_sort_origin = 0
 layer_1/z_index = -1
-layer_1/tile_data = PackedInt32Array()
 
 [node name="DebugCamera" type="Camera2D" parent="."]
 enabled = false

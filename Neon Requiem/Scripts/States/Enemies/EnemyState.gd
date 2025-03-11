@@ -12,4 +12,3 @@ var AvailableStates: Dictionary = {
 @export var animate: AnimatedSprite2D
 
 var player: CharacterBody2D = null
-

@@ -37,7 +37,7 @@ func _on_continue_button_pressed():
 	get_tree().change_scene_to_file("res://Scenes/TestScenes/GameLoop.tscn")
 	
 func fade_in_music():
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
 	$"Menu Music".volume_db = -40 
 	$"Menu Music".play()
 	tween.tween_property($"Menu Music", "volume_db", 0, 1) 

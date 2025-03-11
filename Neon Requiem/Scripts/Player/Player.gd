@@ -255,12 +255,10 @@ func melee():
 		sword.get_node("Sprite2D").flip_v = true
 		sword.rotation = direction.angle()
 		sword.position = to_local($Gun/Aiming.global_position)
-		print("if")
 	else:
 		sword.rotation = direction.angle()
 		sword.position = to_local($Gun/Aiming.global_position)
-		print("else")
-
+	 
 func _on_shoot_cooldown_timeout():
 	is_shoot_ready = true
 

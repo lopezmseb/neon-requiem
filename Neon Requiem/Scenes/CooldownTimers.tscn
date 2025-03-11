@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://26njbw8cwpfc"]
 
-[ext_resource type="Script" path="res://Scripts/UI/CooldownTimer.gd" id="1_cedmr"]
+[ext_resource type="Script" uid="uid://dtttp3t33ml0i" path="res://Scripts/UI/CooldownTimer.gd" id="1_cedmr"]
 
 [node name="CooldownTimers" type="Control"]
 layout_mode = 3

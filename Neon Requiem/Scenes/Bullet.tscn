@@ -1,9 +1,9 @@
 [gd_scene load_steps=16 format=3 uid="uid://b1vlue38274fi"]
 
-[ext_resource type="Script" path="res://Scripts/Player/Bullet.gd" id="1_t3mwa"]
+[ext_resource type="Script" uid="uid://deu10po6qqjs1" path="res://Scripts/Player/Bullet.gd" id="1_t3mwa"]
 [ext_resource type="Texture2D" uid="uid://cvxl8563qh2jo" path="res://Assets/Projectiles/BaseBullet.png" id="2_6odcj"]
-[ext_resource type="Script" path="res://Scripts/Stats/AttackComponent.gd" id="3_lof4c"]
-[ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="4_r6537"]
+[ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="3_lof4c"]
+[ext_resource type="Script" uid="uid://bh3o63i4jlnmj" path="res://Scripts/Stats/ColorComponent.gd" id="4_r6537"]
 [ext_resource type="AudioStream" uid="uid://d01vqm2drwj7c" path="res://Assets/Sound/SFX/shoot.wav" id="6_em8sl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w4a5u"]

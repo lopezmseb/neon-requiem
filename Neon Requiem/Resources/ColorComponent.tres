@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ColorComponent" load_steps=2 format=3 uid="uid://d1fs77th335fl"]
 
-[ext_resource type="Script" path="res://Scripts/Stats/ColorComponent.gd" id="1_n762b"]
+[ext_resource type="Script" uid="uid://bh3o63i4jlnmj" path="res://Scripts/Stats/ColorComponent.gd" id="1_n762b"]
 
 [resource]
 resource_local_to_scene = true

@@ -215,13 +215,13 @@ func _on_level_generated():
 	
 func fadeOut():
 	var tween = create_tween()
-	tween.tween_property(fade, 'modulate:a', 0, 0.25)
+	tween.tween_property(fade, 'modulate:a', 0, 5)
 	
 	
 func fadeIn():
 	# Fade Black
 	var tween = create_tween()
-	tween.tween_property(fade, 'modulate:a', 1, 0.25)
+	tween.tween_property(fade, 'modulate:a', 1, 5)
 	
 func level_cleared():
 	call_deferred("fadeIn")

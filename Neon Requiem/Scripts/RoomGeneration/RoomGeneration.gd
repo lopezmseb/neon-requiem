@@ -301,7 +301,7 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		elif tileMap.get_cell_atlas_coords(0, top_pos) == Vector2i(0, 0) && tileMap.get_cell_alternative_tile(0, top_pos) != 0:
 			tileMap.set_cell(0, top_pos, 1, Vector2i(7, 0))
 		
-		#await get_tree().process_frame
+		await get_tree().process_frame
 
 	# Carve vertical path
 	for y in range(pos1.y, pos2.y, yDiff):
@@ -357,7 +357,7 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 			tileMap.set_cell(0, right_pos, 1, Vector2i(0, 0), 3)
 		elif tileMap.get_cell_atlas_coords(0, right_pos) == Vector2i(0, 0)&& tileMap.get_cell_alternative_tile(0, right_pos) != 3:
 			tileMap.set_cell(0, right_pos, 1, Vector2i(7, 0))
-		#await get_tree().process_frame
+		await get_tree().process_frame
 
 func find_start_room():
 	var min_x = INF

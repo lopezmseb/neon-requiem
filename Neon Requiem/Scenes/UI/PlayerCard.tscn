@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://tm1w1xql2km7"]
 
 [ext_resource type="Texture2D" uid="uid://5gb4p7pl5lww" path="res://Assets/Characters/Boss.png" id="1_45f70"]
-[ext_resource type="Script" path="res://Scenes/UI/PlayerCard.gd" id="1_vrmly"]
+[ext_resource type="Script" uid="uid://c82qh08bw8021" path="res://Scenes/UI/PlayerCard.gd" id="1_vrmly"]
 [ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="2_whnp6"]
 
 [node name="PlayerCard" type="Control"]

@@ -15,7 +15,7 @@ var minSize = 10
 var maxSize = 15
 var spread = 200
 var roomPositions = []
-var path 
+var path
 var startRoom
 var endRoom
 
@@ -35,7 +35,7 @@ func makeRooms():
 		var pos = Vector2(randf_range(-spread, spread),randf_range(-spread, spread))
 		var r = Room.instantiate()
 		var w = minSize + randi() % (maxSize - minSize)
-		var h = minSize + randi() % (maxSize - minSize) 
+		var h = minSize + randi() % (maxSize - minSize)
 		
 		r.makeRoom(pos, Vector2(w,h) * tileSize)
 		$Rooms.add_child(r)
@@ -107,7 +107,9 @@ func find_mst(nodes: Array):
 	path.add_point(path.get_available_point_id(), nodes.pop_front())
 	
 	#repeat until no more node remains
+	print(nodes.size())
 	while nodes:
+		print("IN NODE LOOP")
 		var minD = INF #minimum distance so far
 		var minP = null #position of that node
 		var p = null #current position
@@ -133,7 +135,7 @@ func makeMap():
 	
 	var fullRectangle = Rect2()
 	for room in $Rooms.get_children():
-		var r = Rect2(room.position - room.size, 
+		var r = Rect2(room.position - room.size,
 			room.get_node("CollisionShape2D").shape.extents*2)
 		fullRectangle = fullRectangle.merge(r)
 		
@@ -222,6 +224,8 @@ func makeMap():
 		endRoom.add_child(endText)
 
 	# Emit signal
+	await get_tree().process_frame
+
 	level_generated.emit()
 
 
@@ -306,7 +310,7 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		var right_pos : Vector2i
 		
 		if yDiff > 0:
-			left_pos = Vector2i(y_x.x - 1, y) 
+			left_pos = Vector2i(y_x.x - 1, y)
 			right_pos = Vector2i(y_x.x + 2, y)
 		elif yDiff < 0:
 			left_pos = Vector2i(y_x.x - 2, y)
@@ -356,9 +360,9 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		await get_tree().process_frame
 
 func find_start_room():
-	var min_x = INF 
+	var min_x = INF
 	for room in $Rooms.get_children():
-		if room.position.x < min_x: 
+		if room.position.x < min_x:
 			startRoom = room
 			min_x = room.position.x
 			

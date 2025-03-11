@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dga40ispxfs62"]
 
-[ext_resource type="Script" path="res://Scripts/UI/UpgradesUI/UpgradeCard.gd" id="1_mhn2u"]
+[ext_resource type="Script" uid="uid://cblekfohuf1rp" path="res://Scripts/UI/UpgradesUI/UpgradeCard.gd" id="1_mhn2u"]
 [ext_resource type="Texture2D" uid="uid://dje7goep4inlm" path="res://Assets/UI/Upgrades/Bullet_damage.png" id="2_n7gn8"]
 
 [sub_resource type="Theme" id="Theme_g0uoy"]

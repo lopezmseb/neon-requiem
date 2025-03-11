@@ -20,4 +20,3 @@ const OPPOSITE_MULTIPLIER = 0.5
 const SAME_MULTIPLIER = 1
 
 var enemyShader = DEFENSIVE_SHADER
-

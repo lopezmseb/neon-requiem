@@ -1,7 +1,7 @@
 class_name SettingsMenu
 
 extends Control
-
+@export var closeButton: Button
 var save_path = "user://settings.save"
 var master_volume = 1
 var music_volume = 1
@@ -23,7 +23,7 @@ func _ready():
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 	
 func _on_master_slider_value_changed(value):
@@ -53,9 +53,8 @@ func _on_close_button_pressed():
 	file.store_var(music_volume)
 	file.store_var(SFX_volume)
 	
-	var close_button = $"../VBoxContainer/New GameButton"
-	if close_button:
-		close_button.grab_focus()
+	if closeButton:
+		closeButton.grab_focus()
 	
 
 func _on_quit_button_pressed():
@@ -68,5 +67,3 @@ func load_data():
 		$"MarginContainer2/MarginContainer/VBoxContainer/GridContainer/Music Slider".value = file.get_var(music_volume)
 		$"MarginContainer2/MarginContainer/VBoxContainer/GridContainer/SFX Slider".value = file.get_var(SFX_volume)
 		
-
-

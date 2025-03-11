@@ -20,4 +20,3 @@ func Physics_Update(delta):
 	var direction = (player.global_position - bullet.position).normalized()
 	bullet.velocity = direction * bulletSpeed
 	bullet.rotation = direction.angle()
-

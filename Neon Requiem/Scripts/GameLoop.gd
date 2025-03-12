@@ -104,14 +104,12 @@ func load_all_players():
 			if(players.size() == 0 ):
 				
 				var remoteTransform := RemoteTransform2D.new()
-				
 				remoteTransform.remote_path = mainCamera.get_path()
 				player.add_child(remoteTransform)
 				user_interface.setPlayer(player)
 				players.append(player)
 				mainViewport.add_child(player)
 			else:
-				#var anotherPlayer : Player = load_player(playerController)
 				var container : SubViewportContainer = SubViewportContainer.new()
 				var subViewport = SubViewport.new()
 				var camera = Camera2D.new()

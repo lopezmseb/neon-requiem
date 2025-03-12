@@ -25,7 +25,7 @@ func damage(attack: AttackComponent):
 			parent.visible = false
 			currentHealth = MAX_HEALTH
 		else:
-			var chance_25 = randf_range(0.0, 1.0) < 0.9
+			var chance_25 = randf_range(0.0, 1.0) < 0.22
 			if chance_25:
 				var pickupObject
 				if randi() % 2:

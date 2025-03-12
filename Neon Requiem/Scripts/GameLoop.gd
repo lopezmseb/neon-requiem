@@ -341,7 +341,7 @@ func level_cleared():
 	for player in players:
 		player.disable_input()
 	#remove all pickups
-	var pickups = $HBoxContainer/SubViewportContainer/SubViewport.find_children("*", "Pickups")
+	var pickups = $HBoxContainer/SubViewportContainer/SubViewport.find_children("*", "Consumable")
 	for pickup in pickups:
 		pickup.queue_free()
 		

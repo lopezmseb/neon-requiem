@@ -26,7 +26,7 @@ func _on_health_component_entity_damaged(attack: float):
 	var number = Label.new()
 	var startingPosition: Control = $HealthBar
 	number.position = startingPosition.position  - Vector2(-5,15)
-	number.text = str(attack)
+	number.text = str(UIHelpers.formatFloat(attack))
 	number.z_index = 50
 	number.label_settings = LabelSettings.new()
 	

@@ -39,5 +39,3 @@ func handle_device(device_id: int, device_type: String):
 		
 		player_counter += 1
 		player_joined.emit(player_counter, device_id, device_type, characters[player_counter - 1])
-
-

@@ -238,13 +238,12 @@ func melee():
 
 	# Instantiate the sword and set it as a child of the player
 	var sword = swordPath.instantiate()
-	add_child(sword)
 	
 	await get_tree().process_frame
 	# Apply upgrades to the sword
 	var swordUpgrades : Array[Node] = $SwordUpgrades.get_children()
 	sword.upgrades = swordUpgrades
-
+	add_child(sword)
 	# Position the sword based on the player's position and movement
 	sword.position = to_local($Gun/Aiming.global_position)
 	# Calculate the direction to the shooting position (mouse)

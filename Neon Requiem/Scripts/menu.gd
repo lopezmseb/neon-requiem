@@ -34,6 +34,8 @@ func _on_quit_pressed():
 
 
 func _on_continue_button_pressed():
+	if FileAccess.file_exists("user://players.save"):
+		DirAccess.remove_absolute("user://players.save")
 	get_tree().change_scene_to_file("res://Scenes/TestScenes/GameLoop.tscn")
 	
 func fade_in_music():

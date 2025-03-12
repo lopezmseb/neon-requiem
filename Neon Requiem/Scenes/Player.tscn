@@ -409,7 +409,7 @@ script = ExtResource("1_2efai")
 material = SubResource("ShaderMaterial_nn6tn")
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_7wljc")
-animation = &"Run-Nyx"
+animation = &"Run-Jex"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 1.5)

@@ -340,6 +340,11 @@ func level_cleared():
 	#stop the shooting and abilities on upgrade screen
 	for player in players:
 		player.disable_input()
+	#remove all pickups
+	var pickups = $HBoxContainer/SubViewportContainer/SubViewport.find_children("*", "Pickups")
+	for pickup in pickups:
+		pickup.queue_free()
+		
 	
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
 	var selectedUpgrades : Array[UpgradeStrategy]  = []

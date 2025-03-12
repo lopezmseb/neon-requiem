@@ -203,7 +203,7 @@ func makeMap():
 		for x in range(2, sizeX):
 			for y in range(2,sizeY):
 				var wallPosition = Vector2i(ul.x + x, ul.y + y)  # Convert local position to global tile coordinates
-				var chance_10 = randf_range(0.0, 1.0) < 0.13  # 10% chance
+				var chance_10 = randf_range(0.0, 1.0) < 0.13  # 13% chance
 				var chace_25 = randi() % 4 # 25% chance
 				
 		

@@ -5,6 +5,7 @@ class_name Player
 # >= 0 => Controller
 @export var playerController : int = -1
 @export var playerName : String = ""
+@export var isBoosted : bool = false
 const speed: float = 100
 const dashSpeed: float = 500
 

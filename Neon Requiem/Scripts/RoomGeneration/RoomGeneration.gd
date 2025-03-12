@@ -24,7 +24,7 @@ signal level_generated
 signal level_cleared
 
 const CULL = 0.5
-const COLOR_ROOM_FREQUENCY = 0.7
+const COLOR_ROOM_FREQUENCY = 0.25
 
 
 func _ready():
@@ -248,17 +248,13 @@ func makeMap():
 					var sizeOffset = offset -1
 					if(isColorRoom && room != startRoom):
 						floorTile = Vector2i(4,1) if colorVariability < COLOR_ROOM_FREQUENCY/2 else Vector2i(4,3)
-						
+						# Our checks later are reliant on layer 0, so we just put layer 2 above
+						# that layer (z-index wise)
 						var oppositeFloorTile = Vector2i(4,3) if colorVariability < COLOR_ROOM_FREQUENCY/2 else Vector2i(4,1)
 						if((y > offset and y < sizeY-sizeOffset) or (x > offset and x < sizeX-sizeOffset)):
-							# Our checks later are reliant on layer 0, so we just put layer 2 above
-							# that layer (z-index wise)_
 							tileMap.set_cell(2, wallPosition, 1, floorTile, 0)
-						elif(crissCross < 0.25):
+						elif(crissCross < 0.15):
 							tileMap.set_cell(2, wallPosition, 1, oppositeFloorTile, 0)
-
-						
-						
 					tileMap.set_cell(0, wallPosition, 1, Vector2i(0,1), 0)
 					
 		

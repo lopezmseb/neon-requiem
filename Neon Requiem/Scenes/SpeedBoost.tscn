@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7s475ek7hddh"]
+
+[ext_resource type="Script" uid="uid://c5erh6x2upqnr" path="res://Scripts/Upgrades/Consumable/SpeedBoost.gd" id="1_ofn6h"]
+[ext_resource type="Texture2D" uid="uid://kcke18g6dj03" path="res://Assets/Pickups/Bottle.png" id="2_wpmu8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4x8as"]
+radius = 3.51581
+height = 16.9647
+
+[node name="Node2D2" type="Area2D"]
+script = ExtResource("1_ofn6h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6, 8)
+rotation = 0.811578
+shape = SubResource("CapsuleShape2D_4x8as")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 15.0
+offset_bottom = 15.0
+texture = ExtResource("2_wpmu8")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

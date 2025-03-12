@@ -218,7 +218,7 @@ func emit_beat():
 	beat.emit()
 
 func _ready():
-	beats(1.0).connect(emit_beat)
+	beats(1.0).connect(beat.emit)
 
 
 # If not stopped, recalculate track position and emit any appropriate signals.

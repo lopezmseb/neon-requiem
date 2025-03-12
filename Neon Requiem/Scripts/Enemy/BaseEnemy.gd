@@ -26,7 +26,7 @@ func _on_health_component_entity_damaged(attack: float):
 	var number = Label.new()
 	var startingPosition: Control = $HealthBar
 	number.position = startingPosition.position  - Vector2(-5,15)
-	number.text = str(attack)
+	number.text = str(UIHelpers.formatFloat(attack))
 	number.z_index = 50
 	number.label_settings = LabelSettings.new()
 	
@@ -44,7 +44,7 @@ func _on_health_component_entity_damaged(attack: float):
 	await get_tree().create_timer(0.10).timeout
 	number.pivot_offset = Vector2(number.size/2)
 	
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
 
 	tween.tween_property(number, "position:y", number.position.y - 10, 0.15).set_ease(Tween.EASE_OUT)
 	tween.chain().tween_property(number, "position:y", number.position.y, 0.15).set_ease(Tween.EASE_IN).set_delay(0.15)

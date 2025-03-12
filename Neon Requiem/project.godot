@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 COLORS="*res://Scripts/Globals/Colors.gd"
 Upgrades="*res://Scripts/Globals/Upgrades.gd"
+GlobalSignals="*res://Scripts/Globals/GlobalSignals.gd"
+UIHelpers="*res://Scripts/Globals/ui_helpers.gd"
 
 [display]
 
@@ -182,3 +184,4 @@ Menu={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

@@ -41,8 +41,111 @@ func _ready():
 		if(subviewport):
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
-	read_player_data()
+	
+func save_player(player: Player, playerName: String):
+	var save_directory = "user://saves/"
+	var save_path = save_directory + "player_" + playerName + ".tscn"
+	var dir = DirAccess.open("user://")
 
+	# Ensure the directory exists before saving
+	if dir:
+		if not dir.dir_exists(save_directory):
+			var result = dir.make_dir(save_directory)
+			if result == OK:
+				print("Directory created successfully")
+			else:
+				print("Failed to create directory")
+		else:
+			print("Directory already exists")
+	else:
+		print("Failed to open user:// directory")
+
+	# Save the player scene
+	var packed_scene = PackedScene.new()
+	var result = packed_scene.pack(player)
+
+	if result == OK:
+		var error = ResourceSaver.save(packed_scene, save_path)
+		if error == OK:
+			print("Player data saved to", save_path)
+		else:
+			print("Failed to save player data:", error)
+	else:
+		print("Failed to pack player scene.")
+
+		
+func save_all_players():
+	for player in players:
+		save_player(player, player.playerName)
+		
+func load_player(playerName: String) -> Player:
+	var save_path = "user://saves/player_" + playerName  + ".tscn"
+	
+	if ResourceLoader.exists(save_path):
+		var packed_scene = ResourceLoader.load(save_path) as PackedScene
+		if packed_scene:
+			var player = packed_scene.instantiate() as Player
+			print("Loaded Player with Upgrades from", save_path)
+			return player
+		else:
+			print("Failed to load PackedScene.")
+	else:
+		print("No saved player found.")
+	
+	return null
+
+func load_all_players():
+	var loaded_any = false
+	var playerNames = ["Jex","Grim","Volt","Nyx"]
+	# Try to load each player by player_id
+	for playername in playerNames:  # Adjust max_players as needed
+		var player = load_player(playername)
+		if(player != null):
+			if(players.size() == 0 ):
+				
+				var remoteTransform := RemoteTransform2D.new()
+				remoteTransform.remote_path = mainCamera.get_path()
+				player.add_child(remoteTransform)
+				user_interface.setPlayer(player)
+				players.append(player)
+				mainViewport.add_child(player)
+			else:
+				var container : SubViewportContainer = SubViewportContainer.new()
+				var subViewport = SubViewport.new()
+				var camera = Camera2D.new()
+				var playerInterface = UIScene.instantiate()
+				
+				# Player Config
+				players.append(player)
+				# UI Config
+				playerInterface.setPlayer(player)
+				# Camera Config
+				camera.set_script(playerCamera)
+				# SubViewport Config 
+				subViewport.world_2d = mainViewport.world_2d
+				subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+				viewports.append(subViewport)
+				# Container Config
+				container.stretch = true
+				container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				
+				# Add Children to Scene
+				subViewport.add_child(camera)
+				subViewport.add_child(playerInterface)
+				
+				mainViewport.add_child(player)		
+				container.add_child(subViewport)
+				hbox.add_child(container)
+				subViewport.get_node("UserInterface/CooldownTimers").set_scale(Vector2(.5, .5))
+				subViewport.get_node("UserInterface/PlayerHealthBar").set_scale(Vector2(.9, .9))
+				update_grid() 
+				# Remote Path to Camera
+				var remoteTransform := RemoteTransform2D.new()
+				remoteTransform.remote_path = camera.get_path()
+				player.add_child(remoteTransform)
+				# Spawn new Player into game
+				roomGen.spawnPlayer(player, 0)
+	
 func read_player_data():
 	if FileAccess.file_exists(player_save):
 		var file = FileAccess.open(player_save, FileAccess.READ)
@@ -50,7 +153,6 @@ func read_player_data():
 	# Read all lines from the file
 		while file.eof_reached() == false:
 			var line = file.get_line().strip_edges() 
-			print(line) # Read and remove any extra whitespace
 			if line != "":
 				# Split the line by commas (assuming CSV format)
 				var data = line.split(",")
@@ -60,12 +162,11 @@ func read_player_data():
 					var device_type = data[1]  # The device type is a string
 					var device_id = int(data[2])  # Convert device_id to integer
 					var sprite = data[3]
-		# Print or store these values for further processing
 					addPlayer(player_counter,device_type,device_id, sprite)
 		file.close()  # Close the file after reading
 
 func addPlayer(player_counter: int, device_type: String, device_id: int, sprite: String):
-	
+
 	if(player_counter == 0):
 		var player = playerScene.instantiate()
 		var remoteTransform := RemoteTransform2D.new()
@@ -162,14 +263,14 @@ func _process(delta):
 		settings_menu.visible = true
 		get_tree().paused = true
 		await get_tree().process_frame  # Ensures UI updates before setting focus
-	
+
 		var close_button = $SettingsMenu/MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton
 		close_button.grab_focus()
 
 var dead_players = 0
 
 func _on_player_death(player):
-	
+
 	if(player in enemies):
 		player.queue_free()
 		enemies.erase(player)
@@ -185,49 +286,52 @@ func _on_player_death(player):
 		game_over()
 
 		
-		
-func game_over():
+func ToGameOver():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
+
+func game_over():
+	call_deferred("ToGameOver")	
 	
 func _on_level_generated():
-	
-	if(level % 2 == 0):
-		var room = roomGen.getRooms().filter(func(room): return room.name == "BossRoom").front()
-		if(room):
-			var roomMarker = room.find_child("BossStartingPosition") as Marker2D
-			var boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn").instantiate()
-			enemiesNode.add_child(boss)
-			roomGen.spawnEnemy(boss, "", roomMarker.global_position)
-	else:
-		# Spawn Enemies
-		for room in roomGen.getRooms():
-			#Do not spawn enemies in the Starting Room
-			if(room == roomGen.startRoom):
-				continue;
-			
-			var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
-			var roomRect = collisionShape.shape.get_rect()
-			var numEnemies = randi() % maxEnemiesPerRoom + 1
-			
-			for i in range(0, numEnemies):
-				var enemyObject = enemyScene.instantiate()
-				
-				enemiesNode.add_child(enemyObject)
-				roomGen.spawnEnemy(enemyObject, room)
-		
-		
-		roomGen.spawnEntities(players)
-	canChangeLevel = true
-	var tween = get_tree().create_tween()
-	
-	tween.tween_property(fade, 'modulate:a', 0, 1)
+	if(players.size() == 0):
+		if FileAccess.file_exists(player_save):
+			read_player_data()
+		else: 
+			load_all_players()
+		roomGen.players = players
 
-	await tween.finished
+	# Spawn Enemies
+	for room in roomGen.getRooms():
+		#Do not spawn enemies in the Starting Room
+		if(room == roomGen.startRoom):
+			continue;
+		
+		var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
+		var roomRect = collisionShape.shape.get_rect()
+		var numEnemies = randi() % maxEnemiesPerRoom + 1
+		
+		for i in range(0, numEnemies):
+			var enemyObject = enemyScene.instantiate()
+			
+			enemiesNode.add_child(enemyObject)
+			roomGen.spawnEnemy(enemyObject, room)
+	
+	roomGen.spawnEntities(players)
+	canChangeLevel = true
+	call_deferred("fadeOut")
+	
+func fadeOut():
+	var tween = create_tween()
+	tween.tween_property(fade, 'modulate:a', 0, 5)
+	
+	
+func fadeIn():
+	# Fade Black
+	var tween = create_tween()
+	tween.tween_property(fade, 'modulate:a', 1, 0.25)
 	
 func level_cleared():
-	# Fade Black
-	var tween = get_tree().create_tween()
-	tween.tween_property(fade, 'modulate:a', 1, 0.25)
+	call_deferred("fadeIn")
 
 	# Pick Upgrade
 	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
@@ -242,6 +346,12 @@ func level_cleared():
 
 	for bullet in bullets:
 		bullet.queue_free()
+		
+	#remove all pickups
+	for child in $HBoxContainer/SubViewportContainer/SubViewport.get_children():
+		if child is Consumable:
+			child.queue_free()
+		
 	
 	# Start Upgrade Process
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
@@ -266,7 +376,7 @@ func onUpgradeSelected():
 			
 			# Make al players "Alive" again
 			var index = 0
-			for player in players:
+			for player in players:				
 				var UI = viewports[index].get_node("UserInterface")
 				var respawn = UI.get_node("Respawn")
 				respawn.visible = false
@@ -274,11 +384,13 @@ func onUpgradeSelected():
 				player.visible = true
 				index += 1
 				player.enable_input()
+							
 		# Increase Level
 		level = level + 1
-	
+		
 		var file = FileAccess.open(room_save, FileAccess.WRITE)
 		file.store_var(level)
+		save_all_players()
 		upgradeSelectedCount = 0
 		#Create Map
 		dead_players = 0

@@ -1,16 +1,16 @@
 [gd_scene load_steps=75 format=3 uid="uid://byw7abk88jgwq"]
 
-[ext_resource type="Script" uid="uid://0butuvbofus7" path="res://Scripts/Player/Player.gd" id="1_2efai"]
-[ext_resource type="Shader" uid="uid://cmh48aqqh4trj" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
-[ext_resource type="Script" uid="uid://dv66ee4b855an" path="res://Scripts/Stats/HealthComponent.gd" id="3_2s3ow"]
+[ext_resource type="Script" uid="uid://dq66kp0c0y4uu" path="res://Scripts/Player/Player.gd" id="1_2efai"]
+[ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
+[ext_resource type="Script" uid="uid://c0b20pvg8umil" path="res://Scripts/Stats/HealthComponent.gd" id="3_2s3ow"]
 [ext_resource type="Texture2D" uid="uid://5x07yetawdtc" path="res://Assets/Characters/Jex-sprite.png" id="3_7tcwy"]
 [ext_resource type="Texture2D" uid="uid://ckay72y2lp226" path="res://Assets/UI/PlayerReticle/PlayerReticle.png" id="3_723uu"]
 [ext_resource type="Texture2D" uid="uid://d03lfryf6wm2e" path="res://Assets/Characters/GRIM-sprite.png" id="3_a26vh"]
-[ext_resource type="Script" uid="uid://n45qkxlhllb5" path="res://Scripts/Stats/CooldownComponent.gd" id="4_unu1y"]
+[ext_resource type="Script" uid="uid://cuqf3bnshci2u" path="res://Scripts/Stats/CooldownComponent.gd" id="4_unu1y"]
 [ext_resource type="Texture2D" uid="uid://dl0ks6bigubnq" path="res://Assets/Characters/Volt-sprite.png" id="5_4kcgm"]
 [ext_resource type="Script" uid="uid://cg0amubqr7uyp" path="res://Scripts/Upgrades/CooldownUpgrades/CooldownAdditiveReduction.gd" id="5_eejht"]
 [ext_resource type="Texture2D" uid="uid://vgjdlhptv5br" path="res://Assets/Characters/Nyx-sprite.png" id="5_y4muu"]
-[ext_resource type="Script" uid="uid://dkagd101a6j5a" path="res://Scripts/Stats/ColorComponent.gd" id="6_bw6ym"]
+[ext_resource type="Script" uid="uid://bh3o63i4jlnmj" path="res://Scripts/Stats/ColorComponent.gd" id="6_bw6ym"]
 [ext_resource type="Texture2D" uid="uid://b5gcpgy1x6h0j" path="res://Assets/UI/Upgrades/Dash.png" id="6_iqabo"]
 [ext_resource type="Texture2D" uid="uid://43677synoxf3" path="res://Assets/UI/Upgrades/Bullet.png" id="6_k1tej"]
 [ext_resource type="Script" uid="uid://mjr2numl6hk4" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="6_otwx6"]
@@ -409,7 +409,7 @@ script = ExtResource("1_2efai")
 material = SubResource("ShaderMaterial_nn6tn")
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_7wljc")
-animation = &"Run-GRIM"
+animation = &"Run-Jex"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 1.5)

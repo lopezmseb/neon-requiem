@@ -4,6 +4,7 @@ class_name HealthComponent
 signal health_depleted(owner)
 signal entity_damaged(attack:float)
 
+const BASE_HEALTH = 100
 @export var MAX_HEALTH : float = 100 : get = calcMaxHealth
 @onready var currentHealth: float = MAX_HEALTH
 
@@ -27,7 +28,7 @@ func damage(attack: AttackComponent):
 
 func calcMaxHealth():
 	# Here we will run all health upgrades when implemented
-	var maxHealth = MAX_HEALTH
+	var maxHealth = BASE_HEALTH
 	for i in get_children():
 		var upgrade = i as UpgradeStrategy
 		

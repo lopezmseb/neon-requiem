@@ -192,6 +192,8 @@ func game_over():
 func _on_level_generated():
 	if(players.size() == 0):
 		read_player_data()
+		roomGen.players = players
+		
 	# Spawn Enemies
 	for room in roomGen.getRooms():
 		#Do not spawn enemies in the Starting Room
@@ -208,7 +210,6 @@ func _on_level_generated():
 			enemiesNode.add_child(enemyObject)
 			roomGen.spawnEnemy(enemyObject, room)
 	
-	
 	roomGen.spawnEntities(players)
 	canChangeLevel = true
 	call_deferred("fadeOut")
@@ -221,7 +222,7 @@ func fadeOut():
 func fadeIn():
 	# Fade Black
 	var tween = create_tween()
-	tween.tween_property(fade, 'modulate:a', 1, 5)
+	tween.tween_property(fade, 'modulate:a', 1, 0.25)
 	
 func level_cleared():
 	call_deferred("fadeIn")

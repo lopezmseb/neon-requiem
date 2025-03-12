@@ -12,21 +12,26 @@ var tileSize = 16
 var maxRooms = 10
 var minRooms = 5
 var minSize = 10
-var maxSize = 15
+var maxSize = 12
 var spread = 200
 var roomPositions = []
 var path
 var startRoom
 var endRoom
+var players = []
 
 signal level_generated
 signal level_cleared
 
 const CULL = 0.5
+const COLOR_ROOM_FREQUENCY = 0.7
+
 
 func _ready():
 	randomize()
+	GlobalSignals.onColorChange.connect(changeColors)
 	makeRooms()
+	
 	
 # Generates A Random Number of Rooms into the scene
 func makeRooms():
@@ -53,12 +58,38 @@ func getRooms():
 		
 	
 func _process(delta):
+	for player in players:
+		if(player is Player):
+			var tilePosition = tileMap.local_to_map(to_local(player.global_position))
+			var atlasCoords = tileMap.get_cell_atlas_coords(2, tilePosition)
+			
+			var playerHealth = player.find_child("HealthComponent") as HealthComponent
+			var playerColor = player.find_child("ColorComponent") as ColorComponent
+			if(not playerColor):
+				continue
+				
+			if(atlasCoords == Vector2i(4,1)):
+				if(playerColor.color == COLORS.OFFENSIVE):
+					continue
+					
+				if(playerHealth):
+					playerHealth.damage($TileDamage)
+					
+			elif(atlasCoords == Vector2i(4,3)):
+				if(playerColor.color == COLORS.DEFENSIVE):
+					continue
+					
+				if(playerHealth):
+					playerHealth.damage($TileDamage)
+	
 	queue_redraw()
 	
 func moveToNextLevel(level:int):
 	# Delete All Old Rooms
 	for i in $Rooms.get_children():
 		i.queue_free()
+		
+	tileMap.clear()
 	
 	makeRooms()
 	
@@ -128,6 +159,13 @@ func find_mst(nodes: Array):
 		path.connect_points(path.get_closest_point(p), n)
 		nodes.erase(minP)
 	return path
+	
+func _input(event):
+	if(Input.is_key_pressed(KEY_DELETE)):
+		moveToNextLevel(1)
+	
+	if(Input.is_key_pressed(KEY_INSERT)):
+		changeColors()
 			
 func makeMap():
 	# Create a Tile Map for generated rooms and path
@@ -148,16 +186,27 @@ func makeMap():
 
 			
 	var connections = []
+	find_start_room()
+	find_end_room()
 	for room in $Rooms.get_children():
 		var s = (room.size/tileSize).floor()
 		var pos = tileMap.local_to_map(room.position)
 		var ul = (room.position/tileSize).floor() - s
 		
-		for x in range(2, s.x * 2 - 1):
-			for y in range(2, s.y * 2 - 1):
+		# If ColorVariability is less than 0.1 then this room is a ColorRoom (10% of rooms will be ColorRooms)
+		var colorVariability = randf_range(0,1)
+		var isColorRoom = colorVariability < COLOR_ROOM_FREQUENCY
+		var crissCross = randf_range(0,1) if isColorRoom else 1
+		
+		var sizeX = s.x * 2 - 1
+		var sizeY = s.y * 2 - 1
+		for x in range(2, sizeX):
+			for y in range(2,sizeY):
 				var wallPosition = Vector2i(ul.x + x, ul.y + y)  # Convert local position to global tile coordinates
 				var chance_10 = randf_range(0.0, 1.0) < 0.13  # 10% chance
 				var chace_25 = randi() % 4 # 25% chance
+				
+		
 				# Check for corners first
 				if x == 2 and y == 2:  # Top-left corner
 					if tileMap.get_cell_atlas_coords(0, wallPosition) == Vector2i(5, 0):
@@ -194,8 +243,24 @@ func makeMap():
 						if chance_10:
 							tileMap.set_cell(1, Vector2i(wallPosition.x , wallPosition.y - 1), 1, Vector2i(chace_25, 4),2)
 				else:
-					tileMap.set_cell(0, wallPosition, 1, Vector2i(0, 1), 0)
+					var floorTile = Vector2i(0,1)
+					var offset = 7
+					var sizeOffset = offset -1
+					if(isColorRoom && room != startRoom):
+						floorTile = Vector2i(4,1) if colorVariability < COLOR_ROOM_FREQUENCY/2 else Vector2i(4,3)
+						
+						var oppositeFloorTile = Vector2i(4,3) if colorVariability < COLOR_ROOM_FREQUENCY/2 else Vector2i(4,1)
+						if((y > offset and y < sizeY-sizeOffset) or (x > offset and x < sizeX-sizeOffset)):
+							# Our checks later are reliant on layer 0, so we just put layer 2 above
+							# that layer (z-index wise)_
+							tileMap.set_cell(2, wallPosition, 1, floorTile, 0)
+						elif(crissCross < 0.25):
+							tileMap.set_cell(2, wallPosition, 1, oppositeFloorTile, 0)
 
+						
+						
+					tileMap.set_cell(0, wallPosition, 1, Vector2i(0,1), 0)
+					
 		
 		var p = path.get_closest_point(room.position)
 		
@@ -210,8 +275,7 @@ func makeMap():
 				
 			connections.append(p)
 	
-	find_start_room()
-	find_end_room()
+
 	
 	
 	if(debugEnabled):
@@ -227,6 +291,7 @@ func makeMap():
 	await get_tree().process_frame
 
 	level_generated.emit()
+	
 
 
 func carvePath(pos1: Vector2i, pos2: Vector2i):
@@ -264,7 +329,8 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		tileMap.set_cell(0, Vector2i(x, x_y.y + xDiff), 1, Vector2i(0, 1))
 		
 		if  tileMap.get_cell_atlas_coords(0, Vector2i(x + 1,  x_y.y + xDiff)) == Vector2i(5, 0):
-			tileMap.set_cell(0, Vector2i(x + 1,  x_y.y + xDiff), 1, Vector2i(0, 0), 3)
+			tileMap.set_cell(0, Vector2i(x + 1,  x_y.y + xDiff), 1, Vector2i(0,
+				0), 3)
 		if  tileMap.get_cell_atlas_coords(0, Vector2i(x + 1, x_y.y)) == Vector2i(5, 0):
 			tileMap.set_cell(0, Vector2i(x + 1, x_y.y), 1, Vector2i(0, 0), 3)
 		if  tileMap.get_cell_atlas_coords(0, Vector2i(x - 1,  x_y.y + xDiff)) == Vector2i(5, 0):
@@ -358,6 +424,28 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		elif tileMap.get_cell_atlas_coords(0, right_pos) == Vector2i(0, 0)&& tileMap.get_cell_alternative_tile(0, right_pos) != 3:
 			tileMap.set_cell(0, right_pos, 1, Vector2i(7, 0))
 		await get_tree().process_frame
+
+func changeColors():
+	for room in $Rooms.get_children():
+		var s = (room.size/tileSize).floor()
+		var ul = (room.position/tileSize).floor() - s
+		
+		var sizeX = s.x * 2 - 1
+		var sizeY = s.y * 2 - 1
+		for x in range(2, sizeX):
+			for y in range(2,sizeY):
+				var wallPosition = Vector2i(ul.x + x, ul.y + y)
+				
+				if(tileMap.get_cell_atlas_coords(2, wallPosition) == Vector2i(-1,-1)):
+					continue
+				
+				if(tileMap.get_cell_atlas_coords(2, wallPosition) == Vector2i(4,1)):
+					tileMap.erase_cell(2, wallPosition)
+					tileMap.set_cell(2, wallPosition, 1, Vector2(4,3))
+				elif(tileMap.get_cell_atlas_coords(2, wallPosition) == Vector2i(4,3)):
+					tileMap.erase_cell(2, wallPosition)
+					tileMap.set_cell(2, wallPosition, 1, Vector2(4,1))
+			
 
 func find_start_room():
 	var min_x = INF

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckuywhyfh4wgb"
-path="res://.godot/imported/tileset_full.png-4386d0d1550c9f1fb27e61848103597b.ctex"
+uid="uid://kcke18g6dj03"
+path="res://.godot/imported/Bottle.png-56032302f04824498989717a4ffa4508.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/TestAssets/TileMaps/tileset_full.png"
-dest_files=["res://.godot/imported/tileset_full.png-4386d0d1550c9f1fb27e61848103597b.ctex"]
+source_file="res://Assets/Pickups/Bottle.png"
+dest_files=["res://.godot/imported/Bottle.png-56032302f04824498989717a4ffa4508.ctex"]
 
 [params]
 

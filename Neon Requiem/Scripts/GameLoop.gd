@@ -341,9 +341,10 @@ func level_cleared():
 	for player in players:
 		player.disable_input()
 	#remove all pickups
-	for child in $HBoxContainer/SubViewportContainer/SubViewport.get_children():
-		if child is SpeedBoost or child is HealthPack:
-			child.queue_free() 
+	var pickups = $HBoxContainer/SubViewportContainer/SubViewport.find_children("*", "Pickups")
+	for pickup in pickups:
+		pickup.queue_free()
+		
 	
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
 	var selectedUpgrades : Array[UpgradeStrategy]  = []

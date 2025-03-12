@@ -1,4 +1,4 @@
-extends Node2D
+extends Consumable
 class_name SpeedBoost
 @onready var timer: Timer = $Timer
 var originalSpeed = 100

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c7s475ek7hddh"]
 
-[ext_resource type="Script" uid="uid://c5erh6x2upqnr" path="res://Scripts/Upgrades/SpeedBoost.gd" id="1_ofn6h"]
+[ext_resource type="Script" uid="uid://c5erh6x2upqnr" path="res://Scripts/Upgrades/Consumable/SpeedBoost.gd" id="1_ofn6h"]
 [ext_resource type="Texture2D" uid="uid://kcke18g6dj03" path="res://Assets/Pickups/Bottle.png" id="2_wpmu8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4x8as"]

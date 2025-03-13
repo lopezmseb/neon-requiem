@@ -10,7 +10,6 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Player and not used and not body.isBoosted:
 		used = true
 		body.isBoosted = true
-		print("Speed")
 		curPlayer = body
 		speedComponent = curPlayer.get_node("SpeedComponent")
 		originalSpeed = speedComponent.startingSpeed

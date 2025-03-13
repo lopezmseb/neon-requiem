@@ -249,7 +249,6 @@ func melee():
 	sword.position = to_local($Gun/Aiming.global_position)
 	# Calculate the direction to the shooting position (mouse)
 	var direction = (shootingDirection - position).normalized()
-	print("direction ", direction.x)
 
 	if direction.x <= 0:
 		sword.get_node("Sprite2D").flip_v = true

@@ -138,7 +138,6 @@ func find_mst(nodes: Array):
 	path.add_point(path.get_available_point_id(), nodes.pop_front())
 	
 	#repeat until no more node remains
-	print(nodes.size())
 	while nodes:
 		print("IN NODE LOOP")
 		var minD = INF #minimum distance so far

@@ -98,12 +98,17 @@ func _on_area_2d_body_entered(body: Node2D):
 
 func _on_health_component_health_depleted(owner):
 	isEnemyAlive = false
-	enemy.visible = false
-	await get_tree().create_timer(1).timeout
+	#await get_tree().create_timer(1).timeout
 	for i in get_children():
 		var timer = i as Timer
 		timer.stop()
-		
-	owner.queue_free()
+	onNewState.emit(self, AvailableStates.Death)
+	
+	#owner.queue_free()
 func _on_base_enemy_on_damage(allowAnimation: bool):
 	canPlayAnimation = allowAnimation
+	if(not isEnemyAlive):
+		return
+		
+	animate.stop()
+	animate.play("Hurt")

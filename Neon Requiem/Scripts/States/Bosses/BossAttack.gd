@@ -10,10 +10,8 @@ const bulletSpeed = 500.0
 var isBossAlive = true
 
 func Await_Coroutine(timer: Timer):
-	print("Yielding Timer ", timer.name)
 	timer.start()
 	await timer.timeout
-	print(timer.name, " timeout done")
 	return true
 
 
@@ -21,26 +19,44 @@ func Enter():
 	rng = RandomNumberGenerator.new()
 	animate.play("Idle")
 
+func PerformAttack(attackFunction: Callable, animationStart: String = "AttackReady", animationFinish: String = "AttackUnready"):
+	animate.play(animationStart)
+	await animate.animation_finished
+	
+	await attackFunction.call()
+	
+	animate.play(animationFinish)
+	await animate.animation_finished
+	
+func RoundSpreader():
+	Spread_Attack()
+	if(is_instance_valid($SpreadWaitTime)):
+		var result = await Await_Coroutine($SpreadWaitTime)
+	# Get out if Boss died while waiting for timer
+	if(not is_instance_valid(self)):
+		return
+
+	Spread_Attack(45)
+	
+
 func Physics_Update(delta: float):
 	var attackToChoose = rng.randi_range(0,3)
 	if(readyToAttack && isBossAlive):
+		readyToAttack = false
+		
 		match attackToChoose:
 			0:
-				Attack_All_Around()
+				await PerformAttack(Attack_All_Around)
 			1:
-				AAA_Burst()
+				await PerformAttack(AAA_Burst)
 			2:
-				Spread_Attack()
-				if(is_instance_valid($SpreadWaitTime)):
-					var result = await Await_Coroutine($SpreadWaitTime)
-
-				# Get out if Boss died while waiting for timer
-				if(not is_instance_valid(self)):
-					return
-
-				Spread_Attack(45)
+				await PerformAttack(RoundSpreader)
 			3:
-				Track_Closest_Player()
+				await PerformAttack(Track_Closest_Player)
+		
+		animate.play("Idle")
+
+
 
 func Track_Closest_Player():
 	readyToAttack = false
@@ -111,8 +127,8 @@ func AAA_Burst():
 		if(not isBossAlive):
 			return
 		Attack_All_Around(0 if i%2 == 1 else 15)
-		if(is_instance_valid($BurstTimer)):
-			var result = await Await_Coroutine($BurstTimer)
+		
+		var result = await Await_Coroutine($BurstTimer)
 
 		# Get out if Boss died while waiting for timer
 		if(not is_instance_valid(self)):
@@ -169,12 +185,8 @@ func _on_attack_cooldown_timeout():
 
 func _on_health_component_health_depleted(owner):
 	isBossAlive = false
-	enemy.visible = false
-	await get_tree().create_timer(4).timeout
-	print(get_children())
 	for i in get_children():
 		if(i is Timer):
 			i.stop()
 	
 	onNewState.emit(self, AvailableStates.Death)
-

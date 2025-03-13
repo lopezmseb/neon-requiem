@@ -4,7 +4,8 @@ class_name EnemyState
 var AvailableStates: Dictionary = {
 	Idle = "idle",
 	Follow = "follow",
-	Attack = "attack"
+	Attack = "attack",
+	Death = "death"
 }
 
 @export var enemy: CharacterBody2D

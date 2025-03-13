@@ -21,6 +21,7 @@ var path
 var startRoom
 var endRoom
 var players = []
+var enableColorChange = true
 
 signal level_generated
 signal level_cleared
@@ -96,13 +97,12 @@ func moveToNextLevel(level:int):
 	for i in $Rooms.get_children():
 		i.queue_free()
 		
-	tileMap.clear()
-	
-	tileMap.clear()
-	
-	if(level%2 == 0):
+	tileMap.clear() 	
+	if(level%GlobalVariables.enemyFloorRate == 0):
+		enableColorChange = false
 		SpawnBossRoom()
 	else:
+		enableColorChange = true
 		makeRooms()
 	
 func spawnPlayer(player: Player, offset: float):
@@ -437,6 +437,8 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		await get_tree().process_frame
 
 func changeColors():
+	if(not enableColorChange):
+		return
 	for room in $Rooms.get_children():
 		var s = (room.size/tileSize).floor()
 		var ul = (room.position/tileSize).floor() - s

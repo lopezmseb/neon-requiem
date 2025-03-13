@@ -300,23 +300,31 @@ func _on_level_generated():
 			load_all_players()
 		roomGen.players = players
 
-	# Spawn Enemies
-	for room in roomGen.getRooms():
-		#Do not spawn enemies in the Starting Room
-		if(room == roomGen.startRoom):
-			continue;
-		
-		var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
-		var roomRect = collisionShape.shape.get_rect()
-		var numEnemies = randi() % maxEnemiesPerRoom + 1
-		
-		for i in range(0, numEnemies):
-			var enemyObject = enemyScene.instantiate()
+	if(level % GlobalVariables.enemyFloorRate == 0):
+		var room = roomGen.getRooms().filter(func(room): return room.name == "BossRoom").front()
+		if(room):
+			var roomMarker = room.find_child("BossStartingPosition") as Marker2D
+			var boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn").instantiate()
+			enemiesNode.add_child(boss)
+			roomGen.spawnEnemy(boss, "", roomMarker.global_position)
+	else:
+		# Spawn Enemies
+		for room in roomGen.getRooms():
+			#Do not spawn enemies in the Starting Room
+			if(room == roomGen.startRoom):
+				continue;
 			
-			enemiesNode.add_child(enemyObject)
-			roomGen.spawnEnemy(enemyObject, room)
-	
-	roomGen.spawnEntities(players)
+			var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
+			var roomRect = collisionShape.shape.get_rect()
+			var numEnemies = randi() % maxEnemiesPerRoom + 1
+			
+			for i in range(0, numEnemies):
+				var enemyObject = enemyScene.instantiate()
+				
+				enemiesNode.add_child(enemyObject)
+				roomGen.spawnEnemy(enemyObject, room)
+		
+		roomGen.spawnEntities(players)
 	canChangeLevel = true
 	call_deferred("fadeOut")
 	

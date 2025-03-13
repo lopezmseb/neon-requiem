@@ -21,6 +21,7 @@ COLORS="*res://Scripts/Globals/Colors.gd"
 Upgrades="*res://Scripts/Globals/Upgrades.gd"
 GlobalSignals="*res://Scripts/Globals/GlobalSignals.gd"
 UIHelpers="*res://Scripts/Globals/ui_helpers.gd"
+GlobalVariables="*res://Scripts/Globals/GlobalVariables.gd"
 
 [display]
 

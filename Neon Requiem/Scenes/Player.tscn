@@ -501,6 +501,14 @@ upgradeImagePath = "res://Assets/UI/Upgrades/Health.png"
 upgradeId = 5.0
 upgradeImage = ExtResource("14_n2ppx")
 
+[node name="SpeedComponent" type="Node" parent="."]
+script = ExtResource("13_lbtrs")
+
+[node name="MovementSpeedUpgrade" type="Node" parent="SpeedComponent"]
+script = ExtResource("14_lwjg2")
+upgradeId = 8.0
+upgradeImage = ExtResource("23_v1wvv")
+
 [node name="ColorComponent" type="Node" parent="."]
 script = ExtResource("6_bw6ym")
 
@@ -529,14 +537,6 @@ upgradeImage = ExtResource("19_j4w3v")
 stream = ExtResource("10_yis84")
 volume_db = -10.0
 bus = &"SFX"
-
-[node name="SpeedComponent" type="Node" parent="."]
-script = ExtResource("13_lbtrs")
-
-[node name="MovementSpeedUpgrade" type="Node" parent="SpeedComponent"]
-script = ExtResource("14_lwjg2")
-upgradeId = 8.0
-upgradeImage = ExtResource("23_v1wvv")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]

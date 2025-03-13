@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://577xd1d52p1t"]
+[gd_scene load_steps=34 format=3 uid="uid://577xd1d52p1t"]
 
 [ext_resource type="Script" uid="uid://gifg73i1qdvn" path="res://Scripts/Enemy/BaseEnemy.gd" id="1_eknkv"]
 [ext_resource type="Script" uid="uid://c7hjp5uyboedw" path="res://Scripts/States/StateMachine.gd" id="2_1hncl"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://psmi6sk3ww3n" path="res://Scripts/States/Enemies/EnemyIdle.gd" id="4_4lkf5"]
 [ext_resource type="Script" uid="uid://b3xkokbtcy8vb" path="res://Scripts/States/Enemies/EnemyFollow.gd" id="5_h2kdd"]
 [ext_resource type="Script" uid="uid://c0b20pvg8umil" path="res://Scripts/Stats/HealthComponent.gd" id="6_t48s2"]
+[ext_resource type="Script" uid="uid://bpcfaqb6cd7cf" path="res://Scripts/States/Enemies/EnemyDeath.gd" id="7_1jihc"]
 [ext_resource type="Script" uid="uid://bh3o63i4jlnmj" path="res://Scripts/Stats/ColorComponent.gd" id="7_15nv6"]
 [ext_resource type="PackedScene" uid="uid://c5thomb4wodpp" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
 
@@ -16,6 +17,30 @@ shader_parameter/line_color = Color(0.439216, 0.945098, 0.239216, 1)
 shader_parameter/min_thickness = 0.0
 shader_parameter/max_thickness = 1.0
 shader_parameter/line_thickness = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jihc"]
+atlas = ExtResource("3_7n6kc")
+region = Rect2(288, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gltnq"]
+atlas = ExtResource("3_7n6kc")
+region = Rect2(312, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6n1ky"]
+atlas = ExtResource("3_7n6kc")
+region = Rect2(336, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vq62f"]
+atlas = ExtResource("3_7n6kc")
+region = Rect2(360, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qrfxv"]
+atlas = ExtResource("3_7n6kc")
+region = Rect2(384, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0eh4"]
+atlas = ExtResource("3_7n6kc")
+region = Rect2(408, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mr715"]
 atlas = ExtResource("3_7n6kc")
@@ -71,6 +96,29 @@ region = Rect2(240, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4vycq"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jihc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gltnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6n1ky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vq62f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qrfxv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0eh4")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mr715")
@@ -145,7 +193,7 @@ script = ExtResource("1_eknkv")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_ulle7")
 sprite_frames = SubResource("SpriteFrames_4vycq")
-animation = &"Hurt"
+animation = &"Death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vxlqs")
@@ -171,6 +219,11 @@ enemy = NodePath("../..")
 animate = NodePath("../../AnimatedSprite2D")
 
 [node name="AttackCooldown" type="Timer" parent="StateMachine/Follow"]
+
+[node name="Death" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy", "animate")]
+script = ExtResource("7_1jihc")
+enemy = NodePath("../..")
+animate = NodePath("../../AnimatedSprite2D")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("6_t48s2")

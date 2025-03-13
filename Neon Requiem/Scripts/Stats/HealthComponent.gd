@@ -12,7 +12,9 @@ signal entity_damaged(attack:float)
 
 
 func damage(attack: AttackComponent):
-	# If health == 0 or lower, destroy the object.
+	# If health == 0, don't run any more code
+	if(currentHealth == 0):
+		return
 	currentHealth -= attack.calculateDamage()
 	entity_damaged.emit(attack.calculateDamage())
 	if(currentHealth <= 0):
@@ -34,7 +36,6 @@ func damage(attack: AttackComponent):
 					pickupObject = healthPackScene.instantiate()
 				pickupObject.position = parent.position
 				parent.get_parent().get_parent().add_child(pickupObject)
-			#parent.queue_free()
 
 		
 

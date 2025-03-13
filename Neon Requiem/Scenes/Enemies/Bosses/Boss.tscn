@@ -441,8 +441,8 @@ animate = NodePath("../../AnimatedSprite2D")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("7_bjisq")
-BASE_HEALTH = 200.0
-MAX_HEALTH = 1000.0
+BASE_HEALTH = 500.0
+MAX_HEALTH = 500.0
 
 [node name="ColorComponent" type="Node" parent="."]
 script = ExtResource("8_spaym")
@@ -468,4 +468,5 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="Area2D" to="StateMachine/Idle" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="StateMachine/Attack/AttackCooldown" to="StateMachine/Attack" method="_on_attack_cooldown_timeout"]
+[connection signal="entity_damaged" from="HealthComponent" to="." method="onHealthDamage"]
 [connection signal="health_depleted" from="HealthComponent" to="StateMachine/Attack" method="_on_health_component_health_depleted"]

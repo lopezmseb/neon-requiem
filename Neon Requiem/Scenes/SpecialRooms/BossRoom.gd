@@ -11,9 +11,11 @@ func _process(delta: float) -> void:
 		
 
 func tileDamage():
+	if(not GlobalVariables.allowDamageFromFloors):
+		return
+		
 	for player in players:
 		if(player is Player):
-			print(player)
 			var tilePosition = tileMap.local_to_map(to_local(player.global_position))
 			var atlasCoords = tileMap.get_cell_atlas_coords(0, tilePosition)
 			

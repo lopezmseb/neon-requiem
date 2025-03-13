@@ -11,8 +11,8 @@ var Room = preload("res://Scenes/Room.tscn")
 var BossRoom = preload("res://Scenes/SpecialRooms/BossRoom.tscn")
 var Boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn")
 var tileSize = 16
-var maxRooms = 3
-var minRooms = 2
+var maxRooms = 5
+var minRooms = 4
 var minSize = 10
 var maxSize = 12
 var spread = 200
@@ -61,29 +61,30 @@ func getRooms():
 		
 	
 func _process(delta):
-	for player in players:
-		if(player is Player):
-			var tilePosition = tileMap.local_to_map(to_local(player.global_position))
-			var atlasCoords = tileMap.get_cell_atlas_coords(2, tilePosition)
-			
-			var playerHealth = player.find_child("HealthComponent") as HealthComponent
-			var playerColor = player.find_child("ColorComponent") as ColorComponent
-			if(not playerColor):
-				continue
+	if(GlobalVariables.allowDamageFromFloors):
+		for player in players:
+			if(player is Player):
+				var tilePosition = tileMap.local_to_map(to_local(player.global_position))
+				var atlasCoords = tileMap.get_cell_atlas_coords(2, tilePosition)
 				
-			if(atlasCoords == Vector2i(4,1)):
-				if(playerColor.color == COLORS.OFFENSIVE):
+				var playerHealth = player.find_child("HealthComponent") as HealthComponent
+				var playerColor = player.find_child("ColorComponent") as ColorComponent
+				if(not playerColor):
 					continue
 					
-				if(playerHealth):
-					playerHealth.damage($TileDamage)
-					
-			elif(atlasCoords == Vector2i(4,3)):
-				if(playerColor.color == COLORS.DEFENSIVE):
-					continue
-					
-				if(playerHealth):
-					playerHealth.damage($TileDamage)
+				if(atlasCoords == Vector2i(4,1)):
+					if(playerColor.color == COLORS.OFFENSIVE):				
+						continue
+						
+					if(playerHealth):
+						playerHealth.damage($TileDamage)
+						
+				elif(atlasCoords == Vector2i(4,3)):
+					if(playerColor.color == COLORS.DEFENSIVE):
+						continue
+						
+					if(playerHealth):
+						playerHealth.damage($TileDamage)
 	
 	queue_redraw()
 	
@@ -285,9 +286,6 @@ func makeMap():
 				carvePath(start,end)
 				
 			connections.append(p)
-	
-
-	
 	
 	if(debugEnabled):
 		var startText = Label.new()

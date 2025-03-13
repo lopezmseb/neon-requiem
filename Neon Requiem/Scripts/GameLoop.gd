@@ -326,6 +326,8 @@ func _on_level_generated():
 		
 		roomGen.spawnEntities(players)
 	canChangeLevel = true
+	GlobalVariables.allowDamageFromFloors = true
+	
 	call_deferred("fadeOut")
 	
 func fadeOut():
@@ -340,7 +342,8 @@ func fadeIn():
 	
 func level_cleared():
 	call_deferred("fadeIn")
-
+	
+	GlobalVariables.allowDamageFromFloors = false
 	# Pick Upgrade
 	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
 	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)

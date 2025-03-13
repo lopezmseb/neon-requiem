@@ -9,8 +9,8 @@ class_name RoomGeneration
 
 var Room = preload("res://Scenes/Room.tscn")
 var tileSize = 16
-var maxRooms = 10
-var minRooms = 5
+var maxRooms = 3
+var minRooms = 2
 var minSize = 10
 var maxSize = 12
 var spread = 200

@@ -84,10 +84,6 @@ func _input(event):
 			if(event.button_index == JOY_BUTTON_Y && event.is_pressed()):
 				changeColor()
 
-	
-	
-		
-		
 func handleKBInput(delta):
 	# Move Gun Reticle on Mouse Direction
 	if input_enabled:

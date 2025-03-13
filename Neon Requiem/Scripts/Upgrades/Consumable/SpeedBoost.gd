@@ -13,14 +13,14 @@ func _on_body_entered(body: Node2D) -> void:
 		print("Speed")
 		curPlayer = body
 		speedComponent = curPlayer.get_node("SpeedComponent")
-		originalSpeed = speedComponent.startingSpeed
-		speedComponent.startingSpeed = originalSpeed + 50
+		originalSpeed = speedComponent.baseSpeed
+		speedComponent.baseSpeed = originalSpeed + 50
 		timer.start()
 		visible = false	
 
 
 func _on_timer_timeout() -> void:
 	speedComponent = curPlayer.get_node("SpeedComponent")
-	speedComponent.startingSpeed = originalSpeed
+	speedComponent.baseSpeed = originalSpeed
 	curPlayer.isBoosted = false
 	queue_free()

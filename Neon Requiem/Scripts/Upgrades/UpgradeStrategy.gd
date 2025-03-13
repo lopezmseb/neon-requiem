@@ -6,6 +6,7 @@ class_name UpgradeStrategy
 @export var upgradeImage : CompressedTexture2D
 @export var upgradeTitle = ""
 @export var upgradeText = "Base"
+@export var color = null
 @export var level = 0
 
 func Apply(stat: float):

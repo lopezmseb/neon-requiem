@@ -1,13 +1,14 @@
 extends Node
 class_name SpeedComponent
 
-@export var startingSpeed = 100.0
-
-func calculateSpeed():
-	var speed = startingSpeed
+@export var baseSpeed = 100.0
+var speed: float = baseSpeed
+		
+func calculateSpeed(speed = baseSpeed):
+	var localSpeed = speed
 	
 	for i in get_children():
 		var upgrade = i as UpgradeStrategy
-		speed = upgrade.Apply(speed)
+		localSpeed = upgrade.Apply(localSpeed)
 	
-	return speed
+	return localSpeed

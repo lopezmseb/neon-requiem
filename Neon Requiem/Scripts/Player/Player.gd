@@ -41,10 +41,10 @@ func _ready():
 	#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 func disable_input():
-	input_enabled = false
+	set_process_input(false)
 
 func enable_input():
-	input_enabled = true
+	set_process_input(true)
 	
 func _input(event):
 	if input_enabled:

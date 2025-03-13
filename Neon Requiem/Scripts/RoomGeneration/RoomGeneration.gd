@@ -11,8 +11,10 @@ var Room = preload("res://Scenes/Room.tscn")
 var BossRoom = preload("res://Scenes/SpecialRooms/BossRoom.tscn")
 var Boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn")
 var tileSize = 16
+
 var maxRooms = 5
 var minRooms = 4
+
 var minSize = 10
 var maxSize = 12
 var spread = 200
@@ -154,7 +156,6 @@ func find_mst(nodes: Array):
 	path.add_point(path.get_available_point_id(), nodes.pop_front())
 	
 	#repeat until no more node remains
-	print(nodes.size())
 	while nodes:
 		print("IN NODE LOOP")
 		var minD = INF #minimum distance so far

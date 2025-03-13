@@ -37,6 +37,7 @@ func damage(attack: AttackComponent):
 				pickupObject.position = parent.position
 				parent.get_parent().get_parent().add_child(pickupObject)
 
+
 		
 
 func calcMaxHealth():

@@ -41,10 +41,10 @@ func _ready():
 	#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 func disable_input():
-	input_enabled = false
+	set_process_input(false)
 
 func enable_input():
-	input_enabled = true
+	set_process_input(true)
 	
 func _input(event):
 	if input_enabled:
@@ -249,7 +249,6 @@ func melee():
 	sword.position = to_local($Gun/Aiming.global_position)
 	# Calculate the direction to the shooting position (mouse)
 	var direction = (shootingDirection - position).normalized()
-	print("direction ", direction.x)
 
 	if direction.x <= 0:
 		sword.get_node("Sprite2D").flip_v = true

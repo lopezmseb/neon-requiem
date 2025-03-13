@@ -8,9 +8,11 @@ class_name RoomGeneration
 @onready var tileMap = $TileMap
 
 var Room = preload("res://Scenes/Room.tscn")
+var BossRoom = preload("res://Scenes/SpecialRooms/BossRoom.tscn")
+var Boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn")
 var tileSize = 16
-var maxRooms = 10
-var minRooms = 5
+var maxRooms = 5
+var minRooms = 4
 var minSize = 10
 var maxSize = 12
 var spread = 200
@@ -19,6 +21,7 @@ var path
 var startRoom
 var endRoom
 var players = []
+var enableColorChange = true
 
 signal level_generated
 signal level_cleared
@@ -58,47 +61,60 @@ func getRooms():
 		
 	
 func _process(delta):
-	for player in players:
-		if(player is Player):
-			var tilePosition = tileMap.local_to_map(to_local(player.global_position))
-			var atlasCoords = tileMap.get_cell_atlas_coords(2, tilePosition)
-			
-			var playerHealth = player.find_child("HealthComponent") as HealthComponent
-			var playerColor = player.find_child("ColorComponent") as ColorComponent
-			if(not playerColor):
-				continue
+	if(GlobalVariables.allowDamageFromFloors):
+		for player in players:
+			if(player is Player):
+				var tilePosition = tileMap.local_to_map(to_local(player.global_position))
+				var atlasCoords = tileMap.get_cell_atlas_coords(2, tilePosition)
 				
-			if(atlasCoords == Vector2i(4,1)):
-				if(playerColor.color == COLORS.OFFENSIVE):
+				var playerHealth = player.find_child("HealthComponent") as HealthComponent
+				var playerColor = player.find_child("ColorComponent") as ColorComponent
+				if(not playerColor):
 					continue
 					
-				if(playerHealth):
-					playerHealth.damage($TileDamage)
-					
-			elif(atlasCoords == Vector2i(4,3)):
-				if(playerColor.color == COLORS.DEFENSIVE):
-					continue
-					
-				if(playerHealth):
-					playerHealth.damage($TileDamage)
+				if(atlasCoords == Vector2i(4,1)):
+					if(playerColor.color == COLORS.OFFENSIVE):				
+						continue
+						
+					if(playerHealth):
+						playerHealth.damage($TileDamage)
+						
+				elif(atlasCoords == Vector2i(4,3)):
+					if(playerColor.color == COLORS.DEFENSIVE):
+						continue
+						
+					if(playerHealth):
+						playerHealth.damage($TileDamage)
 	
 	queue_redraw()
+	
+func SpawnBossRoom():
+	var room = BossRoom.instantiate()
+	$Rooms.add_child(room)
+	level_generated.emit()
 	
 func moveToNextLevel(level:int):
 	# Delete All Old Rooms
 	for i in $Rooms.get_children():
 		i.queue_free()
 		
-	tileMap.clear()
-	
-	makeRooms()
+	tileMap.clear() 	
+	if(level%GlobalVariables.enemyFloorRate == 0):
+		enableColorChange = false
+		SpawnBossRoom()
+	else:
+		enableColorChange = true
+		makeRooms()
 	
 func spawnPlayer(player: Player, offset: float):
 	if(is_instance_valid(startRoom)):
 		player.position = Vector2(startRoom.position.x + offset, startRoom.position.y)
 	
-func spawnEnemy(enemy, room):
-	enemy.position = room.position
+func spawnEnemy(enemy, room, position = null):
+	if(position):
+		enemy.position = position
+	else:
+		enemy.position = room.position
 	
 func spawnEntities(players: Array[Player]) -> void:
 	# Set Player to startRoom position
@@ -271,9 +287,6 @@ func makeMap():
 				
 			connections.append(p)
 	
-
-	
-	
 	if(debugEnabled):
 		var startText = Label.new()
 		startText.text = "Start"
@@ -422,6 +435,8 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 		await get_tree().process_frame
 
 func changeColors():
+	if(not enableColorChange):
+		return
 	for room in $Rooms.get_children():
 		var s = (room.size/tileSize).floor()
 		var ul = (room.position/tileSize).floor() - s

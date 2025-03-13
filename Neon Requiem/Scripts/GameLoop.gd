@@ -300,24 +300,34 @@ func _on_level_generated():
 			load_all_players()
 		roomGen.players = players
 
-	# Spawn Enemies
-	for room in roomGen.getRooms():
-		#Do not spawn enemies in the Starting Room
-		if(room == roomGen.startRoom):
-			continue;
-		
-		var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
-		var roomRect = collisionShape.shape.get_rect()
-		var numEnemies = randi() % maxEnemiesPerRoom + 1
-		
-		for i in range(0, numEnemies):
-			var enemyObject = enemyScene.instantiate()
+	if(level % GlobalVariables.enemyFloorRate == 0):
+		var room = roomGen.getRooms().filter(func(room): return room.name == "BossRoom").front()
+		if(room):
+			var roomMarker = room.find_child("BossStartingPosition") as Marker2D
+			var boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn").instantiate()
+			enemiesNode.add_child(boss)
+			roomGen.spawnEnemy(boss, "", roomMarker.global_position)
+	else:
+		# Spawn Enemies
+		for room in roomGen.getRooms():
+			#Do not spawn enemies in the Starting Room
+			if(room == roomGen.startRoom):
+				continue;
 			
-			enemiesNode.add_child(enemyObject)
-			roomGen.spawnEnemy(enemyObject, room)
-	
-	roomGen.spawnEntities(players)
+			var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
+			var roomRect = collisionShape.shape.get_rect()
+			var numEnemies = randi() % maxEnemiesPerRoom + 1
+			
+			for i in range(0, numEnemies):
+				var enemyObject = enemyScene.instantiate()
+				
+				enemiesNode.add_child(enemyObject)
+				roomGen.spawnEnemy(enemyObject, room)
+		
+		roomGen.spawnEntities(players)
 	canChangeLevel = true
+	GlobalVariables.allowDamageFromFloors = true
+	
 	call_deferred("fadeOut")
 	
 func fadeOut():
@@ -332,7 +342,8 @@ func fadeIn():
 	
 func level_cleared():
 	call_deferred("fadeIn")
-
+	
+	GlobalVariables.allowDamageFromFloors = false
 	# Pick Upgrade
 	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
 	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
@@ -340,12 +351,20 @@ func level_cleared():
 	#stop the shooting and abilities on upgrade screen
 	for player in players:
 		player.disable_input()
+
+	# Remove any existing bullets
+	var bullets = get_tree().root.find_children("*", "Bullet")
+
+	for bullet in bullets:
+		bullet.queue_free()
+		
 	#remove all pickups
 	for child in $HBoxContainer/SubViewportContainer/SubViewport.get_children():
 		if child is Consumable:
 			child.queue_free()
 		
 	
+	# Start Upgrade Process
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
 	var selectedUpgrades : Array[UpgradeStrategy]  = []
 	
@@ -363,7 +382,7 @@ func onUpgradeSelected():
 	if(upgradeSelectedCount == players.size()):
 		# If UpgradeSelectScreen exists, remove it from tree and set it to null (for next level)
 		if(upgradeSelectScreen):
-			upgradeSelectScreen.queue_free()
+			upgradeSelectScreen.call_deferred("queue_free")
 			upgradeSelectScreen = null
 			
 			# Make al players "Alive" again

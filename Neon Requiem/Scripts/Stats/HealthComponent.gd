@@ -4,17 +4,18 @@ class_name HealthComponent
 signal health_depleted(owner)
 signal entity_damaged(attack:float)
 
-const BASE_HEALTH = 100
+@export var BASE_HEALTH: float = 100
 @export var MAX_HEALTH : float = 100 : get = calcMaxHealth
-@export var currentHealth: float = MAX_HEALTH
+@onready var currentHealth: float = BASE_HEALTH
 @onready var healthPackScene = preload("res://Scenes/HealthPack.tscn")
 @onready var speedBoostScene = preload("res://Scenes/SpeedBoost.tscn")
 
 
 func damage(attack: AttackComponent):
-	# If health == 0 or lower, destroy the object.
+	# If health == 0, don't run any more code
+	if(currentHealth == 0):
+		return
 	currentHealth -= attack.calculateDamage()
-	print("Damage", attack.calculateDamage())
 	entity_damaged.emit(attack.calculateDamage())
 	if(currentHealth <= 0):
 		
@@ -25,6 +26,7 @@ func damage(attack: AttackComponent):
 			parent.visible = false
 			currentHealth = MAX_HEALTH
 		else:
+			health_depleted.emit(parent)
 			var chance_25 = randf_range(0.0, 1.0) < 0.22
 			if chance_25:
 				var pickupObject
@@ -34,7 +36,6 @@ func damage(attack: AttackComponent):
 					pickupObject = healthPackScene.instantiate()
 				pickupObject.position = parent.position
 				parent.get_parent().get_parent().add_child(pickupObject)
-			parent.queue_free()
 
 		
 

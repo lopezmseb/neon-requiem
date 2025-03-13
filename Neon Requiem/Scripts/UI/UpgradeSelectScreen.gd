@@ -12,8 +12,10 @@ signal endSelection
 
 
 func _ready():
-	var tween = create_tween()
-	tween.tween_property($Fade, "color:a", 0.5, 1)
+
+	
+	var tween = get_tree().create_tween()
+	tween.tween_property($Fade_Upgrade, "color:a", 0.5, 1)
 	
 	var count = 0
 	focus_mode = Control.FOCUS_ALL

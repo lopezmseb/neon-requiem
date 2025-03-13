@@ -1,5 +1,23 @@
 extends CharacterBody2D
+@onready var color_component: ColorComponent = $ColorComponent
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
+
+func switchColors():
+	if(color_component.color == COLORS.OFFENSIVE):
+		var shaderMaterial = ShaderMaterial.new()
+		shaderMaterial.shader = COLORS.DEFENSIVE_SHADER
+		animated_sprite_2d.material = shaderMaterial
+		color_component.color = COLORS.DEFENSIVE
+	else:
+		var shaderMaterial = ShaderMaterial.new()
+		shaderMaterial.shader = COLORS.OFFENSIVE_SHADER
+		animated_sprite_2d.material = shaderMaterial
+		color_component.color = COLORS.OFFENSIVE
+
+
+func _ready():
+	GlobalSignals.onColorChange.connect(switchColors)
 
 func _physics_process(delta):
 	pass

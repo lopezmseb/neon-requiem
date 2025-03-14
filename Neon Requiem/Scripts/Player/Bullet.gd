@@ -69,7 +69,8 @@ func _on_area_2d_body_entered(body):
 		
 	if(healthBar is HealthBar):
 		healthBar.show()
-		
+	visible = false
+	await audio_stream_player.finished
 	queue_free()
 	
 

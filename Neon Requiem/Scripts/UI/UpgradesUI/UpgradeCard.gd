@@ -25,8 +25,6 @@ func upgradeStrategyFillInfo():
 func _ready():
 	upgradeStrategyFillInfo()
 	
-	#mouse_entered.connect(_on_mouse_entered)
-	#mouse_exited.connect(_on_mouse_exit)
 			
 func _process(delta):
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL

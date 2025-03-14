@@ -12,8 +12,8 @@ var BossRoom = preload("res://Scenes/SpecialRooms/BossRoom.tscn")
 var Boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn")
 var tileSize = 16
 
-var maxRooms = 5
-var minRooms = 4
+var maxRooms = 3
+var minRooms = 2
 
 var minSize = 10
 var maxSize = 12

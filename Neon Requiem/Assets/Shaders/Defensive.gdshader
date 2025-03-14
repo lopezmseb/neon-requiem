@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform vec4 line_color : source_color = vec4(0.4,0.95,0.24,1);
+uniform vec4 line_color : source_color = vec4(0,1,0.95,1);
 // TODO: Add pulsating effect ?
 uniform float min_thickness : hint_range(0,1) = 0.0;
 uniform float max_thickness : hint_range(0,1) = 1.0;

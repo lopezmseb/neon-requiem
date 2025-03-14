@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b41rswdtvd10e"]
+[gd_scene load_steps=8 format=3 uid="uid://b41rswdtvd10e"]
 
 [ext_resource type="Script" uid="uid://c5w8x0yckjjm" path="res://Scripts/GameLoop.gd" id="1_a5ecp"]
 [ext_resource type="PackedScene" uid="uid://833p2gpb3bdv" path="res://Scenes/TestScenes/RoomGeneration.tscn" id="1_q0fmw"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://vkd8f0r02u4y" path="res://Scripts/Player/PlayerCamera.gd" id="4_cxvdw"]
 [ext_resource type="AudioStream" uid="uid://b4yi0o5f878jr" path="res://Assets/Sound/Music/cyberpunk-music-277931.mp3" id="5_ywwyg"]
 [ext_resource type="Script" uid="uid://bf5v6p3h44658" path="res://Scripts/Music/BeatSwitcher.gd" id="6_ctnvr"]
-[ext_resource type="PackedScene" uid="uid://cwuxgblo0jje2" path="res://Scenes/UI/settings_menu.tscn" id="6_e1fsm"]
 [ext_resource type="Script" uid="uid://bo27f4j28666h" path="res://addons/rhythm_notifier/rhythm_notifier.gd" id="8_f5ep2"]
 
 [node name="GameLoop" type="Control"]
@@ -68,9 +67,5 @@ script = ExtResource("8_f5ep2")
 bpm = 100.0
 beat_length = 0.6
 audio_stream_player = NodePath("../AudioStreamPlayer")
-
-[node name="SettingsMenu" parent="." instance=ExtResource("6_e1fsm")]
-visible = false
-layout_mode = 1
 
 [connection signal="level_generated" from="HBoxContainer/SubViewportContainer/SubViewport/RoomGeneration" to="." method="_on_level_generated"]

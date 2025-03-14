@@ -144,7 +144,10 @@ func _physics_process(delta):
 	
 func changeColor():
 	colorComponent.color = COLORS.OFFENSIVE if colorComponent.color == COLORS.DEFENSIVE else COLORS.DEFENSIVE; 
-	$AnimatedSprite2D.material.set("shader_parameter/line_color", COLORS.OUTLINE_CLRS[colorComponent.color])
+	var shaderMaterial = ShaderMaterial.new()
+	var shader = COLORS.OFFENSIVE_SHADER if colorComponent.color == COLORS.OFFENSIVE else COLORS.DEFENSIVE_SHADER
+	shaderMaterial.shader = shader
+	$AnimatedSprite2D.material = shaderMaterial
 
 func dash():
 	$DashCooldown.start()  # Start cooldown timer

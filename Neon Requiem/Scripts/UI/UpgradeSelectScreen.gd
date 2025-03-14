@@ -54,7 +54,8 @@ func _process(delta):
 	read_player_data()
 	upgradeContainer.queue_redraw()	
 	$Turn.text = "[center]Player {currentPlayer}'s Turn".format({"currentPlayer": int(currentPlayerNumber)})
-	set_controller_device(devices[currentPlayerNumber - 1])
+	if(currentPlayerNumber - 1 < devices.size()):
+		set_controller_device(devices[currentPlayerNumber - 1])
 	var count = 0
 	for i in upgradeScenes:
 

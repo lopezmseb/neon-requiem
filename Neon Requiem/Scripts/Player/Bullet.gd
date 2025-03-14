@@ -44,6 +44,8 @@ func _on_area_2d_body_entered(body):
 	# If the object does not have a health component, then it must be a wall
 	# therefore, delete projectile
 	if(health == null):
+		visible = false
+		await audio_stream_player.finished
 		queue_free()
 		return
 		

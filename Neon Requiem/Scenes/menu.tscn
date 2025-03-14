@@ -38,11 +38,11 @@ expand_mode = 2
 
 [node name="Sky" type="Sprite2D" parent="TextureRect"]
 position = Vector2(1514, 862)
-scale = Vector2(1, 0.998773)
 texture = ExtResource("2_wi1je")
 
 [node name="Buildings" type="Sprite2D" parent="TextureRect"]
-position = Vector2(1523, 857)
+position = Vector2(1519.5, 867.5)
+scale = Vector2(3, 3)
 texture = ExtResource("3_67qqv")
 
 [node name="Title" type="TextureRect" parent="TextureRect"]

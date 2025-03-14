@@ -207,7 +207,7 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		subViewport.add_child(camera)
 		subViewport.add_child(playerInterface)
 		
-		mainViewport.add_child(anotherPlayer)		
+		subViewport.add_child(anotherPlayer)		
 		container.add_child(subViewport)
 		hbox.add_child(container)
 		subViewport.get_node("UserInterface/CooldownTimers").set_scale(Vector2(.5, .5))

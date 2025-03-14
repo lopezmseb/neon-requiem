@@ -45,7 +45,7 @@ func disable_input():
 
 func enable_input():
 	set_process_input(true)
-	
+
 func _input(event):
 	if input_enabled:
 		if(event.device != playerController):
@@ -56,13 +56,12 @@ func _input(event):
 			if(abs(movementDirection.x) < 0.1 and abs(movementDirection.y) < 0.1):
 				movementDirection = Vector2.ZERO
 			
-			var rightX = Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_X)
-			var rightY = Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_Y)
 			var tempDir = Vector2(Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_X), Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_Y))
-			
+
 			if(abs(tempDir.x) > 0.1 || abs(tempDir.y) > 0.1):
-				shootingDirection = tempDir * 30 + position
+				shootingDirection = position + tempDir.normalized() * 4000
 			
+
 				
 			var rightTrigger = Input.get_joy_axis(playerController, JOY_AXIS_TRIGGER_RIGHT);
 			

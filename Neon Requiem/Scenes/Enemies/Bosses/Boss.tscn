@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://hb7isw645t1t"]
+[gd_scene load_steps=61 format=3 uid="uid://hb7isw645t1t"]
 
 [ext_resource type="Script" uid="uid://bcgrdcpnobkci" path="res://Scripts/Enemy/Bosses/Boss.gd" id="1_75vd1"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_up4e3"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cg24mmnxnubgs" path="res://Scripts/States/Bosses/BossDeath.gd" id="8_gddqf"]
 [ext_resource type="Script" uid="uid://bh3o63i4jlnmj" path="res://Scripts/Stats/ColorComponent.gd" id="8_spaym"]
 [ext_resource type="PackedScene" uid="uid://c5thomb4wodpp" path="res://Scenes/ObjectHealthBar.tscn" id="9_8u8i2"]
+[ext_resource type="AudioStream" uid="uid://wnxkwkd7le0g" path="res://Assets/Sound/SFX/BossQueue.mp3" id="12_nup2b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eib4j"]
 shader = ExtResource("2_up4e3")
@@ -466,6 +467,10 @@ grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 healthComponent = NodePath("../HealthComponent")
 metadata/_edit_use_anchors_ = true
+
+[node name="ArmMoveSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_nup2b")
+bus = &"SFX"
 
 [connection signal="body_entered" from="Area2D" to="StateMachine/Idle" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="StateMachine/Attack/AttackCooldown" to="StateMachine/Attack" method="_on_attack_cooldown_timeout"]

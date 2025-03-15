@@ -21,6 +21,7 @@ func Enter():
 
 func PerformAttack(attackFunction: Callable, animationStart: String = "AttackReady", animationFinish: String = "AttackUnready"):
 	animate.play(animationStart)
+	$"../../ArmMoveSFX".play()
 	await animate.animation_finished
 	
 	await attackFunction.call()

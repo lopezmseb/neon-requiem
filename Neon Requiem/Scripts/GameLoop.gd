@@ -17,7 +17,7 @@ var room_save = "user://room.save"
 var player_save = "user://players.save"
 var level: int = 1
 var canChangeLevel : bool = false
-var maxEnemiesPerRoom = 2
+var maxEnemiesPerRoom = 5
 var players: Array[Player]
 var enemies: Array[Node]
 var viewports: Array[Viewport]

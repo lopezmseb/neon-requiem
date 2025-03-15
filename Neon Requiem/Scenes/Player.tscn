@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=77 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" uid="uid://dq66kp0c0y4uu" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://cdf8kpa6j6fxg" path="res://Assets/UI/Upgrades/Sword_damage.png" id="19_j4w3v"]
 [ext_resource type="Texture2D" uid="uid://u0xc8xj24372" path="res://Assets/UI/Upgrades/Speed_upgrade.png" id="23_v1wvv"]
 [ext_resource type="Script" uid="uid://buw0evh7jxvmk" path="res://Scripts/Upgrades/SpeedUpgrades/TempBoostUpgrade.gd" id="27_u7x0b"]
+[ext_resource type="Script" uid="uid://dfn3xp5k3pays" path="res://Scripts/Upgrades/AttackUpgrades/SwordLifesteal.gd" id="27_utwlt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -510,6 +511,10 @@ script = ExtResource("14_lwjg2")
 upgradeId = 8.0
 upgradeImage = ExtResource("23_v1wvv")
 
+[node name="TempSpeedBoost" type="Node" parent="SpeedComponent"]
+script = ExtResource("27_u7x0b")
+upgradeTitle = "TempSpeedBoost"
+
 [node name="ColorComponent" type="Node" parent="."]
 script = ExtResource("6_bw6ym")
 
@@ -534,22 +539,13 @@ baseAdditive = 5.0
 upgradeId = 7.0
 upgradeImage = ExtResource("19_j4w3v")
 
+[node name="SwordLifesteal" type="Node" parent="SwordUpgrades"]
+script = ExtResource("27_utwlt")
+
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")
 volume_db = -10.0
 bus = &"SFX"
-
-[node name="SpeedComponent" type="Node" parent="."]
-script = ExtResource("13_lbtrs")
-
-[node name="MovementSpeedUpgrade" type="Node" parent="SpeedComponent"]
-script = ExtResource("14_lwjg2")
-upgradeId = 8.0
-upgradeImage = ExtResource("23_v1wvv")
-
-[node name="TempSpeedBoost" type="Node" parent="SpeedComponent"]
-script = ExtResource("27_u7x0b")
-upgradeTitle = "TempSpeedBoost"
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]

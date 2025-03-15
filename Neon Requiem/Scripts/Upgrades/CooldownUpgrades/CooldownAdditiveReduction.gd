@@ -10,6 +10,6 @@ func _process(delta):
 	
 	upgradeTitle = "Cooldown Reduction"
 
-func Apply(baseStat: float):
+func Apply(baseStat: float, extraData: Dictionary = {}):
 	time = baseStat
 	return clampf(baseStat - (baseAdditive * level), 0.1, 10)

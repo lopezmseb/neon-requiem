@@ -15,10 +15,17 @@ func damage(attack: AttackComponent):
 	# If health == 0, don't run any more code
 	if(currentHealth == 0):
 		return
-	currentHealth -= attack.calculateDamage()
-	entity_damaged.emit(attack.calculateDamage())
-	if(currentHealth <= 0):
+	
+	var attackOwner := attack.get_owner().get_parent()	
+	var target := get_owner()
+	
+	var upgradeDict = {"source": attackOwner, "target": target}
 		
+	var damage = attack.calculateDamage(upgradeDict)
+	currentHealth -= damage
+	entity_damaged.emit(damage)
+	
+	if(currentHealth <= 0):
 		var parent = get_parent()
 		if(parent is Player):
 			health_depleted.emit(parent)
@@ -27,7 +34,7 @@ func damage(attack: AttackComponent):
 			currentHealth = MAX_HEALTH
 		else:
 			health_depleted.emit(parent)
-			var chance_25 = randf_range(0.0, 1.0) < 0.22
+			var chance_25 = randf_range(0.0, 1.0) < 0.99
 			if chance_25:
 				var pickupObject
 				if randi() % 2:

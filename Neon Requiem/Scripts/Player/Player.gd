@@ -215,7 +215,7 @@ func dashAttack():
 	$Ability2Cooldown.start()
 
 	# Get the player's current position.
-	var position = global_position
+	var position = global_position   
 
 	# Calculate the direction to the mouse position.
 	var direction = (shootingDirection - position).normalized()

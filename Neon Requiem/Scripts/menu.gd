@@ -25,7 +25,6 @@ func _on_new_game_pressed():
 		var file_name = dir.get_next()
 		while file_name != "":
 			var file_path = "user://saves" + "/" + file_name
-			print(file_path)
 			DirAccess.remove_absolute(file_path)  # Delete file
 			file_name = dir.get_next()
 		

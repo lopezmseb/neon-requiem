@@ -14,7 +14,6 @@ func _ready():
 
 func _on_level_up(level):
 	level_text.text = "Floor Reached: {level}".format({"level": level})
-	print("HERE")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

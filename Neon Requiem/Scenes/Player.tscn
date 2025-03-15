@@ -30,7 +30,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
-shader_parameter/line_color = Color(0.439216, 0.945098, 0.239216, 1)
+shader_parameter/line_color = Color(0, 1, 0.95, 1)
 shader_parameter/min_thickness = 0.0
 shader_parameter/max_thickness = 1.0
 shader_parameter/line_thickness = 1.0
@@ -304,7 +304,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_a5oy0")
 }],
 "loop": true,
-"name": &"Run-Grim",
+"name": &"Run-GRIM",
 "speed": 5.0
 }, {
 "frames": [{
@@ -502,6 +502,14 @@ upgradeImagePath = "res://Assets/UI/Upgrades/Health.png"
 upgradeId = 5.0
 upgradeImage = ExtResource("14_n2ppx")
 
+[node name="SpeedComponent" type="Node" parent="."]
+script = ExtResource("13_lbtrs")
+
+[node name="MovementSpeedUpgrade" type="Node" parent="SpeedComponent"]
+script = ExtResource("14_lwjg2")
+upgradeId = 8.0
+upgradeImage = ExtResource("23_v1wvv")
+
 [node name="ColorComponent" type="Node" parent="."]
 script = ExtResource("6_bw6ym")
 
@@ -522,7 +530,7 @@ upgradeImage = ExtResource("17_l1s3k")
 
 [node name="SwordAdditiveUpgrade" type="Node" parent="SwordUpgrades"]
 script = ExtResource("11_tq7sg")
-baseAdditive = 2.5
+baseAdditive = 5.0
 upgradeId = 7.0
 upgradeImage = ExtResource("19_j4w3v")
 

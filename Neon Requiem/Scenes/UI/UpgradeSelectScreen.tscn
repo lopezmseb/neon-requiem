@@ -20,7 +20,7 @@ grow_vertical = 2
 script = ExtResource("1_7re0p")
 upgrades = [NodePath("BulletAdditiveUpgrade"), NodePath("HealthAdditiveUpgrade"), NodePath("CooldownAdditiveReduction")]
 
-[node name="Fade" type="ColorRect" parent="."]
+[node name="Fade_Upgrade" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,7 +41,6 @@ offset_right = -79.0
 offset_bottom = -154.0
 grow_horizontal = 2
 grow_vertical = 2
-focus_mode = 2
 theme_override_constants/separation = 35
 
 [node name="Turn" type="RichTextLabel" parent="."]

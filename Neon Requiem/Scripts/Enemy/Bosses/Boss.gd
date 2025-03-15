@@ -1,27 +1,38 @@
 extends CharacterBody2D
+@onready var color_component: ColorComponent = $ColorComponent
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
-@onready var color_component : ColorComponent = $ColorComponent
-@onready var animated_sprite_2d := $AnimatedSprite2D
-signal onDamage(allowAnimation: bool)
+
+func switchColors():
+	if(color_component.color == COLORS.OFFENSIVE):
+		var shaderMaterial = ShaderMaterial.new()
+		shaderMaterial.shader = COLORS.DEFENSIVE_SHADER
+		animated_sprite_2d.material = shaderMaterial
+		color_component.color = COLORS.DEFENSIVE
+	else:
+		var shaderMaterial = ShaderMaterial.new()
+		shaderMaterial.shader = COLORS.OFFENSIVE_SHADER
+		animated_sprite_2d.material = shaderMaterial
+		color_component.color = COLORS.OFFENSIVE
+
+
+func _ready():
+	GlobalSignals.onColorChange.connect(switchColors)
 
 func _physics_process(delta):
-	if(animated_sprite_2d):
-		var shaderMaterial = ShaderMaterial.new()
-		shaderMaterial.shader = COLORS.enemyShader
-		animated_sprite_2d.material = shaderMaterial
-		
-		if(COLORS.enemyShader == COLORS.OFFENSIVE_SHADER):
-			color_component.color = COLORS.OFFENSIVE
-		else:
-			color_component.color = COLORS.DEFENSIVE
-	move_and_slide()
+	pass
 
-func _on_health_component_entity_damaged(attack: float):
-	onDamage.emit(false) 
-	
+
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE:
+		for i in find_children("*", "Timer"):
+			var timer = i as Timer
+			timer.stop()
+
+func onHealthDamage(attack):
 	var number = Label.new()
 	var startingPosition: Control = $HealthBar
-	number.position = startingPosition.position  - Vector2(-5,15)
+	number.position = startingPosition.position  - Vector2(startingPosition.position.x/2 -10 ,15)
 	number.text = str(UIHelpers.formatFloat(attack))
 	number.z_index = 50
 	number.label_settings = LabelSettings.new()
@@ -48,8 +59,4 @@ func _on_health_component_entity_damaged(attack: float):
 	
 	await tween.finished
 	
-	onDamage.emit(true)
 	number.queue_free()
-
-	
-		

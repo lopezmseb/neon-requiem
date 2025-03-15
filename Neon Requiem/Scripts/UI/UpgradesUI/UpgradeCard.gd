@@ -25,8 +25,6 @@ func upgradeStrategyFillInfo():
 func _ready():
 	upgradeStrategyFillInfo()
 	
-	#mouse_entered.connect(_on_mouse_entered)
-	#mouse_exited.connect(_on_mouse_exit)
 			
 func _process(delta):
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -34,7 +32,7 @@ func _process(delta):
 	pivot_offset = size/2
 	upgradeStrategyFillInfo()
 
-	var tween = create_tween()
+	var tween = get_tree().create_tween()
 	if(has_focus() or isHovering):
 		tween.tween_property($".", "scale",Vector2(1.025, 1.025), 0.2)
 	else:

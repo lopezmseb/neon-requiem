@@ -41,11 +41,11 @@ func _ready():
 	#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 func disable_input():
-	input_enabled = false
+	set_process_input(false)
 
 func enable_input():
-	input_enabled = true
-	
+	set_process_input(true)
+
 func _input(event):
 	if input_enabled:
 		if(event.device != playerController):
@@ -56,13 +56,12 @@ func _input(event):
 			if(abs(movementDirection.x) < 0.1 and abs(movementDirection.y) < 0.1):
 				movementDirection = Vector2.ZERO
 			
-			var rightX = Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_X)
-			var rightY = Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_Y)
 			var tempDir = Vector2(Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_X), Input.get_joy_axis(playerController, JOY_AXIS_RIGHT_Y))
-			
+
 			if(abs(tempDir.x) > 0.1 || abs(tempDir.y) > 0.1):
-				shootingDirection = tempDir * 30 + position
+				shootingDirection = position + tempDir.normalized() * 4000
 			
+
 				
 			var rightTrigger = Input.get_joy_axis(playerController, JOY_AXIS_TRIGGER_RIGHT);
 			
@@ -140,7 +139,10 @@ func _physics_process(delta):
 	
 func changeColor():
 	colorComponent.color = COLORS.OFFENSIVE if colorComponent.color == COLORS.DEFENSIVE else COLORS.DEFENSIVE; 
-	$AnimatedSprite2D.material.set("shader_parameter/line_color", COLORS.OUTLINE_CLRS[colorComponent.color])
+	var shaderMaterial = ShaderMaterial.new()
+	var shader = COLORS.OFFENSIVE_SHADER if colorComponent.color == COLORS.OFFENSIVE else COLORS.DEFENSIVE_SHADER
+	shaderMaterial.shader = shader
+	$AnimatedSprite2D.material = shaderMaterial
 
 func dash():
 	$DashCooldown.start()  # Start cooldown timer
@@ -245,7 +247,6 @@ func melee():
 	sword.position = to_local($Gun/Aiming.global_position)
 	# Calculate the direction to the shooting position (mouse)
 	var direction = (shootingDirection - position).normalized()
-	print("direction ", direction.x)
 
 	if direction.x <= 0:
 		sword.get_node("Sprite2D").flip_v = true

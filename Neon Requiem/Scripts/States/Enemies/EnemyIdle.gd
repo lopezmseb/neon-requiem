@@ -31,3 +31,6 @@ func Physics_Update(delta):
 func _on_area_2d_body_entered(body):
 	if body is Player:
 		onNewState.emit(self, AvailableStates.Follow)
+
+func _on_health_component_health_depleted(owner):
+	onNewState.emit(self, AvailableStates.Death)

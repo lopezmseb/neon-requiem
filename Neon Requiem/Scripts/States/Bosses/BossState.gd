@@ -1,9 +1,8 @@
 extends State
-class_name EnemyState
+class_name BossState
 
 var AvailableStates: Dictionary = {
 	Idle = "idle",
-	Follow = "follow",
 	Attack = "attack",
 	Death = "death"
 }
@@ -13,3 +12,4 @@ var AvailableStates: Dictionary = {
 @export var animate: AnimatedSprite2D
 
 var player: CharacterBody2D = null
+

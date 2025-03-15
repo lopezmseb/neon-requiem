@@ -18,6 +18,20 @@ func _on_new_game_pressed():
 		DirAccess.remove_absolute("user://room.save")
 	if FileAccess.file_exists("user://players.save"):
 		DirAccess.remove_absolute("user://players.save")
+		
+	var dir = DirAccess.open("user://saves")
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			var file_path = "user://saves" + "/" + file_name
+			print(file_path)
+			DirAccess.remove_absolute(file_path)  # Delete file
+			file_name = dir.get_next()
+		
+		dir.list_dir_end()  # End directory listing
+		DirAccess.remove_absolute("user://saves")  # Finally, remove the empty directory
+		
 	get_tree().change_scene_to_file("res://Scenes/UI/PlayerJoin.tscn")
 	
 		

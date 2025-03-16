@@ -23,6 +23,7 @@ var enemies: Array[Node]
 var viewports: Array[Viewport]
 var upgradeSelectedCount: float = 0
 var upgradeSelectScreen : UpgradeSelect = null
+var miniMap: bool = false
 
 func _ready():
 	add_to_group("game_loop")
@@ -220,9 +221,9 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		# Spawn new Player into game
 		roomGen.spawnPlayer(anotherPlayer, 0)
 
-#func _input(event):
-#	if event.is_action_pressed("add_player"):
-#		addPlayer()
+func _input(event):
+	if event.is_action_pressed("map"):
+		openMiniMap()
 		
 
 func update_grid():
@@ -418,5 +419,28 @@ func onUpgradeSelected():
 					newPlayerUpgrades.append(j)
 		
 		upgradeSelectScreen.upgrades = newPlayerUpgrades
-		upgradeSelectScreen.currentPlayerNumber = upgradeSelectedCount + 1
+		upgradeSelectScreen.currentPlayerNumber = upgradeSelectedCount + 1 
+		
+		
+func getCenterOfMinimap():
+	var leftPosition = roomGen.startRoom.position.x
+	var rightPosition = roomGen.endRoom.position.x
+	var topPosition = roomGen.topRoom.position.y
+	var botPosition = roomGen.botRoom.position.y
+	$HBoxContainer/SubViewportContainer/SubViewport/MiniMap.position.x = leftPosition + (leftPosition - rightPosition)
+	$HBoxContainer/SubViewportContainer/SubViewport/MiniMap.position.y = topPosition + (topPosition - botPosition)
+	
+func openMiniMap():
+	var cam = $HBoxContainer/SubViewportContainer/SubViewport/Camera2D
+	
+	if miniMap:
+		cam.zoom = Vector2(5.812, 5.812)
+		print("change")
+		miniMap = false
+	else:
+		cam.zoom = Vector2(1, 1)
+		miniMap = true
+	print("New Zoom:", cam.zoom) # Debuggingom = Vector2(4,4)
+		
+	
 	

@@ -1,4 +1,4 @@
 extends Node
 
-var enemyFloorRate = 2
+var enemyFloorRate = 4
 var allowDamageFromFloors = true

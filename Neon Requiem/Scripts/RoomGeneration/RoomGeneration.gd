@@ -22,6 +22,8 @@ var roomPositions = []
 var path
 var startRoom
 var endRoom
+var topRoom
+var botRoom
 var players = []
 var enableColorChange = true
 
@@ -472,3 +474,17 @@ func find_end_room():
 		if room.position.x > max_x:
 			endRoom = room
 			max_x = room.position.x
+
+func find_top_room():
+	var max_y = INF
+	for room in $Rooms.get_children():
+		if room.position.y > max_y:
+			topRoom = room
+			max_y = room.position.y
+			
+func find_bot_room():
+	var max_y = -INF
+	for room in $Rooms.get_children():
+		if room.position.y > max_y:
+			botRoom = room
+			max_y = room.position.y

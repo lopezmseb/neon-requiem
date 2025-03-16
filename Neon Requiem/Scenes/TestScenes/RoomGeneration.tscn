@@ -22,6 +22,8 @@ one_shot = true
 
 [node name="TileMap" type="TileMap" parent="."]
 show_behind_parent = true
+light_mask = 33
+visibility_layer = 33
 tile_set = ExtResource("2_m1yd0")
 format = 2
 layer_0/z_index = -2

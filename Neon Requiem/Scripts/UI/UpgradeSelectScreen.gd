@@ -8,6 +8,8 @@ class_name UpgradeSelect
 var player_save = "user://players.save"
 var devices = []
 var upgradeScenes = []
+var default_inputs = {}
+var default_keyboard_inputs = {}
 signal endSelection
 
 
@@ -54,7 +56,6 @@ func _process(delta):
 		set_controller_device(devices[currentPlayerNumber - 1])
 	var count = 0
 	for i in upgradeScenes:
-
 		if(is_instance_valid(i)):
 			i.upgradeStrategy = upgrades[count] 
 			count += 1
@@ -83,25 +84,48 @@ func onButtonPressed(upgradeStrategy, id):
 	
 var current_device_id: int = -1  # Track the active controller
 
-func set_controller_device(device_id: int):
-	# If the device ID is -1, clear all controller inputs
-	if device_id == -1:
-		clear_all_controller_inputs()
-	else:
-		# If a different controller is assigned, clear the previous controller's inputs
-		if current_device_id != -1 and current_device_id != device_id:
-			clear_previous_controller_inputs(current_device_id)
-
-		# Define directional mappings
-		var directions = {
+var directions = {
 			"ui_left": { "button": 13, "axis": 0, "value": -1.0 },
 			"ui_right": { "button": 14, "axis": 0, "value": 1.0 },
 			"ui_up": { "button": 11, "axis": 1, "value": -1.0 },
 			"ui_down": { "button": 12, "axis": 1, "value": 1.0 },
 			"ui_accept": { "button": 0, "axis": null, "value": null },
-			"ui_select": { "button": 1, "axis": null, "value": null }
+			"ui_select": { "button": 1, "axis": null, "value": null },
+			"map": { "button": 20, "axis": null, "value": null },
+			"Menu": { "button": 6, "axis": null, "value": null }
 		}
 
+func store_all_inputs():
+	default_inputs.clear()  # Clear any existing data
+	
+	for action in InputMap.get_actions():
+		var events = InputMap.action_get_events(action)
+		default_inputs[action] = []  # Store events for this action
+		
+		for event in events:
+			default_inputs[action].append(event.duplicate())  # Store a copy
+
+
+func store_default_keyboard_inputs():
+	# Store the initial keyboard and mouse inputs before they get removed
+	for action in InputMap.get_actions():
+		var events = InputMap.action_get_events(action)
+		for event in events:
+			if event is InputEventKey or event is InputEventMouseButton:
+				if not default_keyboard_inputs.has(action):
+					default_keyboard_inputs[action] = []
+				default_keyboard_inputs[action].append(event)
+
+
+func set_controller_device(device_id: int):
+	clear_all_inputs()
+	# If the device ID is -1, clear all controller inputs
+	if device_id == -1:
+		enable_keyboard()
+	else:
+		# If a different controller is assigned, clear the previous controller's inputs
+		if current_device_id != device_id:
+			clear_previous_controller_inputs(current_device_id)
 		# Loop through each action and reassign input
 		for input_name in directions.keys():
 			var data = directions[input_name]
@@ -124,16 +148,34 @@ func set_controller_device(device_id: int):
 	# Update the active device ID
 	current_device_id = device_id
 
-# Function to clear all inputs for a controller
-func clear_all_controller_inputs():
+func enable_keyboard():
+	for action in default_keyboard_inputs.keys():
+		for event in default_keyboard_inputs[action]:
+			InputMap.action_add_event(action, event)
+
+func restore_all_inputs():
+	# First, clear all existing inputs to prevent duplicates
 	for action in InputMap.get_actions():
-		for event in InputMap.action_get_events(action):
-			if event is InputEventJoypadButton or event is InputEventJoypadMotion:
-				if event.device == current_device_id:
-					InputMap.action_erase_event(action, event)
+		InputMap.action_erase_events(action)
+	
+	# Restore stored inputs
+	for action in default_inputs.keys():
+		for event in default_inputs[action]:
+			InputMap.action_add_event(action, event)
+
+func clear_all_inputs():
+	for action in InputMap.get_actions():
+		InputMap.action_erase_events(action)
+
 
 # Function to clear inputs from the previous controller
 func clear_previous_controller_inputs(device_id: int):
+	for action in InputMap.get_actions():
+			var events = InputMap.action_get_events(action)
+			for event in events:
+				if event is InputEventKey or event is InputEventMouseButton:
+					InputMap.action_erase_event(action, event)
+				
 	for action in InputMap.get_actions():
 		for event in InputMap.action_get_events(action):
 			if event is InputEventJoypadButton or event is InputEventJoypadMotion:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=74 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" uid="uid://dq66kp0c0y4uu" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://b5gcpgy1x6h0j" path="res://Assets/UI/Upgrades/Dash.png" id="6_iqabo"]
 [ext_resource type="Texture2D" uid="uid://43677synoxf3" path="res://Assets/UI/Upgrades/Bullet.png" id="6_k1tej"]
 [ext_resource type="Script" uid="uid://mjr2numl6hk4" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="6_otwx6"]
-[ext_resource type="Script" uid="uid://vkd8f0r02u4y" path="res://Scripts/Player/PlayerCamera.gd" id="7_2xrf5"]
 [ext_resource type="Texture2D" uid="uid://drr0kj6v0ecg3" path="res://Assets/UI/Upgrades/Melee.png" id="7_bdk3u"]
 [ext_resource type="Texture2D" uid="uid://s4wnownnydp1" path="res://Assets/UI/Upgrades/shotgun.png" id="9_54qtt"]
 [ext_resource type="Texture2D" uid="uid://ckpgnwxtfpgpd" path="res://Assets/UI/Upgrades/Dash_attack.png" id="10_hlm7b"]
@@ -402,6 +401,8 @@ func _process(delta):
 "
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+visibility_layer = 33
+collision_layer = 33
 collision_mask = 9
 script = ExtResource("1_2efai")
 
@@ -511,10 +512,6 @@ upgradeImage = ExtResource("23_v1wvv")
 
 [node name="ColorComponent" type="Node" parent="."]
 script = ExtResource("6_bw6ym")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-visible = false
-script = ExtResource("7_2xrf5")
 
 [node name="BulletUpgrades" type="Node" parent="."]
 

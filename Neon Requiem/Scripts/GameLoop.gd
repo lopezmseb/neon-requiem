@@ -235,19 +235,28 @@ func update_grid():
 			# Set custom minimum size based on child_count
 			if (child_count == 1):
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size())  # Full size
+				set_zoom(1)
 			elif (child_count == 2):
 				$HBoxContainer.set_columns(2)
 				user_interface.get_node("CooldownTimers").set_scale(Vector2(.4,.4))
 				user_interface.get_node("PlayerHealthBar").set_scale(Vector2(.9,.9))
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y)
+				set_zoom(1)
 			elif (child_count == 3 || child_count == 4):
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 2)
+				set_zoom(1)
 			elif (child_count == 5 || child_count == 6):
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 3)
 			elif (child_count == 7 || child_count == 8):
 				$HBoxContainer.set_columns(3)
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 3, DisplayServer.window_get_size().y / 3)
 
+func set_zoom(multiplier: float):
+	for player in players:
+		print(player.playerName)
+		var camera = player.get_parent().find_child("Camera2D", true, false) as PlayerCamera
+		if camera is PlayerCamera:
+			camera.cameraMultiplier = multiplier
 
 func _process(delta):
 	# Set Hbox to screensize

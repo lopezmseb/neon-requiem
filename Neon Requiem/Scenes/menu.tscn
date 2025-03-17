@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6nasoc2xm7yq"]
+[gd_scene load_steps=9 format=3 uid="uid://b6nasoc2xm7yq"]
 
 [ext_resource type="Script" uid="uid://qb3jwg3dt12i" path="res://Scripts/menu.gd" id="1_ek5x3"]
 [ext_resource type="Texture2D" uid="uid://duhi0mcqqct17" path="res://Assets/Menu/SKY.png" id="2_wi1je"]
-[ext_resource type="Texture2D" uid="uid://b0yrcvublky61" path="res://Assets/Menu/BUILDINGS.png" id="3_67qqv"]
+[ext_resource type="Texture2D" uid="uid://g6qnng2cx1yx" path="res://Assets/Menu/background.png" id="3_q3rjx"]
+[ext_resource type="Texture2D" uid="uid://c534pie4jkxmc" path="res://Assets/Menu/Ads.png" id="4_6swd7"]
 [ext_resource type="Texture2D" uid="uid://bxsn068gjqtlp" path="res://Assets/Menu/Title.png" id="4_jcs6e"]
 [ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="4_xrl2i"]
 [ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="6_1tbn7"]
@@ -19,53 +20,62 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_ek5x3")
-metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1560.0
-offset_top = -771.0
-offset_right = 1493.0
-offset_bottom = 948.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-expand_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand_mode = 3
 
-[node name="Sky" type="Sprite2D" parent="TextureRect"]
-position = Vector2(1514, 862)
+[node name="Sky" type="TextureRect" parent="CanvasLayer/TextureRect"]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 3072.0
+offset_bottom = 1732.0
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_wi1je")
 
-[node name="Buildings" type="Sprite2D" parent="TextureRect"]
-position = Vector2(1519.5, 867.5)
-scale = Vector2(3, 3)
-texture = ExtResource("3_67qqv")
+[node name="Buildings" type="TextureRect" parent="CanvasLayer/TextureRect"]
+layout_mode = 0
+offset_top = 26.0
+offset_right = 2560.0
+offset_bottom = 1466.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_q3rjx")
 
-[node name="Title" type="TextureRect" parent="TextureRect"]
+[node name="Ads" type="TextureRect" parent="CanvasLayer/TextureRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_6swd7")
+
+[node name="Title" type="TextureRect" parent="CanvasLayer/TextureRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -729.5
-offset_top = -290.5
-offset_right = 20.5
-offset_bottom = -211.5
+offset_left = -670.0
+offset_top = -152.0
+offset_right = 80.0
+offset_bottom = -73.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(2, 2)
+scale = Vector2(1.75, 1.75)
 texture = ExtResource("4_jcs6e")
 expand_mode = 3
 stretch_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
 process_mode = 1
-layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -79,36 +89,35 @@ grow_vertical = 0
 theme = ExtResource("4_xrl2i")
 alignment = 1
 
-[node name="New GameButton" type="Button" parent="VBoxContainer"]
+[node name="New GameButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Quit")
 text = "New Game"
 
-[node name="ContinueButton" type="Button" parent="VBoxContainer"]
+[node name="ContinueButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Continue"
 
-[node name="SettingsButton" type="Button" parent="VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Settings
 "
 
-[node name="Quit" type="Button" parent="VBoxContainer"]
+[node name="Quit" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../New GameButton")
 text = "Quit"
+
+[node name="SettingsMenu" parent="CanvasLayer" instance=ExtResource("7_yyu1d")]
+process_mode = 0
+visible = false
 
 [node name="Menu Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_1tbn7")
 autoplay = true
 bus = &"Music"
 
-[node name="SettingsMenu" parent="." instance=ExtResource("7_yyu1d")]
-process_mode = 0
-visible = false
-layout_mode = 1
-
-[connection signal="pressed" from="VBoxContainer/New GameButton" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/New GameButton" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/SettingsButton" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

@@ -2,10 +2,10 @@ extends Control
 
 
 
-@onready var settings_menu = $SettingsMenu as SettingsMenu
+@onready var settings_menu = $CanvasLayer/SettingsMenu as SettingsMenu
 
 func _ready():
-	$"VBoxContainer/New GameButton".grab_focus()
+	$"CanvasLayer/VBoxContainer/New GameButton".grab_focus()
 	fade_in_music()
 
 
@@ -26,7 +26,7 @@ func _on_settings_pressed():
 	settings_menu.visible = true
 	await get_tree().process_frame  # Ensures UI updates before setting focus
 	
-	var close_button = $SettingsMenu/MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton
+	var close_button = $CanvasLayer/SettingsMenu/MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton
 	close_button.grab_focus()
 	
 func _on_quit_pressed():

@@ -10,6 +10,7 @@ class_name UpgradeStrategy
 @export var level = 0
 @export var priority = 0
 @export var maxLevel = 999
+@export var showOnUpgradeSelectScreen: bool = true
 
 func Apply(stat: float, extraData: Dictionary = {}):
 	pass

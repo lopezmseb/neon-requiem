@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=80 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" uid="uid://dq66kp0c0y4uu" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -29,6 +29,8 @@
 [ext_resource type="Script" uid="uid://buw0evh7jxvmk" path="res://Scripts/Upgrades/SpeedUpgrades/TempBoostUpgrade.gd" id="27_u7x0b"]
 [ext_resource type="Script" uid="uid://dfn3xp5k3pays" path="res://Scripts/Upgrades/AttackUpgrades/SwordLifesteal.gd" id="27_utwlt"]
 [ext_resource type="Script" uid="uid://dkq60ctigec2q" path="res://Scripts/Upgrades/AttackUpgrades/ResetCooldownOnKill.gd" id="28_kih0c"]
+[ext_resource type="Script" uid="uid://cypwh1ixetgdf" path="res://Scripts/Upgrades/AttackUpgrades/AttackBoostOnKill.gd" id="29_lyrkg"]
+[ext_resource type="Script" uid="uid://bcmkqx03f5bcy" path="res://Scripts/Upgrades/AttackUpgrades/TempMultiplierUpgrade.gd" id="30_c43xd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -533,6 +535,25 @@ upgradeImagePath = "res://Assets/UI/Upgrades/Bullet_damage.png"
 upgradeId = 6.0
 upgradeImage = ExtResource("17_l1s3k")
 
+[node name="DashResetOnBullet" type="Node" parent="BulletUpgrades" node_paths=PackedStringArray("cooldownToReset")]
+script = ExtResource("28_kih0c")
+cooldownToReset = NodePath("../../DashCooldown")
+triggerAttack = "Bullet"
+attackToReset = "Dash"
+
+[node name="SwordAttackRaise" type="Node" parent="BulletUpgrades" node_paths=PackedStringArray("tempMultiplierUpgrade")]
+script = ExtResource("29_lyrkg")
+tempMultiplierUpgrade = NodePath("../../SwordUpgrades/TempMultiplier")
+triggerAttack = "Bullet"
+attackToBoost = "Sword"
+baseAdditive = 0.5
+priority = 1
+
+[node name="TempMultiplier" type="Node" parent="BulletUpgrades"]
+script = ExtResource("30_c43xd")
+priority = 2
+showOnUpgradeSelectScreen = false
+
 [node name="SwordUpgrades" type="Node" parent="."]
 
 [node name="SwordAdditiveUpgrade" type="Node" parent="SwordUpgrades"]
@@ -551,6 +572,7 @@ cooldownToReset = NodePath("../../Ability1Cooldown")
 triggerAttack = "Sword"
 attackToReset = "Ability 1"
 upgradeTitle = "Sword Kill: Reset Ability One"
+priority = 1
 maxLevel = 1
 
 [node name="SwordResetAbilityTwo" type="Node" parent="SwordUpgrades" node_paths=PackedStringArray("cooldownToReset")]
@@ -559,7 +581,21 @@ cooldownToReset = NodePath("../../Ability2Cooldown")
 triggerAttack = "Sword"
 attackToReset = "Ability 2"
 upgradeTitle = "Sword Kill: Reset Ability One"
+priority = 1
 maxLevel = 1
+
+[node name="BulletAttackRaise" type="Node" parent="SwordUpgrades" node_paths=PackedStringArray("tempMultiplierUpgrade")]
+script = ExtResource("29_lyrkg")
+tempMultiplierUpgrade = NodePath("../../BulletUpgrades/TempMultiplier")
+triggerAttack = "Sword"
+attackToBoost = "Bullet"
+baseAdditive = 0.5
+priority = 1
+
+[node name="TempMultiplier" type="Node" parent="SwordUpgrades"]
+script = ExtResource("30_c43xd")
+priority = 2
+showOnUpgradeSelectScreen = false
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")

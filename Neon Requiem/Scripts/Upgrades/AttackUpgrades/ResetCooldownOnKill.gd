@@ -21,7 +21,6 @@ func Apply(stat: float, upgradeDict: Dictionary = {}):
 	if(targetHealth is HealthComponent and targetHealth.currentHealth - stat > 0):
 		return stat
 	
-	print("On Kill")
 	# Cooldown cannot be 0
 	cooldownToReset.timeout.emit()
 	cooldownToReset.stop()

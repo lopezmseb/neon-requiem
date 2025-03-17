@@ -14,7 +14,10 @@ func _init(attack: float = DEFAULT_ATTACK):
 func calculateDamage(upgdradeInfoDict: Dictionary = {}):
 	var attack = baseAttack
 	
-	for i in get_children():
+	var upgrades = get_children()
+	upgrades.sort_custom(Upgrades.sortArrayByPriority)
+		
+	for i in upgrades:
 		var upgrade = i as UpgradeStrategy
 		attack = upgrade.Apply(attack, upgdradeInfoDict)
 	

@@ -426,7 +426,7 @@ buttonCode = Array[String](["Space", "X"])
 [node name="CooldownAdditiveReduction" type="Node" parent="DashCooldown"]
 script = ExtResource("5_eejht")
 ability = "Dash"
-baseAdditive = 0.25
+baseAdditive = 0.3
 upgradeImagePath = "res://Assets/UI/Upgrades/Dash.png"
 upgradeImage = ExtResource("6_iqabo")
 
@@ -439,13 +439,12 @@ buttonCode = Array[String](["M1", "RT"])
 [node name="CooldownAdditiveReduction" type="Node" parent="ShootCooldown"]
 script = ExtResource("5_eejht")
 ability = "Fire Rate"
-baseAdditive = 0.1
+baseAdditive = 0.05
 upgradeImagePath = "res://Assets/UI/Upgrades/Bullet.png"
 upgradeId = 1.0
 upgradeImage = ExtResource("6_k1tej")
 
 [node name="MeleeCooldown" type="Timer" parent="."]
-wait_time = 0.5
 one_shot = true
 script = ExtResource("4_unu1y")
 buttonCode = Array[String](["M2", "L1"])
@@ -459,7 +458,7 @@ upgradeId = 2.0
 upgradeImage = ExtResource("7_bdk3u")
 
 [node name="Ability1Cooldown" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 4.0
 one_shot = true
 script = ExtResource("4_unu1y")
 buttonCode = Array[String](["Q", "R1"])
@@ -467,12 +466,13 @@ buttonCode = Array[String](["Q", "R1"])
 [node name="CooldownAdditiveReduction" type="Node" parent="Ability1Cooldown"]
 script = ExtResource("5_eejht")
 ability = "Ability 1"
-baseAdditive = 0.5
+baseAdditive = 0.4
 upgradeImagePath = "res://Assets/UI/Upgrades/shotgun.png"
 upgradeId = 3.0
 upgradeImage = ExtResource("9_54qtt")
 
 [node name="Ability2Cooldown" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 script = ExtResource("4_unu1y")
 buttonCode = Array[String](["E", "LT"])
@@ -480,7 +480,7 @@ buttonCode = Array[String](["E", "LT"])
 [node name="CooldownAdditiveReduction" type="Node" parent="Ability2Cooldown"]
 script = ExtResource("5_eejht")
 ability = "Ability 2"
-baseAdditive = 0.5
+baseAdditive = 0.3
 upgradeImagePath = "res://Assets/UI/Upgrades/Dash_attack.png"
 upgradeId = 4.0
 upgradeImage = ExtResource("10_hlm7b")
@@ -514,6 +514,7 @@ upgradeImage = ExtResource("23_v1wvv")
 [node name="TempSpeedBoost" type="Node" parent="SpeedComponent"]
 script = ExtResource("27_u7x0b")
 upgradeTitle = "TempSpeedBoost"
+priority = 1
 
 [node name="ColorComponent" type="Node" parent="."]
 script = ExtResource("6_bw6ym")
@@ -541,6 +542,7 @@ upgradeImage = ExtResource("19_j4w3v")
 
 [node name="SwordLifesteal" type="Node" parent="SwordUpgrades"]
 script = ExtResource("27_utwlt")
+priority = 1
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")

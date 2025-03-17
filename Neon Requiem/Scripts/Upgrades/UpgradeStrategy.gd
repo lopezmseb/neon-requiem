@@ -8,6 +8,8 @@ class_name UpgradeStrategy
 @export var upgradeText = "Base"
 @export var color = null
 @export var level = 0
+@export var priority = 0
+@export var maxLevel = 999
 
 func Apply(stat: float, extraData: Dictionary = {}):
 	pass

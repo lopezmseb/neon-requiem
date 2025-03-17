@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=78 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" uid="uid://dq66kp0c0y4uu" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://u0xc8xj24372" path="res://Assets/UI/Upgrades/Speed_upgrade.png" id="23_v1wvv"]
 [ext_resource type="Script" uid="uid://buw0evh7jxvmk" path="res://Scripts/Upgrades/SpeedUpgrades/TempBoostUpgrade.gd" id="27_u7x0b"]
 [ext_resource type="Script" uid="uid://dfn3xp5k3pays" path="res://Scripts/Upgrades/AttackUpgrades/SwordLifesteal.gd" id="27_utwlt"]
+[ext_resource type="Script" uid="uid://dkq60ctigec2q" path="res://Scripts/Upgrades/AttackUpgrades/ResetCooldownOnKill.gd" id="28_kih0c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -543,6 +544,22 @@ upgradeImage = ExtResource("19_j4w3v")
 [node name="SwordLifesteal" type="Node" parent="SwordUpgrades"]
 script = ExtResource("27_utwlt")
 priority = 1
+
+[node name="SwordResetAbilityOne" type="Node" parent="SwordUpgrades" node_paths=PackedStringArray("cooldownToReset")]
+script = ExtResource("28_kih0c")
+cooldownToReset = NodePath("../../Ability1Cooldown")
+triggerAttack = "Sword"
+attackToReset = "Ability 1"
+upgradeTitle = "Sword Kill: Reset Ability One"
+maxLevel = 1
+
+[node name="SwordResetAbilityTwo" type="Node" parent="SwordUpgrades" node_paths=PackedStringArray("cooldownToReset")]
+script = ExtResource("28_kih0c")
+cooldownToReset = NodePath("../../Ability2Cooldown")
+triggerAttack = "Sword"
+attackToReset = "Ability 2"
+upgradeTitle = "Sword Kill: Reset Ability One"
+maxLevel = 1
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")

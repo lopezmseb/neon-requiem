@@ -12,7 +12,6 @@
 [node name="Menu" type="Control"]
 process_mode = 1
 layout_mode = 3
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -21,9 +20,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_ek5x3")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,31 +30,38 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 expand_mode = 3
+stretch_mode = 2
 
-[node name="Sky" type="TextureRect" parent="CanvasLayer/TextureRect"]
+[node name="Sky" type="TextureRect" parent="TextureRect"]
 layout_mode = 0
 offset_top = 4.0
 offset_right = 3072.0
 offset_bottom = 1732.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_wi1je")
+expand_mode = 3
+stretch_mode = 1
 
-[node name="Buildings" type="TextureRect" parent="CanvasLayer/TextureRect"]
+[node name="Buildings" type="TextureRect" parent="TextureRect"]
 layout_mode = 0
 offset_top = 26.0
 offset_right = 2560.0
 offset_bottom = 1466.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_q3rjx")
+expand_mode = 3
+stretch_mode = 1
 
-[node name="Ads" type="TextureRect" parent="CanvasLayer/TextureRect"]
+[node name="Ads" type="TextureRect" parent="TextureRect"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_6swd7")
+expand_mode = 3
+stretch_mode = 1
 
-[node name="Title" type="TextureRect" parent="CanvasLayer/TextureRect"]
+[node name="Title" type="TextureRect" parent="TextureRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -74,8 +79,9 @@ texture = ExtResource("4_jcs6e")
 expand_mode = 3
 stretch_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 process_mode = 1
+layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -89,35 +95,36 @@ grow_vertical = 0
 theme = ExtResource("4_xrl2i")
 alignment = 1
 
-[node name="New GameButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="New GameButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Quit")
 text = "New Game"
 
-[node name="ContinueButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="ContinueButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Continue"
 
-[node name="SettingsButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Settings
 "
 
-[node name="Quit" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../New GameButton")
 text = "Quit"
 
-[node name="SettingsMenu" parent="CanvasLayer" instance=ExtResource("7_yyu1d")]
+[node name="SettingsMenu" parent="." instance=ExtResource("7_yyu1d")]
 process_mode = 0
 visible = false
+layout_mode = 1
 
 [node name="Menu Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_1tbn7")
 autoplay = true
 bus = &"Music"
 
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/New GameButton" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/SettingsButton" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/New GameButton" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

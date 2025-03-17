@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6nasoc2xm7yq"]
+[gd_scene load_steps=10 format=3 uid="uid://b6nasoc2xm7yq"]
 
 [ext_resource type="Script" uid="uid://qb3jwg3dt12i" path="res://Scripts/menu.gd" id="1_ek5x3"]
 [ext_resource type="Texture2D" uid="uid://duhi0mcqqct17" path="res://Assets/Menu/SKY.png" id="2_wi1je"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bxsn068gjqtlp" path="res://Assets/Menu/Title.png" id="4_jcs6e"]
 [ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="4_xrl2i"]
 [ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="6_1tbn7"]
+[ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="6_6swd7"]
 [ext_resource type="PackedScene" uid="uid://cwuxgblo0jje2" path="res://Scenes/UI/settings_menu.tscn" id="7_yyu1d"]
 
 [node name="Menu" type="Control"]
@@ -75,6 +76,30 @@ grow_vertical = 2
 texture = ExtResource("4_6swd7")
 expand_mode = 2
 stretch_mode = 4
+
+[node name="Label" type="Label" parent="TextureRect/Ads"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.684
+anchor_top = 0.726
+anchor_right = 0.977
+anchor_bottom = 1.029
+offset_left = 214.228
+offset_top = 60.87
+offset_right = 3.65894
+offset_bottom = -63.895
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.352941)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_6swd7")
+text = "By: 
+Nathan Cameron
+ & 
+Sebastian Lopez"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Title" type="TextureRect" parent="TextureRect"]
 layout_mode = 1

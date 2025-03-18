@@ -18,13 +18,18 @@ func Apply(stat: float, upgradeDict: Dictionary = {}):
 	
 	var target = upgradeDict.get("target")
 	var targetHealth = target.find_child("HealthComponent")
-		# If we don't kill on this next hit, return base stat
-	if(targetHealth is HealthComponent and targetHealth.currentHealth - stat > 0):
-		return stat
 	
-	# Set Multiplier Here
-	tempMultiplierUpgrade.multiplier = 1 + (baseAdditive * level)
+	# If we don't kill on this next hit, return base stat
+	if(not targetHealth is HealthComponent):
+		return stat
 		
+	if(targetHealth.currentHealth - stat <= 0):
+		if(not tempMultiplierUpgrade.enableBoost):
+			print("In here")
+			tempMultiplierUpgrade.multiplier = 1 + (baseAdditive * level)
+			tempMultiplierUpgrade.enableBoost = true
+		return stat
+	# Set Multiplier Here
 	return stat
 	
 	

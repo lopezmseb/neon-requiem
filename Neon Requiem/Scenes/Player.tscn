@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=89 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" uid="uid://dq66kp0c0y4uu" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -25,13 +25,21 @@
 [ext_resource type="Texture2D" uid="uid://crrvojxbn3eiw" path="res://Assets/UI/Upgrades/Health.png" id="14_n2ppx"]
 [ext_resource type="Texture2D" uid="uid://dje7goep4inlm" path="res://Assets/UI/Upgrades/Bullet_damage.png" id="17_l1s3k"]
 [ext_resource type="Texture2D" uid="uid://cdf8kpa6j6fxg" path="res://Assets/UI/Upgrades/Sword_damage.png" id="19_j4w3v"]
+[ext_resource type="Texture2D" uid="uid://tqklwpdfujgg" path="res://Assets/UI/Upgrades/Speed-boost.png" id="22_xixlo"]
 [ext_resource type="Texture2D" uid="uid://u0xc8xj24372" path="res://Assets/UI/Upgrades/Speed_upgrade.png" id="23_v1wvv"]
+[ext_resource type="Texture2D" uid="uid://cfbqji1i0fhxt" path="res://Assets/UI/Upgrades/dash_reset.png" id="27_opqna"]
 [ext_resource type="Script" uid="uid://buw0evh7jxvmk" path="res://Scripts/Upgrades/SpeedUpgrades/TempBoostUpgrade.gd" id="27_u7x0b"]
 [ext_resource type="Script" uid="uid://dfn3xp5k3pays" path="res://Scripts/Upgrades/AttackUpgrades/SwordLifesteal.gd" id="27_utwlt"]
+[ext_resource type="Texture2D" uid="uid://cb60v32t141g2" path="res://Assets/UI/Upgrades/Sword_oneShot.png" id="28_bfbt0"]
 [ext_resource type="Script" uid="uid://dkq60ctigec2q" path="res://Scripts/Upgrades/AttackUpgrades/ResetCooldownOnKill.gd" id="28_kih0c"]
 [ext_resource type="Script" uid="uid://cypwh1ixetgdf" path="res://Scripts/Upgrades/AttackUpgrades/AttackBoostOnKill.gd" id="29_lyrkg"]
 [ext_resource type="Script" uid="uid://bcmkqx03f5bcy" path="res://Scripts/Upgrades/AttackUpgrades/TempMultiplierUpgrade.gd" id="30_c43xd"]
 [ext_resource type="Script" uid="uid://bedqq0emxb04" path="res://Scripts/Upgrades/HealthUpgrades/HealMoreFromPackUpgrade.gd" id="31_avx33"]
+[ext_resource type="Texture2D" uid="uid://corx2ut4osyda" path="res://Assets/UI/Upgrades/lifesteal.png" id="33_pqity"]
+[ext_resource type="Texture2D" uid="uid://dyamg64rs16sv" path="res://Assets/UI/Upgrades/shotgun_reset.png" id="34_opqna"]
+[ext_resource type="Texture2D" uid="uid://b06klpvqyawev" path="res://Assets/UI/Upgrades/Dash_attack_reset.png" id="35_00okb"]
+[ext_resource type="Texture2D" uid="uid://1rep62j5hhyk" path="res://Assets/UI/Upgrades/Bullet_oneShot.png" id="36_6hr71"]
+[ext_resource type="Texture2D" uid="uid://ck8o42pirrr5s" path="res://Assets/UI/Upgrades/Health-boost.png" id="38_y6y60"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -517,6 +525,8 @@ upgradeImage = ExtResource("23_v1wvv")
 
 [node name="TempSpeedBoost" type="Node" parent="SpeedComponent"]
 script = ExtResource("27_u7x0b")
+upgradeImagePath = "uid://tqklwpdfujgg"
+upgradeImage = ExtResource("22_xixlo")
 upgradeTitle = "TempSpeedBoost"
 priority = 1
 
@@ -535,12 +545,15 @@ baseAdditive = 5.0
 upgradeImagePath = "res://Assets/UI/Upgrades/Bullet_damage.png"
 upgradeId = 6.0
 upgradeImage = ExtResource("17_l1s3k")
+level = 20
 
 [node name="DashResetOnBullet" type="Node" parent="BulletUpgrades" node_paths=PackedStringArray("cooldownToReset")]
 script = ExtResource("28_kih0c")
 cooldownToReset = NodePath("../../DashCooldown")
 triggerAttack = "Bullet"
 attackToReset = "Dash"
+upgradeImage = ExtResource("27_opqna")
+upgradeTitle = "Bullet Make Me Go VROOM"
 
 [node name="SwordAttackRaise" type="Node" parent="BulletUpgrades" node_paths=PackedStringArray("tempMultiplierUpgrade")]
 script = ExtResource("29_lyrkg")
@@ -548,6 +561,9 @@ tempMultiplierUpgrade = NodePath("../../SwordUpgrades/TempMultiplier")
 triggerAttack = "Bullet"
 attackToBoost = "Sword"
 baseAdditive = 0.5
+upgradeImage = ExtResource("28_bfbt0")
+upgradeTitle = "Sword go BIG SWING"
+level = 6
 priority = 1
 
 [node name="TempMultiplier" type="Node" parent="BulletUpgrades"]
@@ -565,6 +581,7 @@ upgradeImage = ExtResource("19_j4w3v")
 
 [node name="SwordLifesteal" type="Node" parent="SwordUpgrades"]
 script = ExtResource("27_utwlt")
+upgradeImage = ExtResource("33_pqity")
 priority = 1
 
 [node name="SwordResetAbilityOne" type="Node" parent="SwordUpgrades" node_paths=PackedStringArray("cooldownToReset")]
@@ -572,6 +589,7 @@ script = ExtResource("28_kih0c")
 cooldownToReset = NodePath("../../Ability1Cooldown")
 triggerAttack = "Sword"
 attackToReset = "Ability 1"
+upgradeImage = ExtResource("34_opqna")
 upgradeTitle = "Sword Kill: Reset Ability One"
 priority = 1
 maxLevel = 1
@@ -581,6 +599,7 @@ script = ExtResource("28_kih0c")
 cooldownToReset = NodePath("../../Ability2Cooldown")
 triggerAttack = "Sword"
 attackToReset = "Ability 2"
+upgradeImage = ExtResource("35_00okb")
 upgradeTitle = "Sword Kill: Reset Ability One"
 priority = 1
 maxLevel = 1
@@ -591,6 +610,9 @@ tempMultiplierUpgrade = NodePath("../../BulletUpgrades/TempMultiplier")
 triggerAttack = "Sword"
 attackToBoost = "Bullet"
 baseAdditive = 0.5
+upgradeImage = ExtResource("36_6hr71")
+upgradeTitle = "Bullet Go Big Bullet"
+level = 1
 priority = 1
 
 [node name="TempMultiplier" type="Node" parent="SwordUpgrades"]
@@ -602,6 +624,7 @@ showOnUpgradeSelectScreen = false
 
 [node name="HealMore" type="Node" parent="HealthPackUpgrades"]
 script = ExtResource("31_avx33")
+upgradeImage = ExtResource("38_y6y60")
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")

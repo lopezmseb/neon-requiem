@@ -6,6 +6,10 @@ var players = []
 func _process(delta: float) -> void:
 	if(players.size() == 0):
 		players = get_tree().root.find_children("*", "Player", true, false)
+		var offset = 0
+		for player in players:
+			player.position = Vector2(0 + offset, 0)
+			offset += 20
 	else:
 		tileDamage()
 		

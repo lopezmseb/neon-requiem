@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=81 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" uid="uid://dq66kp0c0y4uu" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -31,6 +31,7 @@
 [ext_resource type="Script" uid="uid://dkq60ctigec2q" path="res://Scripts/Upgrades/AttackUpgrades/ResetCooldownOnKill.gd" id="28_kih0c"]
 [ext_resource type="Script" uid="uid://cypwh1ixetgdf" path="res://Scripts/Upgrades/AttackUpgrades/AttackBoostOnKill.gd" id="29_lyrkg"]
 [ext_resource type="Script" uid="uid://bcmkqx03f5bcy" path="res://Scripts/Upgrades/AttackUpgrades/TempMultiplierUpgrade.gd" id="30_c43xd"]
+[ext_resource type="Script" uid="uid://bedqq0emxb04" path="res://Scripts/Upgrades/HealthUpgrades/HealMoreFromPackUpgrade.gd" id="31_avx33"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -596,6 +597,11 @@ priority = 1
 script = ExtResource("30_c43xd")
 priority = 2
 showOnUpgradeSelectScreen = false
+
+[node name="HealthPackUpgrades" type="Node" parent="."]
+
+[node name="HealMore" type="Node" parent="HealthPackUpgrades"]
+script = ExtResource("31_avx33")
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")

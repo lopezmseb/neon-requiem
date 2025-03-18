@@ -23,10 +23,7 @@ func _ready():
 	if(get_parent().name == "GameLoop"):
 		$MarginContainer2/MarginContainer/VBoxContainer/GridContainer/UnstuckButton.visible = true
 		$MarginContainer2/MarginContainer/VBoxContainer/GridContainer/MenuButton.visible = true
-		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	print(get_parent().name)
+
 	
 func _on_master_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(Master_Bus_ID, linear_to_db(value))

@@ -254,8 +254,10 @@ func update_grid():
 func set_zoom(multiplier: float):
 	for player in players:
 		print(player.playerName)
-		var camera = player.get_parent().find_child("Camera2D", true, false) as PlayerCamera
+		print(player.get_parent().get_children())
+		var camera = player.get_parent().find_child("Camera2D", true, false)
 		if camera is PlayerCamera:
+			print(camera)
 			camera.cameraMultiplier = multiplier
 
 func _process(delta):

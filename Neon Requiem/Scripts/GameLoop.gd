@@ -141,7 +141,7 @@ func load_all_players():
 				subViewport.add_child(player)		
 				container.add_child(subViewport)
 				hbox.add_child(container)
-				subViewport.get_node("UserInterface/CooldownTimers").set_scale(Vector2(.4, .4))
+				subViewport.get_node("UserInterface/CooldownTimers").set_scale(Vector2(.4, .4 ))
 				subViewport.get_node("UserInterface/PlayerHealthBar").set_scale(Vector2(.9, .9))
 				update_grid() 
 				# Remote Path to Camera

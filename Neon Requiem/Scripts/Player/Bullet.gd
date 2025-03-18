@@ -45,7 +45,8 @@ func _on_area_2d_body_entered(body):
 	# therefore, delete projectile
 	if(health == null):
 		visible = false
-		await audio_stream_player.finished
+		if(audio_stream_player.playing):
+			await audio_stream_player.finished
 		queue_free()
 		return
 		
@@ -71,13 +72,14 @@ func _on_area_2d_body_entered(body):
 		
 	if(healthBar is HealthBar):
 		healthBar.show()
-	visible = false
-	await audio_stream_player.finished
+	visible = false	
+	
+	if(audio_stream_player.playing):		
+		await audio_stream_player.finished
+	
 	queue_free()
 	
 
 
 func _on_life_timeout():
-	# Once Timer runs out, delete projectile.
-	await audio_stream_player.finished
 	queue_free()

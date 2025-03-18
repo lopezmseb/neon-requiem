@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6nasoc2xm7yq"]
+[gd_scene load_steps=10 format=3 uid="uid://b6nasoc2xm7yq"]
 
 [ext_resource type="Script" uid="uid://qb3jwg3dt12i" path="res://Scripts/menu.gd" id="1_ek5x3"]
 [ext_resource type="Texture2D" uid="uid://duhi0mcqqct17" path="res://Assets/Menu/SKY.png" id="2_wi1je"]
-[ext_resource type="Texture2D" uid="uid://b0yrcvublky61" path="res://Assets/Menu/BUILDINGS.png" id="3_67qqv"]
+[ext_resource type="Texture2D" uid="uid://g6qnng2cx1yx" path="res://Assets/Menu/background.png" id="3_q3rjx"]
+[ext_resource type="Texture2D" uid="uid://c534pie4jkxmc" path="res://Assets/Menu/Ads.png" id="4_6swd7"]
 [ext_resource type="Texture2D" uid="uid://bxsn068gjqtlp" path="res://Assets/Menu/Title.png" id="4_jcs6e"]
 [ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="4_xrl2i"]
 [ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="6_1tbn7"]
+[ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="6_6swd7"]
 [ext_resource type="PackedScene" uid="uid://cwuxgblo0jje2" path="res://Scenes/UI/settings_menu.tscn" id="7_yyu1d"]
 
 [node name="Menu" type="Control"]
@@ -19,31 +21,85 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_ek5x3")
-metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1560.0
-offset_top = -771.0
-offset_right = 1493.0
-offset_bottom = 948.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -35.0
+offset_right = 53.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 expand_mode = 2
+stretch_mode = 2
 
-[node name="Sky" type="Sprite2D" parent="TextureRect"]
-position = Vector2(1514, 862)
+[node name="Sky" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -18.0
+offset_right = 74.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_wi1je")
+expand_mode = 2
+stretch_mode = 4
 
-[node name="Buildings" type="Sprite2D" parent="TextureRect"]
-position = Vector2(1519.5, 867.5)
-scale = Vector2(3, 3)
-texture = ExtResource("3_67qqv")
+[node name="Buildings" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 41.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_q3rjx")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Ads" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -51.0
+offset_top = 24.0
+offset_right = -51.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_6swd7")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="TextureRect/Ads"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.684
+anchor_top = 0.726
+anchor_right = 0.977
+anchor_bottom = 1.029
+offset_left = 214.228
+offset_top = 60.87
+offset_right = 3.65894
+offset_bottom = -63.895
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.352941)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_6swd7")
+text = "By: 
+Nathan Cameron
+ & 
+Sebastian Lopez"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Title" type="TextureRect" parent="TextureRect"]
 layout_mode = 1
@@ -52,16 +108,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -729.5
-offset_top = -290.5
-offset_right = 20.5
-offset_bottom = -211.5
+offset_left = -762.5
+offset_top = -140.5
+offset_right = 61.5
+offset_bottom = -54.5
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(2, 2)
+scale = Vector2(1.75, 1.75)
 texture = ExtResource("4_jcs6e")
 expand_mode = 3
-stretch_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 process_mode = 1
@@ -90,23 +145,22 @@ text = "Continue"
 
 [node name="SettingsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Settings
-"
+text = "Settings"
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../New GameButton")
 text = "Quit"
 
-[node name="Menu Music" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_1tbn7")
-autoplay = true
-bus = &"Music"
-
 [node name="SettingsMenu" parent="." instance=ExtResource("7_yyu1d")]
 process_mode = 0
 visible = false
 layout_mode = 1
+
+[node name="Menu Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_1tbn7")
+autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="VBoxContainer/New GameButton" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]

@@ -353,7 +353,7 @@ func level_cleared():
 		player.disable_input()
 
 	# Remove any existing bullets
-	var bullets = get_tree().root.find_children("*", "Bullet")
+	var bullets = get_tree().root.find_children("*", "Bullet", true, false)
 
 	for bullet in bullets:
 		bullet.queue_free()

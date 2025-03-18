@@ -112,15 +112,20 @@ func load_all_players():
 			else:
 				var container : SubViewportContainer = SubViewportContainer.new()
 				var subViewport = SubViewport.new()
-				var camera = Camera2D.new()
+				var camera
 				var playerInterface = UIScene.instantiate()
+				var existing_camera = player.find_child("Camera2D", true, false)
+				if existing_camera:
+					camera = existing_camera
+				else:
+					camera = Camera2D.new()
+					camera.set_script(playerCamera)
 				
 				# Player Config
 				players.append(player)
 				# UI Config
 				playerInterface.setPlayer(player)
 				# Camera Config
-				camera.set_script(playerCamera)
 				# SubViewport Config 
 				subViewport.world_2d = mainViewport.world_2d
 				subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
@@ -133,7 +138,7 @@ func load_all_players():
 				subViewport.add_child(camera)
 				subViewport.add_child(playerInterface)
 				
-				mainViewport.add_child(player)		
+				subViewport.add_child(player)		
 				container.add_child(subViewport)
 				hbox.add_child(container)
 				subViewport.get_node("UserInterface/CooldownTimers").set_scale(Vector2(.5, .5))
@@ -184,9 +189,14 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		var anotherPlayer : Player = playerScene.instantiate()
 		var container : SubViewportContainer = SubViewportContainer.new()
 		var subViewport = SubViewport.new()
-		var camera = Camera2D.new()
 		var playerInterface = UIScene.instantiate()
-		
+		var existing_camera = anotherPlayer.find_child("Camera2D", true, false)
+		var camera
+		if existing_camera:
+			camera = existing_camera
+		else:
+			camera = Camera2D.new()
+			camera.set_script(playerCamera)
 		# Player Config
 		anotherPlayer.playerController = device_id
 		anotherPlayer.playerName = sprite
@@ -194,7 +204,7 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		# UI Config
 		playerInterface.setPlayer(anotherPlayer)
 		# Camera Config
-		camera.set_script(playerCamera)
+
 		# SubViewport Config 
 		subViewport.world_2d = mainViewport.world_2d
 		subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
@@ -235,19 +245,30 @@ func update_grid():
 			# Set custom minimum size based on child_count
 			if (child_count == 1):
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size())  # Full size
+				set_zoom(3)
 			elif (child_count == 2):
 				$HBoxContainer.set_columns(2)
 				user_interface.get_node("CooldownTimers").set_scale(Vector2(.4,.4))
 				user_interface.get_node("PlayerHealthBar").set_scale(Vector2(.9,.9))
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y)
+				set_zoom(2.5)
 			elif (child_count == 3 || child_count == 4):
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 2)
+				set_zoom(1.5)
 			elif (child_count == 5 || child_count == 6):
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 2, DisplayServer.window_get_size().y / 3)
 			elif (child_count == 7 || child_count == 8):
 				$HBoxContainer.set_columns(3)
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 3, DisplayServer.window_get_size().y / 3)
 
+func set_zoom(multiplier: float):
+	for player in players:
+		print(player.playerName)
+		print(player.get_parent().get_children())
+		var camera = player.get_parent().find_child("Camera2D", true, false)
+		if camera is PlayerCamera:
+			print(camera)
+			camera.cameraMultiplier = multiplier
 
 func _process(delta):
 	# Set Hbox to screensize

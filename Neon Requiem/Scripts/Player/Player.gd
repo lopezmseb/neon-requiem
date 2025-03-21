@@ -83,10 +83,6 @@ func _input(event):
 			if(event.button_index == JOY_BUTTON_Y && event.is_pressed()):
 				changeColor()
 
-	
-	
-		
-		
 func handleKBInput(delta):
 	# Move Gun Reticle on Mouse Direction
 	if input_enabled:
@@ -114,6 +110,12 @@ func handleKBInput(delta):
 
 	
 func _physics_process(delta):
+	var upgrades = find_children("*", "UpgradeStrategy", true, false)
+	
+	for i in upgrades:
+		var upgrade = i as UpgradeStrategy
+		if(upgrade.showOnUpgradeSelectScreen):
+			print(upgrade, " Id:", upgrade.upgradeId)
 	if(playerController == -1):
 		handleKBInput(delta)
 		
@@ -219,7 +221,7 @@ func dashAttack():
 	$Ability2Cooldown.start()
 
 	# Get the player's current position.
-	var position = global_position
+	var position = global_position   
 
 	# Calculate the direction to the mouse position.
 	var direction = (shootingDirection - position).normalized()

@@ -17,7 +17,7 @@ var room_save = "user://room.save"
 var player_save = "user://players.save"
 var level: int = 1
 var canChangeLevel : bool = false
-var maxEnemiesPerRoom = 2
+var maxEnemiesPerRoom = 5
 var players: Array[Player]
 var enemies: Array[Node]
 var viewports: Array[Viewport]
@@ -387,6 +387,7 @@ func level_cleared():
 	
 	# Start Upgrade Process
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
+	baseUpgrades = baseUpgrades.filter(func(x): if(x is UpgradeStrategy): return x.showOnUpgradeSelectScreen)
 	var selectedUpgrades : Array[UpgradeStrategy]  = []
 	
 	while(selectedUpgrades.size() != clampf(players.size(), 3, players.size() + 1)):

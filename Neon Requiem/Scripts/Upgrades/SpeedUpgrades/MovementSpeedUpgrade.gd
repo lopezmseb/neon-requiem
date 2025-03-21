@@ -6,5 +6,5 @@ func _process(delta):
 	upgradeText = "Add {speed}% to your max speed! (Stackable)".format({"speed": 25})
 	upgradeTitle = "Movement Speed Up"
 
-func Apply(speed: float):
+func Apply(speed: float,extraData: Dictionary = {}):
 	return speed + (speed* baseAdditive * level)

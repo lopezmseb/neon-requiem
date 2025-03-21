@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://byw7abk88jgwq"]
+[gd_scene load_steps=85 format=3 uid="uid://byw7abk88jgwq"]
 
 [ext_resource type="Script" uid="uid://dq66kp0c0y4uu" path="res://Scripts/Player/Player.gd" id="1_2efai"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_5f8dx"]
@@ -25,7 +25,17 @@
 [ext_resource type="Texture2D" uid="uid://crrvojxbn3eiw" path="res://Assets/UI/Upgrades/Health.png" id="14_n2ppx"]
 [ext_resource type="Texture2D" uid="uid://dje7goep4inlm" path="res://Assets/UI/Upgrades/Bullet_damage.png" id="17_l1s3k"]
 [ext_resource type="Texture2D" uid="uid://cdf8kpa6j6fxg" path="res://Assets/UI/Upgrades/Sword_damage.png" id="19_j4w3v"]
+[ext_resource type="Texture2D" uid="uid://tqklwpdfujgg" path="res://Assets/UI/Upgrades/Speed-boost.png" id="22_xixlo"]
 [ext_resource type="Texture2D" uid="uid://u0xc8xj24372" path="res://Assets/UI/Upgrades/Speed_upgrade.png" id="23_v1wvv"]
+[ext_resource type="Texture2D" uid="uid://cfbqji1i0fhxt" path="res://Assets/UI/Upgrades/dash_reset.png" id="27_opqna"]
+[ext_resource type="Script" uid="uid://buw0evh7jxvmk" path="res://Scripts/Upgrades/SpeedUpgrades/TempBoostUpgrade.gd" id="27_u7x0b"]
+[ext_resource type="Script" uid="uid://dfn3xp5k3pays" path="res://Scripts/Upgrades/AttackUpgrades/SwordLifesteal.gd" id="27_utwlt"]
+[ext_resource type="Script" uid="uid://dkq60ctigec2q" path="res://Scripts/Upgrades/AttackUpgrades/ResetCooldownOnKill.gd" id="28_kih0c"]
+[ext_resource type="Script" uid="uid://bedqq0emxb04" path="res://Scripts/Upgrades/HealthUpgrades/HealMoreFromPackUpgrade.gd" id="31_avx33"]
+[ext_resource type="Texture2D" uid="uid://corx2ut4osyda" path="res://Assets/UI/Upgrades/lifesteal.png" id="33_pqity"]
+[ext_resource type="Texture2D" uid="uid://dyamg64rs16sv" path="res://Assets/UI/Upgrades/shotgun_reset.png" id="34_opqna"]
+[ext_resource type="Texture2D" uid="uid://b06klpvqyawev" path="res://Assets/UI/Upgrades/Dash_attack_reset.png" id="35_00okb"]
+[ext_resource type="Texture2D" uid="uid://ck8o42pirrr5s" path="res://Assets/UI/Upgrades/Health-boost.png" id="38_y6y60"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn6tn"]
 shader = ExtResource("2_5f8dx")
@@ -424,7 +434,7 @@ buttonCode = Array[String](["Space", "X"])
 [node name="CooldownAdditiveReduction" type="Node" parent="DashCooldown"]
 script = ExtResource("5_eejht")
 ability = "Dash"
-baseAdditive = 0.25
+baseAdditive = 0.3
 upgradeImagePath = "res://Assets/UI/Upgrades/Dash.png"
 upgradeImage = ExtResource("6_iqabo")
 
@@ -437,13 +447,12 @@ buttonCode = Array[String](["M1", "RT"])
 [node name="CooldownAdditiveReduction" type="Node" parent="ShootCooldown"]
 script = ExtResource("5_eejht")
 ability = "Fire Rate"
-baseAdditive = 0.1
+baseAdditive = 0.05
 upgradeImagePath = "res://Assets/UI/Upgrades/Bullet.png"
 upgradeId = 1.0
 upgradeImage = ExtResource("6_k1tej")
 
 [node name="MeleeCooldown" type="Timer" parent="."]
-wait_time = 0.5
 one_shot = true
 script = ExtResource("4_unu1y")
 buttonCode = Array[String](["M2", "L1"])
@@ -457,7 +466,7 @@ upgradeId = 2.0
 upgradeImage = ExtResource("7_bdk3u")
 
 [node name="Ability1Cooldown" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 4.0
 one_shot = true
 script = ExtResource("4_unu1y")
 buttonCode = Array[String](["Q", "R1"])
@@ -465,12 +474,13 @@ buttonCode = Array[String](["Q", "R1"])
 [node name="CooldownAdditiveReduction" type="Node" parent="Ability1Cooldown"]
 script = ExtResource("5_eejht")
 ability = "Ability 1"
-baseAdditive = 0.5
+baseAdditive = 0.4
 upgradeImagePath = "res://Assets/UI/Upgrades/shotgun.png"
 upgradeId = 3.0
 upgradeImage = ExtResource("9_54qtt")
 
 [node name="Ability2Cooldown" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 script = ExtResource("4_unu1y")
 buttonCode = Array[String](["E", "LT"])
@@ -478,7 +488,7 @@ buttonCode = Array[String](["E", "LT"])
 [node name="CooldownAdditiveReduction" type="Node" parent="Ability2Cooldown"]
 script = ExtResource("5_eejht")
 ability = "Ability 2"
-baseAdditive = 0.5
+baseAdditive = 0.3
 upgradeImagePath = "res://Assets/UI/Upgrades/Dash_attack.png"
 upgradeId = 4.0
 upgradeImage = ExtResource("10_hlm7b")
@@ -497,6 +507,7 @@ script = ExtResource("3_2s3ow")
 
 [node name="HealthAdditiveUpgrade" type="Node" parent="HealthComponent"]
 script = ExtResource("6_otwx6")
+baseAdditive = 25.0
 upgradeImagePath = "res://Assets/UI/Upgrades/Health.png"
 upgradeId = 5.0
 upgradeImage = ExtResource("14_n2ppx")
@@ -508,6 +519,14 @@ script = ExtResource("13_lbtrs")
 script = ExtResource("14_lwjg2")
 upgradeId = 8.0
 upgradeImage = ExtResource("23_v1wvv")
+
+[node name="TempSpeedBoost" type="Node" parent="SpeedComponent"]
+script = ExtResource("27_u7x0b")
+upgradeImagePath = "uid://tqklwpdfujgg"
+upgradeId = 9.0
+upgradeImage = ExtResource("22_xixlo")
+upgradeTitle = "TempSpeedBoost"
+priority = 1
 
 [node name="ColorComponent" type="Node" parent="."]
 script = ExtResource("6_bw6ym")
@@ -525,6 +544,15 @@ upgradeImagePath = "res://Assets/UI/Upgrades/Bullet_damage.png"
 upgradeId = 6.0
 upgradeImage = ExtResource("17_l1s3k")
 
+[node name="DashResetOnBullet" type="Node" parent="BulletUpgrades" node_paths=PackedStringArray("cooldownToReset")]
+script = ExtResource("28_kih0c")
+cooldownToReset = NodePath("../../DashCooldown")
+triggerAttack = "Bullet"
+attackToReset = "Dash"
+upgradeId = 10.0
+upgradeImage = ExtResource("27_opqna")
+upgradeTitle = "Bullet Make Me Go VROOM"
+
 [node name="SwordUpgrades" type="Node" parent="."]
 
 [node name="SwordAdditiveUpgrade" type="Node" parent="SwordUpgrades"]
@@ -532,6 +560,41 @@ script = ExtResource("11_tq7sg")
 baseAdditive = 5.0
 upgradeId = 7.0
 upgradeImage = ExtResource("19_j4w3v")
+
+[node name="SwordLifesteal" type="Node" parent="SwordUpgrades"]
+script = ExtResource("27_utwlt")
+upgradeId = 11.0
+upgradeImage = ExtResource("33_pqity")
+priority = 1
+
+[node name="SwordResetAbilityOne" type="Node" parent="SwordUpgrades" node_paths=PackedStringArray("cooldownToReset")]
+script = ExtResource("28_kih0c")
+cooldownToReset = NodePath("../../Ability1Cooldown")
+triggerAttack = "Sword"
+attackToReset = "Ability 1"
+upgradeId = 12.0
+upgradeImage = ExtResource("34_opqna")
+upgradeTitle = "Sword Kill: Reset Ability One"
+priority = 1
+maxLevel = 1
+
+[node name="SwordResetAbilityTwo" type="Node" parent="SwordUpgrades" node_paths=PackedStringArray("cooldownToReset")]
+script = ExtResource("28_kih0c")
+cooldownToReset = NodePath("../../Ability2Cooldown")
+triggerAttack = "Sword"
+attackToReset = "Ability 2"
+upgradeId = 13.0
+upgradeImage = ExtResource("35_00okb")
+upgradeTitle = "Sword Kill: Reset Ability One"
+priority = 1
+maxLevel = 1
+
+[node name="HealthPackUpgrades" type="Node" parent="."]
+
+[node name="HealMore" type="Node" parent="HealthPackUpgrades"]
+script = ExtResource("31_avx33")
+upgradeId = 14.0
+upgradeImage = ExtResource("38_y6y60")
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")

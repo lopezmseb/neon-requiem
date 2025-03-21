@@ -6,9 +6,13 @@ class_name UpgradeStrategy
 @export var upgradeImage : CompressedTexture2D
 @export var upgradeTitle = ""
 @export var upgradeText = "Base"
+@export var color = null
 @export var level = 0
+@export var priority = 0
+@export var maxLevel = 999
+@export var showOnUpgradeSelectScreen: bool = true
 
-func Apply(stat: float):
+func Apply(stat: float, extraData: Dictionary = {}):
 	pass
 	
 func OnPickup():

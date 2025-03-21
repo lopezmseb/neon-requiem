@@ -12,6 +12,9 @@ func Apply(stat: float, upgradeDict: Dictionary = {}):
 	if(enableBoost):
 		print("In Herererere")
 		changeEnable(false)
+		enableBoost = false
+		enableBoost = false
+		enableBoost = false
 		return stat * multiplier
 	
 	return stat

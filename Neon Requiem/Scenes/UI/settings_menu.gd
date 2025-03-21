@@ -20,11 +20,10 @@ func _ready():
 	if Input.is_action_just_pressed("Menu"):
 		settings_menu.visible = false
 		get_tree().paused = false
-		
+	if(get_parent().name == "GameLoop"):
+		$MarginContainer2/MarginContainer/VBoxContainer/GridContainer/UnstuckButton.visible = true
+		$MarginContainer2/MarginContainer/VBoxContainer/GridContainer/MenuButton.visible = true
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
 	
 func _on_master_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(Master_Bus_ID, linear_to_db(value))
@@ -53,8 +52,8 @@ func _on_close_button_pressed():
 	file.store_var(music_volume)
 	file.store_var(SFX_volume)
 	
-	if closeButton:
-		closeButton.grab_focus()
+	if get_parent().name == "Menu":
+		get_parent().find_child("New GameButton").grab_focus()
 	
 
 func _on_quit_button_pressed():
@@ -67,3 +66,22 @@ func load_data():
 		$"MarginContainer2/MarginContainer/VBoxContainer/GridContainer/Music Slider".value = file.get_var(music_volume)
 		$"MarginContainer2/MarginContainer/VBoxContainer/GridContainer/SFX Slider".value = file.get_var(SFX_volume)
 		
+
+
+func _on_menu_button_pressed() -> void:
+	visible = false
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+
+
+func _on_unstuck_button_pressed() -> void:
+	var roomGen = get_parent().find_child("RoomGeneration", true)
+	var players = get_parent().find_children("Player", "", true, false)
+	var offset = 0 
+	
+	for player in players:
+		if roomGen.startRoom:
+			player.position = Vector2(roomGen.startRoom.position.x + offset, roomGen.startRoom.position.y)
+		else: 
+			player.position = Vector2(0 + offset,0)
+		offset += 20

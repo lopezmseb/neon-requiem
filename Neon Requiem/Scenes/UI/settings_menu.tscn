@@ -109,16 +109,38 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 focus_neighbor_top = NodePath("../SFX Slider")
-focus_neighbor_bottom = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../UnstuckButton")
 theme = ExtResource("3_1dscj")
 text = "  Save & Close  "
+metadata/_edit_use_anchors_ = true
+
+[node name="UnstuckButton" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+focus_neighbor_top = NodePath("../CloseButton")
+focus_neighbor_bottom = NodePath("../MenuButton")
+theme = ExtResource("3_1dscj")
+text = "Unstuck"
+metadata/_edit_use_anchors_ = true
+
+[node name="MenuButton" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+focus_neighbor_top = NodePath("../UnstuckButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+theme = ExtResource("3_1dscj")
+text = "Main Menu"
 metadata/_edit_use_anchors_ = true
 
 [node name="QuitButton" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
-focus_neighbor_top = NodePath("../CloseButton")
+focus_neighbor_top = NodePath("../MenuButton")
 focus_neighbor_bottom = NodePath("../Master Slider")
 theme = ExtResource("3_1dscj")
 text = "  Quit     
@@ -130,5 +152,8 @@ metadata/_edit_use_anchors_ = true
 [connection signal="value_changed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/SFX Slider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/UnstuckButton" to="." method="_on_unstuck_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/QuitButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/QuitButton" to="." method="_on_quit_button_pressed"]

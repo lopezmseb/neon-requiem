@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://hb7isw645t1t"]
+[gd_scene load_steps=64 format=3 uid="uid://hb7isw645t1t"]
 
 [ext_resource type="Script" uid="uid://bcgrdcpnobkci" path="res://Scripts/Enemy/Bosses/Boss.gd" id="1_75vd1"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_up4e3"]
@@ -106,6 +106,22 @@ region = Rect2(0, 0, 72, 72)
 [sub_resource type="AtlasTexture" id="AtlasTexture_be32c"]
 atlas = ExtResource("3_bqlqv")
 region = Rect2(72, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h84k2"]
+atlas = ExtResource("3_bqlqv")
+region = Rect2(2736, 0, 72, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpr0w"]
+atlas = ExtResource("3_bqlqv")
+region = Rect2(2808, 0, 72, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fj84y"]
+atlas = ExtResource("3_bqlqv")
+region = Rect2(2880, 0, 72, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1f2qs"]
+atlas = ExtResource("3_bqlqv")
+region = Rect2(2952, 0, 72, 74)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bll67"]
 atlas = ExtResource("3_bqlqv")
@@ -288,6 +304,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_h84k2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mpr0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fj84y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1f2qs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1f2qs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fj84y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mpr0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h84k2")
+}],
+"loop": false,
+"name": &"Jump",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_bll67")
 }, {
 "duration": 1.0,
@@ -366,7 +411,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4vrvr")
 }],
-"loop": true,
+"loop": false,
 "name": &"SummonEnemies",
 "speed": 5.0
 }]
@@ -386,10 +431,9 @@ script = ExtResource("1_75vd1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_eib4j")
-position = Vector2(1, 0)
+position = Vector2(1, -1)
 sprite_frames = SubResource("SpriteFrames_kic57")
-animation = &"SummonEnemies"
-frame_progress = 0.276026
+animation = &"MissileShoot"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.5, 0)
@@ -435,6 +479,8 @@ script = ExtResource("7_61e08")
 wait_time = 0.2
 script = ExtResource("7_61e08")
 
+[node name="RocketExplodeTimer" type="Timer" parent="StateMachine/Attack"]
+
 [node name="Death" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy", "animate")]
 script = ExtResource("8_gddqf")
 enemy = NodePath("../..")
@@ -466,6 +512,8 @@ grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 healthComponent = NodePath("../HealthComponent")
 metadata/_edit_use_anchors_ = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="body_entered" from="Area2D" to="StateMachine/Idle" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="StateMachine/Attack/AttackCooldown" to="StateMachine/Attack" method="_on_attack_cooldown_timeout"]

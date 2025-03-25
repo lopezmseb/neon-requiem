@@ -3,6 +3,9 @@ extends Node2D
 
 var players = []
 
+func _ready() -> void:
+	$UserInterface.setPlayer($Player)
+
 func _process(delta: float) -> void:
 	if(players.size() == 0):
 		players = get_tree().root.find_children("*", "Player", true, false)

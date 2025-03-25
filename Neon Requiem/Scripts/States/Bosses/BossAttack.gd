@@ -43,8 +43,8 @@ func RoundSpreader():
 	
 
 func Physics_Update(delta: float):
-	#var attackToChoose = rng.randi_range(0,6)
-	var attackToChoose = 6
+	var attackToChoose = rng.randi_range(0,6)
+	#var attackToChoose = 6
 	
 	if(readyToAttack && isBossAlive):
 		readyToAttack = false

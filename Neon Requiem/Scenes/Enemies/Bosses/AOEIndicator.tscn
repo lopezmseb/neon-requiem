@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bw0i6g1wvj428"]
+[gd_scene load_steps=5 format=3 uid="uid://bw0i6g1wvj428"]
 
 [ext_resource type="Script" uid="uid://ch1exmtuixf3p" path="res://Scripts/AOEIndicator.gd" id="1_wcp11"]
+[ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="2_5hm2s"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8secx"]
 size = Vector2(75, 75)
@@ -19,3 +20,7 @@ shape = SubResource("CircleShape2D_wcp11")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
+
+[node name="AttackComponent" type="Node" parent="."]
+script = ExtResource("2_5hm2s")
+metadata/_custom_type_script = "uid://du7l3pmt8akjr"

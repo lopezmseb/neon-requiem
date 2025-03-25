@@ -4,6 +4,7 @@ extends BossState
 @onready var aiming = $"../../Gun/Aiming"
 @onready var AOEIndicator = preload("res://Scenes/Enemies/Bosses/AOEIndicator.tscn")
 @onready var baseEnemy = preload("res://Scenes/BaseEnemy.tscn")
+@onready var attackComponent = $"../../AttackComponent"
 var bulletPath = preload("res://Scenes/Bullet.tscn")
 var rng: RandomNumberGenerator
 var readyToAttack = true
@@ -42,8 +43,8 @@ func RoundSpreader():
 	
 
 func Physics_Update(delta: float):
-	#var attackToChoose = rng.randi_range(0,5)
-	var attackToChoose = 4
+	#var attackToChoose = rng.randi_range(0,6)
+	var attackToChoose = 6
 	
 	if(readyToAttack && isBossAlive):
 		readyToAttack = false
@@ -58,7 +59,13 @@ func Physics_Update(delta: float):
 			3:
 				await PerformAttack(Track_Closest_Player)
 			4:
-				await PerformAttack(JumpToPlayer, "Jump")
+				animate.play("Death", 10.00)
+				await animate.animation_finished
+				
+				await JumpToPlayer()
+				
+				animate.play("Death", -10.00)
+				await animate.animation_finished
 			5:
 				await PerformAttack(SpawnEnemies, "SummonEnemies")
 			6:
@@ -77,6 +84,7 @@ func RocketAttack():
 		var AOEObject = AOEIndicator.instantiate()
 		AOEObject.timer = $RocketExplodeTimer
 		AOEObject.global_position = i.global_position
+		AOEObject.attackComponent = attackComponent
 		add_child(AOEObject)
 		
 	$RocketExplodeTimer.start()
@@ -115,10 +123,13 @@ func JumpToPlayer():
 	
 	var randomPlayer = players.pick_random()
 	
-	var tween = create_tween()
-	tween.tween_property($"../..", "position", randomPlayer.position, 1.5)
+	enemy.visible = false
+	enemy.position = Vector2(9999, 9999)
 	
-	await tween.finished
+	$TeleportTimer.start()
+	await $TeleportTimer.timeout
+	
+	enemy.position = randomPlayer.position
 	
 	$AttackCooldown.start()
 	

@@ -1,17 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://f8k7aqsq2stj"]
+[gd_scene load_steps=8 format=3 uid="uid://f8k7aqsq2stj"]
 
 [ext_resource type="Script" uid="uid://ca8y4bw7x60u2" path="res://Scripts/SpecialRooms/TutorialRoom.gd" id="1_uo1fs"]
 [ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="2_2o727"]
 [ext_resource type="TileSet" uid="uid://dgy5axd7187uk" path="res://Assets/Tileset/GlobalTileMap.tres" id="2_3j26a"]
+[ext_resource type="PackedScene" uid="uid://5x4v60hjwd6y" path="res://Scenes/StaticEnemy.tscn" id="2_vv0ms"]
 [ext_resource type="PackedScene" uid="uid://577xd1d52p1t" path="res://Scenes/BaseEnemy.tscn" id="3_3j26a"]
 [ext_resource type="PackedScene" uid="uid://byw7abk88jgwq" path="res://Scenes/Player.tscn" id="3_7bloo"]
 [ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="5_x7a1n"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" groups=["Viewports"]]
 script = ExtResource("1_uo1fs")
 
 [node name="BaseEnemy" parent="." instance=ExtResource("3_3j26a")]
 position = Vector2(332, 352)
+
+[node name="BaseEnemy2" parent="." instance=ExtResource("3_3j26a")]
+position = Vector2(405, 232)
+
+[node name="StaticEnemy" parent="." instance=ExtResource("2_vv0ms")]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_3j26a")
@@ -25,6 +31,7 @@ layer_0/tile_data = PackedInt32Array(196604, 65537, 536870912, 196605, 65537, 53
 
 [node name="Player" parent="." instance=ExtResource("3_7bloo")]
 position = Vector2(-15, -15)
+playerName = "Jex"
 
 [node name="TileDamage" type="Node" parent="."]
 script = ExtResource("2_2o727")

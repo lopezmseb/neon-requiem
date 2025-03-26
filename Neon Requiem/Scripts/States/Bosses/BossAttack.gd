@@ -2,6 +2,9 @@ extends BossState
 
 @onready var gun = $"../../Gun"
 @onready var aiming = $"../../Gun/Aiming"
+@onready var AOEIndicator = preload("res://Scenes/Enemies/Bosses/AOEIndicator.tscn")
+@onready var baseEnemy = preload("res://Scenes/BaseEnemy.tscn")
+@onready var attackComponent = $"../../AttackComponent"
 var bulletPath = preload("res://Scenes/Bullet.tscn")
 var rng: RandomNumberGenerator
 var readyToAttack = true
@@ -40,7 +43,9 @@ func RoundSpreader():
 	
 
 func Physics_Update(delta: float):
-	var attackToChoose = rng.randi_range(0,3)
+	var attackToChoose = rng.randi_range(0,6)
+	#var attackToChoose = 6
+	
 	if(readyToAttack && isBossAlive):
 		readyToAttack = false
 		
@@ -53,10 +58,82 @@ func Physics_Update(delta: float):
 				await PerformAttack(RoundSpreader)
 			3:
 				await PerformAttack(Track_Closest_Player)
+			4:
+				animate.play("Death", 10.00)
+				await animate.animation_finished
+				
+				await JumpToPlayer()
+				
+				animate.play("Death", -10.00)
+				await animate.animation_finished
+			5:
+				await PerformAttack(SpawnEnemies, "SummonEnemies")
+			6:
+				animate.play("MissileStart")
+				await animate.animation_finished
+				
+				await RocketAttack()
 		
 		animate.play("Idle")
+		
+func RocketAttack():
+	readyToAttack = false
+	var players = get_tree().root.find_children("*", "Player", true, false)
+	
+	for i in players:
+		var AOEObject = AOEIndicator.instantiate()
+		AOEObject.timer = $RocketExplodeTimer
+		AOEObject.global_position = i.global_position
+		AOEObject.attackComponent = attackComponent
+		add_child(AOEObject)
+		
+	$RocketExplodeTimer.start()
+	await $RocketExplodeTimer.timeout
+	
+	animate.play("MissileShoot")
+	await animate.animation_finished
+	
+	$AttackCooldown.start()
+		
+func SpawnEnemies():
+	readyToAttack = false
+	var players = get_tree().root.find_children("*", "Player", true, false)
+	# We only care about the minimum, we don't care about the max
+	var enemyCount = clampf(players.size(), 2, 999)
+	var enemiesNode = get_tree().root.find_child("Enemies", true, false)
+	
+	if(not enemiesNode):
+		return
+	
+	for i in range(enemyCount):
+		var baseEnemyNode = baseEnemy.instantiate()
+		baseEnemyNode.position = enemy.position + Vector2(0,50)
+		
+		enemiesNode.add_child(baseEnemyNode)
+	
+	$AttackCooldown.start()
 
-
+func JumpToPlayer():
+	readyToAttack = false
+	var players = get_tree().root.find_children("*", "Player", true, false)
+	
+	if(players.size() == 0):
+		readyToAttack = true
+		return
+	
+	var randomPlayer = players.pick_random()
+	
+	enemy.visible = false
+	enemy.position = Vector2(9999, 9999)
+	
+	$TeleportTimer.start()
+	await $TeleportTimer.timeout
+	
+	enemy.position = randomPlayer.position
+	
+	$AttackCooldown.start()
+	
+	
 
 func Track_Closest_Player():
 	readyToAttack = false

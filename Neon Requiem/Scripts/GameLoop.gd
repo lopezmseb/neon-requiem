@@ -17,7 +17,9 @@ var room_save = "user://room.save"
 var player_save = "user://players.save"
 var level: int = 1
 var canChangeLevel : bool = false
-var maxEnemiesPerRoom = 5
+var maxEnemiesPerRoom = 3 : 
+	get():
+		return GlobalVariables.getMaxEnemiesByLevel(level)
 var players: Array[Player]
 var enemies: Array[Node]
 var viewports: Array[Viewport]
@@ -337,7 +339,7 @@ func _on_level_generated():
 			
 			var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
 			var roomRect = collisionShape.shape.get_rect()
-			var numEnemies = randi() % maxEnemiesPerRoom + 1
+			var numEnemies = randi() % int(maxEnemiesPerRoom) + 1
 			
 			for i in range(0, numEnemies):
 				var enemyObject = enemyScene.instantiate()

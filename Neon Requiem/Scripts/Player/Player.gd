@@ -114,8 +114,6 @@ func _physics_process(delta):
 	
 	for i in upgrades:
 		var upgrade = i as UpgradeStrategy
-		if(upgrade.showOnUpgradeSelectScreen):
-			print(upgrade, " Id:", upgrade.upgradeId)
 	if(playerController == -1):
 		handleKBInput(delta)
 		

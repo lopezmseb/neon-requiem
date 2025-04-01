@@ -343,7 +343,7 @@ func _on_level_generated():
 			
 			for i in range(0, numEnemies):
 				var enemyObject = enemyScene.instantiate()
-				
+				enemyObject.level = level
 				enemiesNode.add_child(enemyObject)
 				roomGen.spawnEnemy(enemyObject, room)
 		

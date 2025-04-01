@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://577xd1d52p1t"]
+[gd_scene load_steps=37 format=3 uid="uid://577xd1d52p1t"]
 
 [ext_resource type="Script" uid="uid://gifg73i1qdvn" path="res://Scripts/Enemy/BaseEnemy.gd" id="1_eknkv"]
 [ext_resource type="Script" uid="uid://c7hjp5uyboedw" path="res://Scripts/States/StateMachine.gd" id="2_1hncl"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" uid="uid://bpcfaqb6cd7cf" path="res://Scripts/States/Enemies/EnemyDeath.gd" id="7_1jihc"]
 [ext_resource type="Script" uid="uid://bh3o63i4jlnmj" path="res://Scripts/Stats/ColorComponent.gd" id="7_15nv6"]
 [ext_resource type="PackedScene" uid="uid://c5thomb4wodpp" path="res://Scenes/ObjectHealthBar.tscn" id="8_nxvgv"]
+[ext_resource type="Script" uid="uid://mjr2numl6hk4" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="9_6n1ky"]
+[ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="12_vq62f"]
+[ext_resource type="Script" uid="uid://bg40lfg4qm5j2" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="13_vq62f"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ulle7"]
 shader = ExtResource("2_ude0n")
@@ -228,6 +231,11 @@ animate = NodePath("../../AnimatedSprite2D")
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("6_t48s2")
 
+[node name="HealthAdditiveUpgrade" type="Node" parent="HealthComponent"]
+script = ExtResource("9_6n1ky")
+baseAdditive = 25.0
+metadata/_custom_type_script = "uid://mjr2numl6hk4"
+
 [node name="ColorComponent" type="Node" parent="."]
 script = ExtResource("7_15nv6")
 
@@ -247,6 +255,15 @@ metadata/_edit_use_anchors_ = true
 
 [node name="DamageNumberStartinPosition" type="Node2D" parent="."]
 position = Vector2(0, -28)
+
+[node name="AttackComponent" type="Node" parent="."]
+script = ExtResource("12_vq62f")
+metadata/_custom_type_script = "uid://du7l3pmt8akjr"
+
+[node name="BulletAttackUpgrade" type="Node" parent="AttackComponent"]
+script = ExtResource("13_vq62f")
+baseAdditive = 5.0
+metadata/_custom_type_script = "uid://bg40lfg4qm5j2"
 
 [connection signal="onDamage" from="." to="StateMachine/Follow" method="_on_base_enemy_on_damage"]
 [connection signal="body_entered" from="Area2D" to="StateMachine/Idle" method="_on_area_2d_body_entered"]

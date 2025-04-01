@@ -1,6 +1,7 @@
 extends CharacterBody2D
 @onready var color_component: ColorComponent = $ColorComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@export var level = 0
 
 
 func switchColors():
@@ -18,6 +19,7 @@ func switchColors():
 
 func _ready():
 	GlobalSignals.onColorChange.connect(switchColors)
+	
 
 func _physics_process(delta):
 	pass

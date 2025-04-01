@@ -6,8 +6,10 @@ var players = []
 func _ready() -> void:
 	$UserInterface.setPlayer($Player)
 	$StaticEnemy2/ColorComponent.color = COLORS.OFFENSIVE
+	players.append($Player)
 
 func _process(delta: float) -> void:	
+	
 	tileDamage()
 	if($Player.position == Vector2(999999,999999)):
 		await get_tree().process_frame

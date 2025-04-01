@@ -46,3 +46,7 @@ func fade_in_music():
 	$"Menu Music".volume_db = -40 
 	$"Menu Music".play()
 	tween.tween_property($"Menu Music", "volume_db", 0, 1) 
+
+
+func _on_tutorial_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/Tutorial.tscn")

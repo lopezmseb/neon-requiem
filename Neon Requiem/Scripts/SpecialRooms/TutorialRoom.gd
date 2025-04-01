@@ -15,8 +15,24 @@ func _process(delta: float) -> void:
 			offset += 20
 	else:
 		tileDamage()
+		var total = count_character2d_excluding_player(get_tree().current_scene)
+		if (total == 0):
+			get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 		
+		
+func count_character2d_excluding_player(node):
+	var count = 0
+	
+	# Check if the current node is a CharacterBody2D and not named "Player"
+	if node is CharacterBody2D and node.name != "Player" and node is not Bullet:
+		count += 1
 
+	# Recursively check all children
+	for child in node.get_children():
+		count += count_character2d_excluding_player(child)
+
+	return count
+	
 func tileDamage():
 	if(not GlobalVariables.allowDamageFromFloors):
 		return

@@ -7,13 +7,14 @@ signal onDamage(allowAnimation: bool)
 func _physics_process(delta):
 	if(animated_sprite_2d):
 		var shaderMaterial = ShaderMaterial.new()
-		shaderMaterial.shader = COLORS.enemyShader
+				
+		if($ColorComponent.color == COLORS.OFFENSIVE):
+			shaderMaterial.shader = COLORS.OFFENSIVE_SHADER
+		else:
+			shaderMaterial.shader = COLORS.DEFENSIVE_SHADER
+		
 		animated_sprite_2d.material = shaderMaterial
 		
-		if(COLORS.enemyShader == COLORS.OFFENSIVE_SHADER):
-			color_component.color = COLORS.OFFENSIVE
-		else:
-			color_component.color = COLORS.DEFENSIVE
 	move_and_slide()
 
 func _on_health_component_entity_damaged(attack: float):

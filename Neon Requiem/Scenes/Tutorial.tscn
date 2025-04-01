@@ -1,17 +1,32 @@
-[gd_scene load_steps=10 format=3 uid="uid://f8k7aqsq2stj"]
+[gd_scene load_steps=13 format=3 uid="uid://f8k7aqsq2stj"]
 
 [ext_resource type="Script" uid="uid://ca8y4bw7x60u2" path="res://Scripts/SpecialRooms/TutorialRoom.gd" id="1_uo1fs"]
 [ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="2_2o727"]
 [ext_resource type="TileSet" uid="uid://dgy5axd7187uk" path="res://Assets/Tileset/GlobalTileMap.tres" id="2_3j26a"]
+[ext_resource type="AudioStream" uid="uid://b4yi0o5f878jr" path="res://Assets/Sound/Music/cyberpunk-music-277931.mp3" id="2_8i65c"]
+[ext_resource type="Script" uid="uid://bo27f4j28666h" path="res://addons/rhythm_notifier/rhythm_notifier.gd" id="2_m35rq"]
 [ext_resource type="PackedScene" uid="uid://5x4v60hjwd6y" path="res://Scenes/StaticEnemy.tscn" id="2_vv0ms"]
 [ext_resource type="PackedScene" uid="uid://577xd1d52p1t" path="res://Scenes/BaseEnemy.tscn" id="3_3j26a"]
 [ext_resource type="PackedScene" uid="uid://byw7abk88jgwq" path="res://Scenes/Player.tscn" id="3_7bloo"]
+[ext_resource type="Script" uid="uid://bf5v6p3h44658" path="res://Scripts/Music/BeatSwitcher.gd" id="3_m35rq"]
 [ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="5_x7a1n"]
 [ext_resource type="Texture2D" uid="uid://b7enxho0wwpgj" path="res://Assets/Tutorial/Controller.png" id="8_vv0ms"]
 [ext_resource type="Texture2D" uid="uid://de48tdty82mea" path="res://Assets/Tutorial/Mouse.png" id="9_hxa32"]
 
 [node name="Node2D" type="Node2D" groups=["Viewports"]]
 script = ExtResource("1_uo1fs")
+
+[node name="BeatNotifier" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player")]
+script = ExtResource("2_m35rq")
+bpm = 100.0
+beat_length = 0.6
+audio_stream_player = NodePath("")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_8i65c")
+volume_db = -14.292
+bus = &"Music"
+script = ExtResource("3_m35rq")
 
 [node name="BaseEnemy" parent="." instance=ExtResource("3_3j26a")]
 position = Vector2(271, 490)
@@ -30,6 +45,7 @@ position = Vector2(430, -75)
 
 [node name="StaticEnemy2" parent="." instance=ExtResource("2_vv0ms")]
 position = Vector2(431, -16)
+motion_mode = 1
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_3j26a")

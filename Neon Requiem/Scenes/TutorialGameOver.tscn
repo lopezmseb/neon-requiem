@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://h1hxcvwefpkx"]
+[gd_scene load_steps=5 format=3 uid="uid://cwxjjxc8cplmj"]
 
-[ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="1_45enr"]
-[ext_resource type="Script" uid="uid://d1n5evh540y4w" path="res://Scripts/UI/TutorialGameOver.gd" id="1_uib17"]
-[ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="2_5hduc"]
-[ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="4_y7ks4"]
+[ext_resource type="Script" uid="uid://ddpnr7ubfi7mj" path="res://Scripts/UI/GameOver.gd" id="1_u1spo"]
+[ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="2_fej45"]
+[ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="3_50sdv"]
+[ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="4_xb24o"]
 
 [node name="Node2D" type="Control"]
 layout_mode = 3
@@ -12,7 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_uib17")
+script = ExtResource("1_u1spo")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -35,8 +35,8 @@ offset_right = 221.0
 offset_bottom = -528.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_45enr")
-theme_override_fonts/font = ExtResource("2_5hduc")
+theme = ExtResource("2_fej45")
+theme_override_fonts/font = ExtResource("3_50sdv")
 theme_override_font_sizes/font_size = 65
 text = "Game Over"
 
@@ -53,16 +53,7 @@ offset_right = 150.5
 offset_bottom = -252.0
 grow_horizontal = 2
 grow_vertical = 0
-theme = ExtResource("1_45enr")
-
-[node name="Level" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-theme = ExtResource("1_45enr")
-theme_override_fonts/font = ExtResource("2_5hduc")
-theme_override_font_sizes/font_size = 32
-text = "Reached Floor: 1"
+theme = ExtResource("2_fej45")
 
 [node name="Restart" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
@@ -77,7 +68,7 @@ size_flags_horizontal = 4
 text = "Quit"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_y7ks4")
+stream = ExtResource("4_xb24o")
 volume_db = -12.56
 autoplay = true
 bus = &"Music"

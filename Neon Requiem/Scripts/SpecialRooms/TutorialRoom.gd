@@ -7,18 +7,13 @@ func _ready() -> void:
 	$UserInterface.setPlayer($Player)
 	$StaticEnemy2/ColorComponent.color = COLORS.OFFENSIVE
 
-func _process(delta: float) -> void:
-	if(players.size() == 0):
-		players = get_tree().root.find_children("*", "Player", true, false)
-		var offset = 0
-		for player in players:
-			player.position = Vector2(0 + offset, 0)
-			offset += 20
-	else:
-		tileDamage()
-		var total = count_character2d_excluding_player(get_tree().current_scene)
-		if (total == 0):
-			get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+func _process(delta: float) -> void:	
+	tileDamage()
+	if($Player.find_child("HealthComponent").currentHealth <= 0 ):
+		get_tree().change_scene_to_file("res://Scenes/TutorialGameOver.tscn")
+	var total = count_character2d_excluding_player(get_tree().current_scene)
+	if (total == 0):
+		get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 		
 		
 func count_character2d_excluding_player(node):

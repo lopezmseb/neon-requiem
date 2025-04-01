@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://f8k7aqsq2stj"]
+[gd_scene load_steps=14 format=3 uid="uid://f8k7aqsq2stj"]
 
 [ext_resource type="Script" uid="uid://ca8y4bw7x60u2" path="res://Scripts/SpecialRooms/TutorialRoom.gd" id="1_uo1fs"]
 [ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="2_2o727"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="5_x7a1n"]
 [ext_resource type="Texture2D" uid="uid://b7enxho0wwpgj" path="res://Assets/Tutorial/Controller.png" id="8_vv0ms"]
 [ext_resource type="Texture2D" uid="uid://de48tdty82mea" path="res://Assets/Tutorial/Mouse.png" id="9_hxa32"]
+[ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="11_sgy12"]
 
 [node name="Node2D" type="Node2D" groups=["Viewports"]]
 script = ExtResource("1_uo1fs")
@@ -72,34 +73,39 @@ offset_left = 262.0
 offset_top = -59.0
 offset_right = 426.0
 offset_bottom = -36.0
+theme_override_fonts/font = ExtResource("11_sgy12")
 theme_override_font_sizes/font_size = 10
-text = "switch tothe opposite colour
- to do more damage"
+text = "Switch to the opposite colour
+to do more damage"
 
 [node name="Label3" type="Label" parent="."]
 offset_left = 237.0
 offset_top = 292.0
 offset_right = 401.0
 offset_bottom = 315.0
-theme_override_font_sizes/font_size = 14
+theme_override_fonts/font = ExtResource("11_sgy12")
+theme_override_font_sizes/font_size = 10
 text = "Fight the opponents "
 
 [node name="Label2" type="Label" parent="."]
-offset_left = 525.0
-offset_top = 382.0
-offset_right = 926.0
-offset_bottom = 419.0
-theme_override_font_sizes/font_size = 12
+offset_left = 524.0
+offset_top = 390.0
+offset_right = 925.0
+offset_bottom = 427.0
+theme_override_fonts/font = ExtResource("11_sgy12")
+theme_override_font_sizes/font_size = 10
 text = "If you are on the wrong
- colour you will take damage"
+colour you will take damage"
 
 [node name="Label" type="Label" parent="."]
-offset_left = 76.0
-offset_top = -28.0
-offset_right = 240.0
-offset_bottom = -5.0
-theme_override_font_sizes/font_size = 14
-text = "Try out your abilities "
+offset_left = 35.0
+offset_top = -37.0
+offset_right = 215.0
+offset_bottom = 6.0
+theme_override_fonts/font = ExtResource("11_sgy12")
+theme_override_font_sizes/font_size = 10
+text = "Try out
+your abilities "
 
 [node name="Controller" type="Sprite2D" parent="."]
 position = Vector2(-69, -101)

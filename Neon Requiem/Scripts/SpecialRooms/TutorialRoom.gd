@@ -10,6 +10,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:	
 	tileDamage()
 	if($Player.find_child("HealthComponent").currentHealth <= 0 ):
+		print("HERE")
 		get_tree().change_scene_to_file("res://Scenes/TutorialGameOver.tscn")
 	var total = count_character2d_excluding_player(get_tree().current_scene)
 	if (total == 0):

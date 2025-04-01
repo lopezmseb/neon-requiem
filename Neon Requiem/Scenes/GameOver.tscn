@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://h1hxcvwefpkx"]
 
 [ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="1_45enr"]
-[ext_resource type="Script" uid="uid://d1n5evh540y4w" path="res://Scripts/UI/TutorialGameOver.gd" id="1_uib17"]
+[ext_resource type="Script" uid="uid://d1n5evh540y4w" path="res://Scripts/UI/GameOver.gd" id="1_uib17"]
 [ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="2_5hduc"]
 [ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="4_y7ks4"]
 

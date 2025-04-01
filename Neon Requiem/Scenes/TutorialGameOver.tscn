@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cwxjjxc8cplmj"]
 
-[ext_resource type="Script" uid="uid://ddpnr7ubfi7mj" path="res://Scripts/UI/GameOver.gd" id="1_u1spo"]
+[ext_resource type="Script" uid="uid://ddpnr7ubfi7mj" path="res://Scripts/UI/GameOverTutorial.gd" id="1_u1spo"]
 [ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="2_fej45"]
 [ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="3_50sdv"]
 [ext_resource type="AudioStream" uid="uid://b8lh0bl74s8i8" path="res://Assets/Sound/Music/Menu.mp3" id="4_xb24o"]

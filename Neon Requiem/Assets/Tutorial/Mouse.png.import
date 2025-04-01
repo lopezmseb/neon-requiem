@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://de48tdty82mea"
-path="res://.godot/imported/pixil-frame-0 (59).png-b2be2a3dc0be09b9a8855a8dd532f38e.ctex"
+path="res://.godot/imported/Mouse.png-c4fd9cad29a6ef9fc974c9f0e02a3413.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/UI/pixil-frame-0 (59).png"
-dest_files=["res://.godot/imported/pixil-frame-0 (59).png-b2be2a3dc0be09b9a8855a8dd532f38e.ctex"]
+source_file="res://Assets/Tutorial/Mouse.png"
+dest_files=["res://.godot/imported/Mouse.png-c4fd9cad29a6ef9fc974c9f0e02a3413.ctex"]
 
 [params]
 

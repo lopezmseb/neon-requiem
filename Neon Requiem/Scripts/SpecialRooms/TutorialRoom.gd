@@ -5,6 +5,7 @@ var players = []
 
 func _ready() -> void:
 	$UserInterface.setPlayer($Player)
+	$StaticEnemy2/ColorComponent.color = COLORS.OFFENSIVE
 
 func _process(delta: float) -> void:
 	if(players.size() == 0):

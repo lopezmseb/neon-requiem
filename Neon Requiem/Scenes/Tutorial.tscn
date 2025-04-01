@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://577xd1d52p1t" path="res://Scenes/BaseEnemy.tscn" id="3_3j26a"]
 [ext_resource type="PackedScene" uid="uid://byw7abk88jgwq" path="res://Scenes/Player.tscn" id="3_7bloo"]
 [ext_resource type="PackedScene" uid="uid://csr0n2s24ehr6" path="res://Scenes/UserInterface.tscn" id="5_x7a1n"]
-[ext_resource type="Texture2D" uid="uid://b7enxho0wwpgj" path="res://Scenes/UI/pixil-frame-0 (58).png" id="8_vv0ms"]
-[ext_resource type="Texture2D" uid="uid://de48tdty82mea" path="res://Scenes/UI/pixil-frame-0 (59).png" id="9_hxa32"]
+[ext_resource type="Texture2D" uid="uid://b7enxho0wwpgj" path="res://Assets/Tutorial/Controller.png" id="8_vv0ms"]
+[ext_resource type="Texture2D" uid="uid://de48tdty82mea" path="res://Assets/Tutorial/Mouse.png" id="9_hxa32"]
 
 [node name="Node2D" type="Node2D" groups=["Viewports"]]
 script = ExtResource("1_uo1fs")
@@ -51,6 +51,15 @@ script = ExtResource("2_2o727")
 baseAttack = 0.05
 metadata/_custom_type_script = "uid://du7l3pmt8akjr"
 
+[node name="Label4" type="Label" parent="."]
+offset_left = 262.0
+offset_top = -59.0
+offset_right = 426.0
+offset_bottom = -36.0
+theme_override_font_sizes/font_size = 10
+text = "switch tothe opposite colour
+ to do more damage"
+
 [node name="Label3" type="Label" parent="."]
 offset_left = 237.0
 offset_top = 292.0
@@ -76,12 +85,12 @@ offset_bottom = -5.0
 theme_override_font_sizes/font_size = 14
 text = "Try out your abilities "
 
-[node name="Pixil-frame-0(58)" type="Sprite2D" parent="."]
+[node name="Controller" type="Sprite2D" parent="."]
 position = Vector2(-69, -101)
 scale = Vector2(0.464, 0.464)
 texture = ExtResource("8_vv0ms")
 
-[node name="Pixil-frame-0(59)" type="Sprite2D" parent="."]
+[node name="Mouse" type="Sprite2D" parent="."]
 position = Vector2(69, -71)
 scale = Vector2(0.636, 0.664)
 texture = ExtResource("9_hxa32")

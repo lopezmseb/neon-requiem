@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://chjxraoikmphb"]
+[gd_scene load_steps=9 format=3 uid="uid://chjxraoikmphb"]
 
 [ext_resource type="Script" uid="uid://bgftycndwb4yv" path="res://Scripts/UI/UpgradeSelectScreen.gd" id="1_7re0p"]
 [ext_resource type="Script" uid="uid://bg40lfg4qm5j2" path="res://Scripts/Upgrades/AttackUpgrades/BulletAdditiveUpgrade.gd" id="2_ip6pi"]
 [ext_resource type="Texture2D" uid="uid://43677synoxf3" path="res://Assets/UI/Upgrades/Bullet.png" id="3_il8dv"]
 [ext_resource type="Texture2D" uid="uid://crrvojxbn3eiw" path="res://Assets/UI/Upgrades/Health.png" id="3_rui1o"]
 [ext_resource type="Script" uid="uid://mjr2numl6hk4" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="4_n5ruu"]
-[ext_resource type="Script" uid="uid://cg0amubqr7uyp" path="res://Scripts/Upgrades/CooldownUpgrades/CooldownAdditiveReduction.gd" id="5_uwgio"]
+[ext_resource type="Script" uid="uid://dfn3xp5k3pays" path="res://Scripts/Upgrades/AttackUpgrades/SwordLifesteal.gd" id="6_7tpx5"]
+[ext_resource type="Texture2D" uid="uid://corx2ut4osyda" path="res://Assets/UI/Upgrades/lifesteal.png" id="7_3sh7i"]
 
 [sub_resource type="Theme" id="Theme_r2nu1"]
 default_font_size = 30
@@ -18,7 +19,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7re0p")
-upgrades = [NodePath("BulletAdditiveUpgrade"), NodePath("HealthAdditiveUpgrade"), NodePath("CooldownAdditiveReduction")]
+upgrades = [NodePath("BulletAdditiveUpgrade"), NodePath("HealthAdditiveUpgrade"), NodePath("SwordLifesteal")]
 
 [node name="Fade_Upgrade" type="ColorRect" parent="."]
 layout_mode = 1
@@ -67,6 +68,8 @@ script = ExtResource("4_n5ruu")
 upgradeImagePath = "res://Assets/UI/Upgrades/Health.png"
 upgradeImage = ExtResource("3_rui1o")
 
-[node name="CooldownAdditiveReduction" type="Node" parent="."]
-script = ExtResource("5_uwgio")
-upgradeImagePath = "res://Assets/UI/Upgrades/Dash.png"
+[node name="SwordLifesteal" type="Node" parent="."]
+script = ExtResource("6_7tpx5")
+upgradeId = 11.0
+upgradeImage = ExtResource("7_3sh7i")
+priority = 1

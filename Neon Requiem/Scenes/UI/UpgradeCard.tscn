@@ -126,13 +126,12 @@ autowrap_mode = 0
 
 [node name="Description" type="RichTextLabel" parent="Button/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 2
 theme = SubResource("Theme_5ltmm")
 bbcode_enabled = true
 text = "[center]Some Stuff About Upgrade IN Here"
 fit_content = true
-autowrap_mode = 0
+autowrap_mode = 2
 
 [node name="Overlay" type="ColorRect" parent="."]
 visible = false

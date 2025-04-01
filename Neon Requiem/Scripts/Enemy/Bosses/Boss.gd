@@ -22,7 +22,9 @@ func _ready():
 	ScaleBoss()
 
 func ScaleBoss():
-	$HealthComponent/HealthAdditiveUpgrade.level = floor(level/6) 
+	var playerCount = get_tree().root.find_children("*", "Player", true, false).size()
+
+	$HealthComponent/HealthAdditiveUpgrade.level = clampf(floor(level/6)  + playerCount, 0, 999)
 	
 	
 

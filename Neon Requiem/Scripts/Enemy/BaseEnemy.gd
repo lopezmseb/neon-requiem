@@ -10,8 +10,10 @@ func _ready():
 	ScaleUpgrades()
 	
 func ScaleUpgrades():
-	$AttackComponent/BulletAttackUpgrade.level = floor(level/5)
-	$HealthComponent/HealthAdditiveUpgrade.level = floor(level/5)
+	var playerCount = get_tree().root.find_children("*", "Player", true, false).size()
+
+	$AttackComponent/BulletAttackUpgrade.level = clampf(floor(level/5) + playerCount - 1, 0 , 999)
+	$HealthComponent/HealthAdditiveUpgrade.level = clampf(floor(level/5) + playerCount - 1, 0 , 999)
 	
 func _physics_process(delta):
 	if(animated_sprite_2d):

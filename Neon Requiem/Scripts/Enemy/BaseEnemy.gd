@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var level = 0
 signal onDamage(allowAnimation: bool)
 
-func ready():
+func _ready():
 	# Scale Upgrades Based on Level
 	ScaleUpgrades()
 	
@@ -14,8 +14,6 @@ func ScaleUpgrades():
 	$HealthComponent/HealthAdditiveUpgrade.level = floor(level/5)
 	
 func _physics_process(delta):
-	# Scale Upgrades Based on Level
-	ScaleUpgrades()
 	if(animated_sprite_2d):
 		var shaderMaterial = ShaderMaterial.new()
 		shaderMaterial.shader = COLORS.enemyShader

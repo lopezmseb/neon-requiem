@@ -19,6 +19,11 @@ func switchColors():
 
 func _ready():
 	GlobalSignals.onColorChange.connect(switchColors)
+	ScaleBoss()
+
+func ScaleBoss():
+	$HealthComponent/HealthAdditiveUpgrade.level = floor(level/6) 
+	
 	
 
 func _physics_process(delta):

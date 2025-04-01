@@ -2,8 +2,19 @@ extends CharacterBody2D
 
 @onready var color_component : ColorComponent = $ColorComponent
 @onready var animated_sprite_2d := $AnimatedSprite2D
+@export var level = 0
 signal onDamage(allowAnimation: bool)
 
+func _ready():
+	# Scale Upgrades Based on Level
+	ScaleUpgrades()
+	
+func ScaleUpgrades():
+	var playerCount = get_tree().root.find_children("*", "Player", true, false).size()
+
+	$AttackComponent/BulletAttackUpgrade.level = clampf(floor(level/5) + playerCount - 1, 0 , 999)
+	$HealthComponent/HealthAdditiveUpgrade.level = clampf(floor(level/5) + playerCount - 1, 0 , 999)
+	
 func _physics_process(delta):
 	if(animated_sprite_2d):
 		var shaderMaterial = ShaderMaterial.new()

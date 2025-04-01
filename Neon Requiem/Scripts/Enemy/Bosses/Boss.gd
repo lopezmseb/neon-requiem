@@ -1,6 +1,7 @@
 extends CharacterBody2D
 @onready var color_component: ColorComponent = $ColorComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@export var level = 0
 
 
 func switchColors():
@@ -18,6 +19,14 @@ func switchColors():
 
 func _ready():
 	GlobalSignals.onColorChange.connect(switchColors)
+	ScaleBoss()
+
+func ScaleBoss():
+	var playerCount = get_tree().root.find_children("*", "Player", true, false).size()
+
+	$HealthComponent/HealthAdditiveUpgrade.level = clampf(floor(level/6)  + playerCount, 0, 999)
+	
+	
 
 func _physics_process(delta):
 	pass

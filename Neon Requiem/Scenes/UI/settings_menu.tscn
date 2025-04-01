@@ -154,5 +154,4 @@ metadata/_edit_use_anchors_ = true
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/UnstuckButton" to="." method="_on_unstuck_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/MenuButton" to="." method="_on_menu_button_pressed"]
-[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/QuitButton" to="." method="_on_button_pressed"]

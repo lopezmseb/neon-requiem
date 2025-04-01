@@ -44,6 +44,7 @@ script = ExtResource("4_cxvdw")
 
 [node name="RoomGeneration" parent="HBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_q0fmw")]
 position = Vector2(52, 43)
+debugEnabled = false
 
 [node name="Enemies" type="Node" parent="HBoxContainer/SubViewportContainer/SubViewport"]
 

@@ -46,10 +46,13 @@ func ShootPlayer():
 	var bullet = bulletPath.instantiate()
 	var bulletColor : ColorComponent = bullet.find_child("ColorComponent")
 	var colorComponent: ColorComponent = get_owner().find_child("ColorComponent")
+	var upgrades = $"../../AttackComponent".get_children()
+	
 	
 	if(bulletColor == null || colorComponent == null):
 		return
 	
+	bullet.upgrades = upgrades
 	bulletColor.color = colorComponent.color
 	bullet.source = "Enemy"
 	var parent = get_tree().get_nodes_in_group("Viewports")

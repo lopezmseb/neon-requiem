@@ -13,8 +13,8 @@ var Boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn")
 var tileSize = 16
 
 var maxRooms = 3
-var minRooms = 2
-
+var minRooms = 2 
+		
 var minSize = 10
 var maxSize = 12
 var spread = 200
@@ -99,6 +99,11 @@ func moveToNextLevel(level:int):
 	# Delete All Old Rooms
 	for i in $Rooms.get_children():
 		i.queue_free()
+		
+	var result = GlobalVariables.getMinMaxFloorsByLevel(level)
+	
+	minRooms = result[0]
+	maxRooms = result[1]
 		
 	tileMap.clear() 	
 	if(level%GlobalVariables.enemyFloorRate == 0):

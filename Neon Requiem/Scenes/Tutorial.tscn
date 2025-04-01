@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://f8k7aqsq2stj"]
+[gd_scene load_steps=15 format=3 uid="uid://f8k7aqsq2stj"]
 
 [ext_resource type="Script" uid="uid://ca8y4bw7x60u2" path="res://Scripts/SpecialRooms/TutorialRoom.gd" id="1_uo1fs"]
 [ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="2_2o727"]
@@ -13,9 +13,15 @@
 [ext_resource type="Texture2D" uid="uid://b7enxho0wwpgj" path="res://Assets/Tutorial/Controller.png" id="8_vv0ms"]
 [ext_resource type="Texture2D" uid="uid://de48tdty82mea" path="res://Assets/Tutorial/Mouse.png" id="9_hxa32"]
 [ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="11_sgy12"]
+[ext_resource type="PackedScene" uid="uid://cwuxgblo0jje2" path="res://Scenes/UI/settings_menu.tscn" id="14_5gw1s"]
 
 [node name="Node2D" type="Node2D" groups=["Viewports"]]
 script = ExtResource("1_uo1fs")
+
+[node name="Player" parent="." instance=ExtResource("3_7bloo")]
+position = Vector2(-15, -15)
+playerController = 0
+playerName = "Jex"
 
 [node name="BeatNotifier" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player")]
 script = ExtResource("2_m35rq")
@@ -25,7 +31,7 @@ audio_stream_player = NodePath("../AudioStreamPlayer")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_8i65c")
-volume_db = -14.292
+volume_db = -12.163
 bus = &"Music"
 script = ExtResource("3_m35rq")
 
@@ -58,10 +64,10 @@ layer_0/tile_data = PackedInt32Array(196604, 65537, 536870912, 196605, 65537, 53
 
 [node name="UserInterface" parent="." instance=ExtResource("5_x7a1n")]
 
-[node name="Player" parent="." instance=ExtResource("3_7bloo")]
-position = Vector2(-15, -15)
-playerController = 0
-playerName = "Jex"
+[node name="SettingsMenu" parent="UserInterface" instance=ExtResource("14_5gw1s")]
+visible = false
+z_index = 2
+scale = Vector2(1.00053, 0.997524)
 
 [node name="TileDamage" type="Node" parent="."]
 script = ExtResource("2_2o727")
@@ -69,6 +75,7 @@ baseAttack = 0.05
 metadata/_custom_type_script = "uid://du7l3pmt8akjr"
 
 [node name="Label4" type="Label" parent="."]
+z_index = -1
 offset_left = 262.0
 offset_top = -59.0
 offset_right = 426.0
@@ -79,6 +86,7 @@ text = "Switch to the opposite colour
 to do more damage"
 
 [node name="Label3" type="Label" parent="."]
+z_index = -1
 offset_left = 237.0
 offset_top = 292.0
 offset_right = 401.0
@@ -88,6 +96,7 @@ theme_override_font_sizes/font_size = 10
 text = "Fight the opponents "
 
 [node name="Label2" type="Label" parent="."]
+z_index = -1
 offset_left = 524.0
 offset_top = 390.0
 offset_right = 925.0
@@ -98,6 +107,7 @@ text = "If you are on the wrong
 colour you will take damage"
 
 [node name="Label" type="Label" parent="."]
+z_index = -1
 offset_left = 35.0
 offset_top = -37.0
 offset_right = 215.0

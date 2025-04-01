@@ -9,12 +9,20 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:	
 	tileDamage()
-	if($Player.find_child("HealthComponent").currentHealth <= 0 ):
-		print("HERE")
+	if($Player.position == Vector2(999999,999999)):
+		await get_tree().process_frame
 		get_tree().change_scene_to_file("res://Scenes/TutorialGameOver.tscn")
+		return
 	var total = count_character2d_excluding_player(get_tree().current_scene)
 	if (total == 0):
-		get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+		get_tree().change_scene_to_file("res://Scenes/TutorialWin.tscn")
+	if Input.is_action_just_pressed("Menu"):
+		$UserInterface/SettingsMenu.visible = true
+		get_tree().paused = true
+		await get_tree().process_frame  # Ensures UI updates before setting focus
+
+		var close_button = $UserInterface/SettingsMenu/MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton
+		close_button.grab_focus()
 		
 		
 func count_character2d_excluding_player(node):

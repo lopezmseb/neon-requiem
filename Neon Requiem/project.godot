@@ -177,6 +177,7 @@ Menu={
 2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Walls"
 2d_physics/layer_4="Projectiles"
+2d_physics/layer_8="RoomSpawningCollision"
 
 [physics]
 

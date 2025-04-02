@@ -337,29 +337,23 @@ func _on_level_generated():
 			enemiesNode.add_child(boss)
 			roomGen.spawnEnemy(boss, "", roomMarker.global_position)
 	else:
-		print("In Spawning ENemies")
 		# Spawn Enemies
 		for room in roomGen.getRooms():
 			#Do not spawn enemies in the Starting Room
 			
 			if(room == roomGen.startRoom):
 				continue;
-			print("Post Get Start Room")
 			
 			var collisionShape : CollisionShape2D = room.get_node("CollisionShape2D") as CollisionShape2D
 			var roomRect = collisionShape.shape.get_rect()
 			var numEnemies = randi() % int(maxEnemiesPerRoom) + 1
 			
-			for i in range(0, numEnemies):
-				print("Loop Start - ", i)
-				
+			for i in range(0, numEnemies):				
 				var enemyObject = enemyScene.instantiate()
 				enemyObject.level = level
 				enemiesNode.add_child(enemyObject)
-				print("After Adding - ", i)
 				
 				roomGen.spawnEnemy(enemyObject, room)
-				print("After Spawn - ", i)
 		
 		roomGen.spawnEntities(players)
 	canChangeLevel = true

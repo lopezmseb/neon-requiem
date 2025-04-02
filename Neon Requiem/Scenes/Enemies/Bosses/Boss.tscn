@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://hb7isw645t1t"]
+[gd_scene load_steps=71 format=3 uid="uid://hb7isw645t1t"]
 
 [ext_resource type="Script" uid="uid://bcgrdcpnobkci" path="res://Scripts/Enemy/Bosses/Boss.gd" id="1_75vd1"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_up4e3"]
@@ -11,8 +11,13 @@
 [ext_resource type="Script" uid="uid://cg24mmnxnubgs" path="res://Scripts/States/Bosses/BossDeath.gd" id="8_gddqf"]
 [ext_resource type="Script" uid="uid://bh3o63i4jlnmj" path="res://Scripts/Stats/ColorComponent.gd" id="8_spaym"]
 [ext_resource type="PackedScene" uid="uid://c5thomb4wodpp" path="res://Scenes/ObjectHealthBar.tscn" id="9_8u8i2"]
-[ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="12_nup2b"]
 [ext_resource type="Script" uid="uid://mjr2numl6hk4" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="10_nup2b"]
+[ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="12_nup2b"]
+[ext_resource type="AudioStream" uid="uid://doxj1n6gnqngf" path="res://Assets/Sound/SFX/Boss/Alarm.mp3" id="13_fywdu"]
+[ext_resource type="AudioStream" uid="uid://dmbk44d6ukw76" path="res://Assets/Sound/SFX/Boss/Explosion.mp3" id="14_a2htw"]
+[ext_resource type="AudioStream" uid="uid://cn4duucdt3waw" path="res://Assets/Sound/SFX/Boss/BossMove.mp3" id="14_a7fde"]
+[ext_resource type="AudioStream" uid="uid://dl2umam7vprau" path="res://Assets/Sound/SFX/Boss/Death.mp3" id="14_xgy0m"]
+[ext_resource type="AudioStream" uid="uid://b7xub273surc4" path="res://Assets/Sound/SFX/Boss/Teleport.mp3" id="16_kpvth"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eib4j"]
 shader = ExtResource("2_up4e3")
@@ -567,6 +572,29 @@ healthComponent = NodePath("../HealthComponent")
 metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Alarm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_fywdu")
+volume_db = -12.0
+bus = &"SFX"
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_xgy0m")
+volume_db = -7.0
+bus = &"SFX"
+
+[node name="BossMove" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_a7fde")
+bus = &"SFX"
+
+[node name="Explosion" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_a2htw")
+volume_db = -3.108
+bus = &"SFX"
+
+[node name="Teleport" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_kpvth")
+bus = &"SFX"
 
 [node name="AttackComponent" type="Node" parent="."]
 script = ExtResource("12_nup2b")

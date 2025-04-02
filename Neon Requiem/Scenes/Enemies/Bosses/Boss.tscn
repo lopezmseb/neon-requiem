@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://hb7isw645t1t"]
+[gd_scene load_steps=66 format=3 uid="uid://hb7isw645t1t"]
 
 [ext_resource type="Script" uid="uid://bcgrdcpnobkci" path="res://Scripts/Enemy/Bosses/Boss.gd" id="1_75vd1"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_up4e3"]
@@ -11,8 +11,8 @@
 [ext_resource type="Script" uid="uid://cg24mmnxnubgs" path="res://Scripts/States/Bosses/BossDeath.gd" id="8_gddqf"]
 [ext_resource type="Script" uid="uid://bh3o63i4jlnmj" path="res://Scripts/Stats/ColorComponent.gd" id="8_spaym"]
 [ext_resource type="PackedScene" uid="uid://c5thomb4wodpp" path="res://Scenes/ObjectHealthBar.tscn" id="9_8u8i2"]
-[ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="12_nup2b"]
 [ext_resource type="Script" uid="uid://mjr2numl6hk4" path="res://Scripts/Upgrades/HealthUpgrades/HealthAdditiveUpgrade.gd" id="10_nup2b"]
+[ext_resource type="Script" uid="uid://du7l3pmt8akjr" path="res://Scripts/Stats/AttackComponent.gd" id="12_nup2b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eib4j"]
 shader = ExtResource("2_up4e3")

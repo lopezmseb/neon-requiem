@@ -23,6 +23,7 @@ func Enter():
 	animate.play("Idle")
 
 func PerformAttack(attackFunction: Callable, animationStart: String = "AttackReady", animationFinish: String = "AttackUnready"):
+	$"../../BossMove".play()
 	animate.play(animationStart)
 	await animate.animation_finished
 	
@@ -59,16 +60,19 @@ func Physics_Update(delta: float):
 			3:
 				await PerformAttack(Track_Closest_Player)
 			4:
+				$"../../Teleport".play()
 				animate.play("Death", 10.00)
 				await animate.animation_finished
 				
 				await JumpToPlayer()
 				
+				$"../../Teleport".play()
 				animate.play("Death", -10.00)
 				await animate.animation_finished
 			5:
 				await PerformAttack(SpawnEnemies, "SummonEnemies")
 			6:
+				$"../../BossMove".play()
 				animate.play("MissileStart")
 				await animate.animation_finished
 				
@@ -79,7 +83,7 @@ func Physics_Update(delta: float):
 func RocketAttack():
 	readyToAttack = false
 	var players = get_tree().root.find_children("*", "Player", true, false)
-	
+	$"../../Alarm".play()
 	for i in players:
 		var AOEObject = AOEIndicator.instantiate()
 		AOEObject.timer = $RocketExplodeTimer
@@ -89,8 +93,11 @@ func RocketAttack():
 		
 	$RocketExplodeTimer.start()
 	await $RocketExplodeTimer.timeout
+	$"../../Alarm".stop()
+	
 	
 	animate.play("MissileShoot")
+	$"../../Explosion".play()
 	await animate.animation_finished
 	
 	$AttackCooldown.start()

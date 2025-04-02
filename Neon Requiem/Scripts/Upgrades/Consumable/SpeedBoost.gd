@@ -15,7 +15,9 @@ func _on_body_entered(body: Node2D) -> void:
 		originalSpeed = speedComponent.baseSpeed
 		speedComponent.baseSpeed = originalSpeed + 50
 		timer.start()
-		visible = false	
+		visible = false
+		$CollisionShape2D.disabled = true
+		$PowerUp.play()
 
 
 func _on_timer_timeout() -> void:

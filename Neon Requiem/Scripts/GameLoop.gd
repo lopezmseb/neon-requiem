@@ -17,7 +17,7 @@ var room_save = "user://room.save"
 var player_save = "user://players.save"
 var level: int = 1
 var canChangeLevel : bool = false
-var maxEnemiesPerRoom = 3 : 
+var maxEnemiesPerRoom = 3 :
 	get():
 		return GlobalVariables.getMaxEnemiesByLevel(level)
 var players: Array[Player]
@@ -30,7 +30,7 @@ func _ready():
 	add_to_group("game_loop")
 	# Set Hbox to screensize
 	if FileAccess.file_exists(room_save):
-		var file = FileAccess.open(room_save, FileAccess.READ) 
+		var file = FileAccess.open(room_save, FileAccess.READ)
 		level = file.get_var(level)
 		
 	hbox.size = DisplayServer.window_get_size()
@@ -140,12 +140,12 @@ func load_all_players():
 				subViewport.add_child(camera)
 				subViewport.add_child(playerInterface)
 				
-				subViewport.add_child(player)		
+				subViewport.add_child(player)
 				container.add_child(subViewport)
 				hbox.add_child(container)
 				subViewport.get_node("UserInterface/CooldownTimers").set_scale(Vector2(.4, .4 ))
 				subViewport.get_node("UserInterface/PlayerHealthBar").set_scale(Vector2(.9, .9))
-				update_grid() 
+				update_grid()
 				# Remote Path to Camera
 				var remoteTransform := RemoteTransform2D.new()
 				remoteTransform.remote_path = camera.get_path()
@@ -159,7 +159,7 @@ func read_player_data():
 
 	# Read all lines from the file
 		while file.eof_reached() == false:
-			var line = file.get_line().strip_edges() 
+			var line = file.get_line().strip_edges()
 			if line != "":
 				# Split the line by commas (assuming CSV format)
 				var data = line.split(",")
@@ -219,12 +219,12 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		subViewport.add_child(camera)
 		subViewport.add_child(playerInterface)
 		
-		subViewport.add_child(anotherPlayer)		
+		subViewport.add_child(anotherPlayer)
 		container.add_child(subViewport)
 		hbox.add_child(container)
 		subViewport.get_node("UserInterface/CooldownTimers").set_scale(Vector2(.4, .4))
 		subViewport.get_node("UserInterface/PlayerHealthBar").set_scale(Vector2(.9, .9))
-		update_grid() 
+		update_grid()
 		# Remote Path to Camera
 		var remoteTransform := RemoteTransform2D.new()
 		remoteTransform.remote_path = camera.get_path()
@@ -308,18 +308,24 @@ func _on_player_death(player):
 	if dead_players == players.size():
 		game_over()
 
-		
+#func _input(event):
+	#if(Input.is_key_pressed(KEY_DELETE)):
+		#for enemy in enemiesNode.get_children():
+			#enemy.queue_free()
+		#enemiesNode.get_children().clear()
+		#print("All enemies deleted.")
+			
 func ToGameOver():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
 
 func game_over():
-	call_deferred("ToGameOver")	
+	call_deferred("ToGameOver")
 	
 func _on_level_generated():
 	if(players.size() == 0):
 		if FileAccess.file_exists(player_save):
 			read_player_data()
-		else: 
+		else:
 			load_all_players()
 		roomGen.players = players
 
@@ -334,6 +340,7 @@ func _on_level_generated():
 		# Spawn Enemies
 		for room in roomGen.getRooms():
 			#Do not spawn enemies in the Starting Room
+			
 			if(room == roomGen.startRoom):
 				continue;
 			
@@ -341,10 +348,11 @@ func _on_level_generated():
 			var roomRect = collisionShape.shape.get_rect()
 			var numEnemies = randi() % int(maxEnemiesPerRoom) + 1
 			
-			for i in range(0, numEnemies):
+			for i in range(0, numEnemies):				
 				var enemyObject = enemyScene.instantiate()
 				enemyObject.level = level
 				enemiesNode.add_child(enemyObject)
+				
 				roomGen.spawnEnemy(enemyObject, room)
 		
 		roomGen.spawnEntities(players)
@@ -373,6 +381,7 @@ func level_cleared():
 	
 	#stop the shooting and abilities on upgrade screen
 	for player in players:
+		player.position = Vector2(99999,99999)
 		player.disable_input()
 
 	# Remove any existing bullets
@@ -411,7 +420,7 @@ func onUpgradeSelected():
 			
 			# Make al players "Alive" again
 			var index = 0
-			for player in players:				
+			for player in players:
 				var UI = viewports[index].get_node("UserInterface")
 				var respawn = UI.get_node("Respawn")
 				respawn.visible = false

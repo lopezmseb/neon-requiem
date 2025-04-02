@@ -20,6 +20,8 @@ func _physics_process(delta):
 
 
 func _on_area_2d_body_entered(body):
+	if(not body):
+		return
 	# Get Health Component
 	
 	var health = body.find_child("HealthComponent")

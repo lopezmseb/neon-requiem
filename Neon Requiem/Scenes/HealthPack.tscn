@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://djpw7yal7sqbu"]
+[gd_scene load_steps=5 format=3 uid="uid://djpw7yal7sqbu"]
 
 [ext_resource type="Script" uid="uid://e15l05dst04w" path="res://Scripts/Upgrades/Consumable/HealthPack.gd" id="1_3n1n7"]
 [ext_resource type="Texture2D" uid="uid://b0gu5fjryroet" path="res://Assets/Pickups/Health.png" id="1_ra0ct"]
+[ext_resource type="AudioStream" uid="uid://bw8kmaq5vkea6" path="res://Assets/Sound/SFX/PowerUp.mp3" id="3_dep0l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dep0l"]
 size = Vector2(12, 12)
@@ -28,5 +29,10 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_ra0ct")
+
+[node name="PowerUp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_dep0l")
+volume_db = -9.0
+bus = &"SFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7s475ek7hddh"]
+[gd_scene load_steps=5 format=3 uid="uid://c7s475ek7hddh"]
 
 [ext_resource type="Script" uid="uid://c5erh6x2upqnr" path="res://Scripts/Upgrades/Consumable/SpeedBoost.gd" id="1_ofn6h"]
 [ext_resource type="Texture2D" uid="uid://kcke18g6dj03" path="res://Assets/Pickups/Bottle.png" id="2_wpmu8"]
+[ext_resource type="AudioStream" uid="uid://bw8kmaq5vkea6" path="res://Assets/Sound/SFX/PowerUp.mp3" id="3_wpmu8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4x8as"]
 radius = 3.51581
@@ -24,6 +25,11 @@ texture = ExtResource("2_wpmu8")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 4.0
+
+[node name="PowerUp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_wpmu8")
+volume_db = -9.0
+bus = &"SFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

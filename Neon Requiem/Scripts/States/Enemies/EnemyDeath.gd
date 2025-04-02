@@ -8,5 +8,7 @@ func toDeferOnEnter():
 func Enter():
 	call_deferred("toDeferOnEnter")
 	animate.play("Death")
+	$"../../Death".play()
 	await animate.animation_finished
+	$"../../Death".stop()
 	get_owner().queue_free()

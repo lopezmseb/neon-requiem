@@ -208,7 +208,9 @@ func makeMap():
 
 			
 	var connections = []
-	
+	find_start_room()
+	find_end_room()
+		
 	for room in $Rooms.get_children():
 		var s = (room.size/tileSize).floor()
 		var pos = tileMap.local_to_map(room.position)
@@ -303,8 +305,7 @@ func makeMap():
 
 	# Emit signal
 	await get_tree().process_frame
-	find_start_room()
-	find_end_room()
+	
 	level_generated.emit()
 	
 

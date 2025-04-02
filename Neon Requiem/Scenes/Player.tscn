@@ -525,7 +525,7 @@ script = ExtResource("27_u7x0b")
 upgradeImagePath = "uid://tqklwpdfujgg"
 upgradeId = 9.0
 upgradeImage = ExtResource("22_xixlo")
-upgradeTitle = "TempSpeedBoost"
+upgradeTitle = "Speed Consumable: Boost"
 priority = 1
 
 [node name="ColorComponent" type="Node" parent="."]
@@ -551,7 +551,7 @@ triggerAttack = "Bullet"
 attackToReset = "Dash"
 upgradeId = 10.0
 upgradeImage = ExtResource("27_opqna")
-upgradeTitle = "Bullet Make Me Go VROOM"
+upgradeTitle = "Bullet Kill: Reset Dash"
 
 [node name="SwordUpgrades" type="Node" parent="."]
 
@@ -595,6 +595,7 @@ maxLevel = 1
 script = ExtResource("31_avx33")
 upgradeId = 14.0
 upgradeImage = ExtResource("38_y6y60")
+upgradeTitle = "Health Consumable: Boost!"
 
 [node name="Dash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_yis84")

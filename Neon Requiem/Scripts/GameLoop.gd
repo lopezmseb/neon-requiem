@@ -308,12 +308,12 @@ func _on_player_death(player):
 	if dead_players == players.size():
 		game_over()
 
-func _input(event):
-	if(Input.is_key_pressed(KEY_DELETE)):
-		for enemy in enemiesNode.get_children():
-			enemy.queue_free()
-		enemiesNode.get_children().clear()
-		print("All enemies deleted.")
+#func _input(event):
+	#if(Input.is_key_pressed(KEY_DELETE)):
+		#for enemy in enemiesNode.get_children():
+			#enemy.queue_free()
+		#enemiesNode.get_children().clear()
+		#print("All enemies deleted.")
 			
 func ToGameOver():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")

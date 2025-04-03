@@ -7,9 +7,9 @@ const enemyScenes = [shootingEnemyScene, bladedEnemyScene]
 
 func spawnEnemies(numberOfEnemies: float):
 	var enemyObjects = []
-	
+
 	for i in range(numberOfEnemies):
-		var newEnemyScene = enemyScenes[randi()%enemyScenes.size()]
+		var newEnemyScene = enemyScenes.pick_random()
 		enemyObjects.append(newEnemyScene.instantiate())
 	
 	return enemyObjects

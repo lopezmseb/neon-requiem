@@ -18,7 +18,7 @@ func _on_body_entered(body: Node2D) -> void:
 		# Heal
 		body.healthComponent.currentHealth = clampf(body.healthComponent.currentHealth + amountToHeal, 0, body.healthComponent.MAX_HEALTH)
 		visible = false
-		$CollisionShape2D.disabled = true
+		$CollisionShape2D.call_deferred("set_disabled", true)
 		$PowerUp.play()
 		await $PowerUp.finished
 		queue_free()

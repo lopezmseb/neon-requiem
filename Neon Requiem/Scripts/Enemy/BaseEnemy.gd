@@ -4,10 +4,17 @@ extends CharacterBody2D
 @onready var animated_sprite_2d := $AnimatedSprite2D
 @export var level = 0
 signal onDamage(allowAnimation: bool)
+var offensiveMaterial :ShaderMaterial = ShaderMaterial.new()
+var defensiveMaterial :ShaderMaterial = ShaderMaterial.new()
 
 func _ready():
 	# Scale Upgrades Based on Level
 	ScaleUpgrades()
+	offensiveMaterial.shader = COLORS.OFFENSIVE_SHADER
+	offensiveMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
+	defensiveMaterial.shader = COLORS.DEFENSIVE_SHADER
+	defensiveMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
+	
 	
 func ScaleUpgrades():
 	var playerCount = get_tree().root.find_children("*", "Player", true, false).size()
@@ -17,14 +24,17 @@ func ScaleUpgrades():
 	
 func _physics_process(delta):
 	if(animated_sprite_2d):
-		var shaderMaterial = ShaderMaterial.new()
-		shaderMaterial.shader = COLORS.enemyShader
-		animated_sprite_2d.material = shaderMaterial
 		
 		if(COLORS.enemyShader == COLORS.OFFENSIVE_SHADER):
+			animated_sprite_2d.material = offensiveMaterial
 			color_component.color = COLORS.OFFENSIVE
 		else:
+			animated_sprite_2d.material = defensiveMaterial
 			color_component.color = COLORS.DEFENSIVE
+	
+	if(velocity == null):
+		velocity = Vector2.ZERO
+
 	move_and_slide()
 
 func _on_health_component_entity_damaged(attack: float):

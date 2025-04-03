@@ -127,9 +127,9 @@ func spawnEntities(players: Array[Player]) -> void:
 	# Set Player to startRoom position
 	var count = 0
 	for player in players:
-		find_start_room()
 		spawnPlayer(player, count * 50 )
 		count = count + 1
+	print("Post Move Players")
 
 # On RoomMovementWait 
 func _on_room_movement_wait_timeout():
@@ -182,12 +182,12 @@ func find_mst(nodes: Array):
 		nodes.erase(minP)
 	return path
 	
-func _input(event):
-	if(Input.is_key_pressed(KEY_DELETE)):
-		moveToNextLevel(1)
-	
-	if(Input.is_key_pressed(KEY_INSERT)):
-		changeColors()
+#func _input(event):
+	#if(Input.is_key_pressed(KEY_DELETE)):
+		#moveToNextLevel(1)
+	#
+	#if(Input.is_key_pressed(KEY_INSERT)):
+		#changeColors()
 			
 func makeMap():
 	# Create a Tile Map for generated rooms and path
@@ -210,6 +210,7 @@ func makeMap():
 	var connections = []
 	find_start_room()
 	find_end_room()
+		
 	for room in $Rooms.get_children():
 		var s = (room.size/tileSize).floor()
 		var pos = tileMap.local_to_map(room.position)
@@ -304,7 +305,7 @@ func makeMap():
 
 	# Emit signal
 	await get_tree().process_frame
-
+	
 	level_generated.emit()
 	
 
@@ -465,6 +466,7 @@ func changeColors():
 			
 
 func find_start_room():
+	print("Find Start Room")
 	var min_x = INF
 	for room in $Rooms.get_children():
 		if room.position.x < min_x:

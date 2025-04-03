@@ -10,8 +10,10 @@ func _physics_process(delta):
 				
 		if($ColorComponent.color == COLORS.OFFENSIVE):
 			shaderMaterial.shader = COLORS.OFFENSIVE_SHADER
+			shaderMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
 		else:
 			shaderMaterial.shader = COLORS.DEFENSIVE_SHADER
+			shaderMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
 		
 		animated_sprite_2d.material = shaderMaterial
 		

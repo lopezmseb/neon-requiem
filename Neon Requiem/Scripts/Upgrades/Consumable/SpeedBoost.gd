@@ -16,7 +16,7 @@ func _on_body_entered(body: Node2D) -> void:
 		speedComponent.baseSpeed = originalSpeed + 50
 		timer.start()
 		visible = false
-		$CollisionShape2D.disabled = true
+		$CollisionShape2D.call_deferred("set_disabled", true)
 		$PowerUp.play()
 
 
@@ -25,3 +25,10 @@ func _on_timer_timeout() -> void:
 	speedComponent.baseSpeed = originalSpeed
 	curPlayer.isBoosted = false
 	queue_free()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		if curPlayer and is_instance_valid(curPlayer):
+			speedComponent = curPlayer.get_node("SpeedComponent")
+			speedComponent.baseSpeed = originalSpeed
+			curPlayer.isBoosted = false

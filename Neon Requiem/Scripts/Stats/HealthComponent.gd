@@ -43,7 +43,8 @@ func damage(attack: AttackComponent):
 				else:
 					pickupObject = healthPackScene.instantiate()
 				pickupObject.position = parent.position
-				parent.get_parent().get_parent().add_child(pickupObject)
+				parent.get_parent().call_deferred("add_sibling", pickupObject)
+
 
 
 		

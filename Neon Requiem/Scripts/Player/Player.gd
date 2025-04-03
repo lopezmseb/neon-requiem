@@ -147,6 +147,7 @@ func changeColor():
 	var shaderMaterial = ShaderMaterial.new()
 	var shader = COLORS.OFFENSIVE_SHADER if colorComponent.color == COLORS.OFFENSIVE else COLORS.DEFENSIVE_SHADER
 	shaderMaterial.shader = shader
+	shaderMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
 	$AnimatedSprite2D.material = shaderMaterial
 
 func dash():

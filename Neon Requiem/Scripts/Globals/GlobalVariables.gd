@@ -2,7 +2,7 @@ extends Node
 
 var enemyFloorRate = 5
 var allowDamageFromFloors = true
-var colourBlind = 3
+var colourBlind = 0
 
 func getMaxEnemiesByLevel(level: float):
 	var playerCount = get_tree().root.find_children("*", "Player", true, false).size()

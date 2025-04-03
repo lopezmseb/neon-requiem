@@ -1,6 +1,6 @@
 extends EnemyState
 
-var bulletPath = preload("res://Scenes/Bullet.tscn")
+var swordPath = preload("res://Scenes/Sword.tscn")
 var canPlayAnimation = true
 @onready var gun = $"../../Gun"
 @onready var aiming = $"../../Gun/Aiming"
@@ -30,40 +30,35 @@ func Physics_Update(delta):
 			enemy.velocity = playerDirection.normalized() * speed
 			# Attack Player
 			if(readyToAttack && isEnemyAlive):
-				ShootPlayer()
+				SwingAtPlayer()
 		
 
-func ShootPlayer():
+func SwingAtPlayer():
 	# Start Cooldown and stop from attacking
 	readyToAttack = false
 	$AttackCooldown.start()
 	
-	# Get Bullet Scene and Add it
-	var bullet = bulletPath.instantiate()
-	var bulletColor : ColorComponent = bullet.find_child("ColorComponent")
-	var colorComponent: ColorComponent = get_owner().find_child("ColorComponent")
-	var upgrades = $"../../AttackComponent".get_children()
-	
-	
-	if(bulletColor == null || colorComponent == null):
-		return
-	var area2D : Area2D = bullet.get_node("Area2D")
+	# Instantiate the sword and set it as a child of the player
+	var sword = swordPath.instantiate()
+	var area2D : Area2D =sword.get_node("Area2D")
 	area2D.set_collision_mask_value(2, false)
-	bullet.upgrades = upgrades
-	bulletColor.color = colorComponent.color
-	bullet.source = "Enemy"
-	var parent = get_tree().get_nodes_in_group("Viewports")
-
-	if(parent.size() > 0):
-		parent[0].add_child(bullet)
-
-	# Position the bullet at the player's shooting point (Marker2D).
-	bullet.position = aiming.global_position
+	area2D.set_collision_mask_value(1, true)
 	
-	# Set the bullet's velocity and rotation based on the direction to the mouse.
-	var direction = (player.global_position - bullet.position).normalized()
-	bullet.velocity = direction * bulletSpeed
-	bullet.rotation = direction.angle()
+	await get_tree().process_frame
+	# Apply upgrades to the sword
+	var swordUpgrades : Array[Node] = $"../../AttackComponent".get_children()
+	sword.upgrades = swordUpgrades
+	enemy.add_child(sword)
+	# Position the sword based on the player's position and movement
+	sword.position = enemy.to_local($"../../Gun/Aiming".global_position)
+	# Calculate the direction to the shooting position (mouse)
+	var swordDirection = (player.global_position - enemy.position).normalized()
+	print(swordDirection)
+	if swordDirection.x <= 0:
+		sword.get_node("Sprite2D").flip_v = true
+	sword.rotation = swordDirection.angle()
+	sword.position = enemy.to_local($"../../Gun/Aiming".global_position)
+	
 
 func switchColor():
 	var colorComponent: ColorComponent = $"../../ColorComponent"

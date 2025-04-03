@@ -112,11 +112,10 @@ func SpawnEnemies():
 	if(not enemiesNode):
 		return
 	
-	for i in range(enemyCount):
-		var baseEnemyNode = baseEnemy.instantiate()
-		baseEnemyNode.position = enemy.position + Vector2(0,50)
-		
-		enemiesNode.add_child(baseEnemyNode)
+	var enemies = EnemySpawner.new().spawnEnemies(enemyCount)
+	for newEnemy in enemies:
+		newEnemy.position = enemy.position + Vector2(0,50)
+		enemiesNode.add_child(newEnemy)
 	
 	$AttackCooldown.start()
 

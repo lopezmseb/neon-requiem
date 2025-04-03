@@ -1,22 +1,18 @@
 extends Node
+class_name EnemySpawner
 
-@export var spawnArea: CollisionShape2D
-@export var numOfEnemies: int = 4
+const shootingEnemyScene: PackedScene = preload("res://Scenes/BaseEnemy.tscn")
+const bladedEnemyScene: PackedScene = preload("res://Scenes/SwordEnemy.tscn")
+const enemyScenes = [shootingEnemyScene, bladedEnemyScene]
 
-
-const enemyScene: PackedScene = preload("res://Scenes/BaseEnemy.tscn")
-
-func _ready():
-	var origin = spawnArea.get_transform().get_origin()
-	var size = spawnArea.shape.extents 
+func spawnEnemies(numberOfEnemies: float):
+	var enemyObjects = []
 	
-	for i in range(0, numOfEnemies):
-		var instance: CharacterBody2D = enemyScene.instantiate()
-		
-		var randomPositionX = randf_range(origin.x, origin.x + size.x)
-		var randomPositionY = randf_range(origin.y, origin.y + size.y)
-		instance.position = Vector2(randomPositionX, randomPositionY)
-		instance.z_index = 99
-		add_child(instance)
-		
+	for i in range(numberOfEnemies):
+		var newEnemyScene = enemyScenes[randi()%enemyScenes.size()]
+		enemyObjects.append(newEnemyScene.instantiate())
+	
+	return enemyObjects
+
+
 	

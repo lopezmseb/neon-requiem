@@ -1,7 +1,7 @@
 extends Control
 
 @onready var playerScene = preload("res://Scenes/Player.tscn")
-@onready var enemyScene = preload("res://Scenes/BaseEnemy.tscn")
+@onready var enemyScene = preload("res://Scenes/SwordEnemy.tscn")
 @onready var UIScene = preload("res://Scenes/UserInterface.tscn")
 @onready var hbox = $HBoxContainer
 @onready var mainViewport = $HBoxContainer/SubViewportContainer/SubViewport
@@ -348,12 +348,12 @@ func _on_level_generated():
 			var roomRect = collisionShape.shape.get_rect()
 			var numEnemies = randi() % int(maxEnemiesPerRoom) + 1
 			
-			for i in range(0, numEnemies):				
-				var enemyObject = enemyScene.instantiate()
-				enemyObject.level = level
-				enemiesNode.add_child(enemyObject)
-				
-				roomGen.spawnEnemy(enemyObject, room)
+			var enemies = EnemySpawner.new().spawnEnemies(numEnemies)
+			
+			for enemy in enemies:
+				enemy.level = level
+				enemiesNode.add_child(enemy)
+				roomGen.spawnEnemy(enemy, room)
 		
 		roomGen.spawnEntities(players)
 	canChangeLevel = true

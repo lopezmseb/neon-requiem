@@ -8,11 +8,13 @@ func switchColors():
 	if(color_component.color == COLORS.OFFENSIVE):
 		var shaderMaterial = ShaderMaterial.new()
 		shaderMaterial.shader = COLORS.DEFENSIVE_SHADER
+		shaderMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
 		animated_sprite_2d.material = shaderMaterial
 		color_component.color = COLORS.DEFENSIVE
 	else:
 		var shaderMaterial = ShaderMaterial.new()
 		shaderMaterial.shader = COLORS.OFFENSIVE_SHADER
+		shaderMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
 		animated_sprite_2d.material = shaderMaterial
 		color_component.color = COLORS.OFFENSIVE
 

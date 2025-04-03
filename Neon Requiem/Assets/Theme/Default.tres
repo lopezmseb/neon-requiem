@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=21 format=3 uid="uid://crtm2m3sw3yoa"]
+[gd_resource type="Theme" load_steps=38 format=3 uid="uid://crtm2m3sw3yoa"]
 
 [ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="1_ysmll"]
 [ext_resource type="Texture2D" uid="uid://chi850he8jvlt" path="res://Assets/Theme/Button/button_pressed.png" id="2_3ojsc"]
@@ -27,6 +27,63 @@ texture = ExtResource("2_3ojsc")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bem4n"]
 texture = ExtResource("7_hpm1q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ghken"]
+texture = ExtResource("3_kcya2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6xq68"]
+texture = ExtResource("4_stad0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xm72f"]
+texture = ExtResource("3_kcya2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2qb6c"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="Image" id="Image_37pt1"]
+data = {
+"data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 177, 177, 177, 153, 177, 177, 177, 166, 170, 170, 170, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170, 170, 170, 18, 177, 177, 177, 166, 178, 178, 178, 151, 0, 0, 0, 0, 0, 0, 0, 0, 177, 177, 177, 166, 178, 178, 178, 217, 178, 178, 178, 178, 170, 170, 170, 18, 0, 0, 0, 0, 0, 0, 0, 0, 170, 170, 170, 18, 178, 178, 178, 179, 178, 178, 178, 217, 178, 178, 178, 165, 0, 0, 0, 0, 0, 0, 0, 0, 170, 170, 170, 18, 178, 178, 178, 178, 178, 178, 178, 217, 178, 178, 178, 178, 170, 170, 170, 18, 170, 170, 170, 18, 178, 178, 178, 179, 178, 178, 178, 217, 178, 178, 178, 178, 180, 180, 180, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170, 170, 170, 18, 178, 178, 178, 178, 178, 178, 178, 217, 178, 178, 178, 197, 178, 178, 178, 197, 178, 178, 178, 217, 178, 178, 178, 178, 180, 180, 180, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170, 170, 170, 18, 178, 178, 178, 178, 178, 178, 178, 217, 178, 178, 178, 217, 178, 178, 178, 178, 180, 180, 180, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170, 170, 170, 18, 178, 178, 178, 165, 178, 178, 178, 165, 180, 180, 180, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"format": "RGBA8",
+"height": 12,
+"mipmaps": false,
+"width": 12
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_wu13o"]
+image = SubResource("Image_37pt1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wu13o"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_po1fc"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_evcgq"]
+texture = ExtResource("4_stad0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kjgdw"]
+texture = ExtResource("4_stad0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ui7uf"]
+texture = ExtResource("4_stad0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t6jdl"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_khl2m"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3e0k5"]
+texture = ExtResource("3_kcya2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y121d"]
+texture = ExtResource("3_kcya2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_37pt1"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1q25t"]
+texture = ExtResource("2_3ojsc")
 
 [sub_resource type="Image" id="Image_evcgq"]
 data = {
@@ -57,7 +114,7 @@ content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(1, 1, 1, 0.75)
+bg_color = Color(0.0646965, 0.0646965, 0.0646965, 0.75)
 draw_center = false
 border_width_left = 2
 border_width_top = 2
@@ -102,6 +159,7 @@ corner_radius_bottom_left = 3
 corner_detail = 5
 
 [resource]
+default_font = ExtResource("1_ysmll")
 Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
 Button/colors/font_focus_color = Color(0, 0, 0, 1)
@@ -129,6 +187,33 @@ HSlider/icons/grabber = ExtResource("5_qorja")
 HSlider/icons/grabber_disabled = ExtResource("6_5i3ko")
 HSlider/icons/grabber_highlight = ExtResource("5_qorja")
 HSlider/styles/grabber_area = SubResource("StyleBoxTexture_bem4n")
+MenuButton/styles/disabled = SubResource("StyleBoxTexture_ghken")
+MenuButton/styles/focus = SubResource("StyleBoxTexture_6xq68")
+MenuButton/styles/normal = SubResource("StyleBoxTexture_xm72f")
+MenuButton/styles/pressed = SubResource("StyleBoxTexture_2qb6c")
+OptionButton/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+OptionButton/colors/font_focus_color = Color(0, 0, 0, 1)
+OptionButton/colors/font_hover_color = Color(0, 0, 0, 1)
+OptionButton/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+OptionButton/colors/font_pressed_color = Color(0, 0, 0, 1)
+OptionButton/constants/arrow_margin = 41
+OptionButton/constants/h_separation = 8
+OptionButton/constants/modulate_arrow = 3
+OptionButton/constants/outline_size = 0
+OptionButton/font_sizes/font_size = 25
+OptionButton/fonts/font = ExtResource("1_ysmll")
+OptionButton/icons/arrow = SubResource("ImageTexture_wu13o")
+OptionButton/styles/disabled = SubResource("StyleBoxTexture_wu13o")
+OptionButton/styles/disabled_mirrored = SubResource("StyleBoxTexture_po1fc")
+OptionButton/styles/focus = SubResource("StyleBoxTexture_evcgq")
+OptionButton/styles/hover = SubResource("StyleBoxTexture_kjgdw")
+OptionButton/styles/hover_mirrored = SubResource("StyleBoxTexture_ui7uf")
+OptionButton/styles/hover_pressed = SubResource("StyleBoxTexture_t6jdl")
+OptionButton/styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_khl2m")
+OptionButton/styles/normal = SubResource("StyleBoxTexture_3e0k5")
+OptionButton/styles/normal_mirrored = SubResource("StyleBoxTexture_y121d")
+OptionButton/styles/pressed = SubResource("StyleBoxTexture_37pt1")
+OptionButton/styles/pressed_mirrored = SubResource("StyleBoxTexture_1q25t")
 TextEdit/colors/background_color = Color(0, 0, 0, 0)
 TextEdit/colors/caret_background_color = Color(0, 0, 0, 0)
 TextEdit/colors/caret_color = Color(0, 0, 0, 1)

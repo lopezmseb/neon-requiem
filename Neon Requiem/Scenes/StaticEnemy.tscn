@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://5x4v60hjwd6y"]
+[gd_scene load_steps=34 format=3 uid="uid://5x4v60hjwd6y"]
 
 [ext_resource type="Script" uid="uid://87co3dwkh38b" path="res://Scripts/Enemy/StaticEnemy.gd" id="1_po7t4"]
 [ext_resource type="Shader" uid="uid://b4c30p1glu8hd" path="res://Assets/Shaders/Defensive.gdshader" id="2_trk6h"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://c0b20pvg8umil" path="res://Scripts/Stats/HealthComponent.gd" id="8_1ia46"]
 [ext_resource type="Script" uid="uid://bh3o63i4jlnmj" path="res://Scripts/Stats/ColorComponent.gd" id="9_5armd"]
 [ext_resource type="PackedScene" uid="uid://c5thomb4wodpp" path="res://Scenes/ObjectHealthBar.tscn" id="10_b6o6p"]
+[ext_resource type="AudioStream" uid="uid://dl2umam7vprau" path="res://Assets/Sound/SFX/Boss/Death.mp3" id="10_cisnb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ulle7"]
 shader = ExtResource("2_trk6h")
@@ -235,6 +236,11 @@ metadata/_edit_use_anchors_ = true
 
 [node name="DamageNumberStartinPosition" type="Node2D" parent="."]
 position = Vector2(0, -28)
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_cisnb")
+volume_db = -7.0
+bus = &"SFX"
 
 [connection signal="onDamage" from="." to="StateMachine/Idle" method="_on_static_enemy_on_damage"]
 [connection signal="body_entered" from="Area2D" to="StateMachine/Idle" method="_on_area_2d_body_entered"]

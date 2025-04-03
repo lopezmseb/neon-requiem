@@ -34,14 +34,14 @@ func damage(attack: AttackComponent):
 			currentHealth = MAX_HEALTH
 		else:
 			health_depleted.emit(parent)
-			var chance_25 = randf_range(0.0, 1.0) < 0.99
+			var chance_25 = randf_range(0.0, 1.0) < 0.33
 			
 			if chance_25:
 				var pickupObject
-				#if randi() % 2:
-				pickupObject = speedBoostScene.instantiate()
-				#else:
-					#pickupObject = healthPackScene.instantiate()
+				if randi() % 2:
+					pickupObject = speedBoostScene.instantiate()
+				else:
+					pickupObject = healthPackScene.instantiate()
 				pickupObject.position = parent.position
 				parent.get_parent().call_deferred("add_sibling", pickupObject)
 

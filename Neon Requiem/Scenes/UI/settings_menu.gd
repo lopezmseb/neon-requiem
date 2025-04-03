@@ -62,6 +62,7 @@ func _on_quit_button_pressed():
 	get_tree().quit()
 	
 func load_data():
+	colour_blind = 0
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ) 
 		master_volume = file.get_var(master_volume)

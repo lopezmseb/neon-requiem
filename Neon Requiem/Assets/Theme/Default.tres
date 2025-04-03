@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=21 format=3 uid="uid://crtm2m3sw3yoa"]
+[gd_resource type="Theme" load_steps=37 format=3 uid="uid://crtm2m3sw3yoa"]
 
 [ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="1_ysmll"]
 [ext_resource type="Texture2D" uid="uid://chi850he8jvlt" path="res://Assets/Theme/Button/button_pressed.png" id="2_3ojsc"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://do33iiqtyx0g3" path="res://Assets/Theme/Slider/selected.png" id="5_qorja"]
 [ext_resource type="Texture2D" uid="uid://chxaecrp8um7p" path="res://Assets/Theme/Slider/unselected.png" id="6_5i3ko"]
 [ext_resource type="Texture2D" uid="uid://v3gy3ja8vkfl" path="res://Assets/Theme/Slider/Bar_background.png" id="7_hpm1q"]
+[ext_resource type="Texture2D" uid="uid://c3llrtso30f76" path="res://Assets/Theme/Button/arrow.png" id="8_3e0k5"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gunnb"]
 texture = ExtResource("2_3ojsc")
@@ -28,7 +29,52 @@ texture = ExtResource("2_3ojsc")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bem4n"]
 texture = ExtResource("7_hpm1q")
 
-[sub_resource type="Image" id="Image_evcgq"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ghken"]
+texture = ExtResource("3_kcya2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6xq68"]
+texture = ExtResource("4_stad0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xm72f"]
+texture = ExtResource("3_kcya2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2qb6c"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wu13o"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_po1fc"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_evcgq"]
+texture = ExtResource("4_stad0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kjgdw"]
+texture = ExtResource("4_stad0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ui7uf"]
+texture = ExtResource("4_stad0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t6jdl"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_khl2m"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3e0k5"]
+texture = ExtResource("3_kcya2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y121d"]
+texture = ExtResource("3_kcya2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_37pt1"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1q25t"]
+texture = ExtResource("2_3ojsc")
+
+[sub_resource type="Image" id="Image_3e0k5"]
 data = {
 "data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 1, 179, 179, 179, 20, 188, 188, 188, 19, 255, 255, 255, 1, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 179, 179, 179, 20, 180, 180, 180, 64, 180, 180, 180, 64, 188, 188, 188, 19, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 188, 188, 188, 19, 180, 180, 180, 64, 180, 180, 180, 64, 188, 188, 188, 19, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 1, 188, 188, 188, 19, 188, 188, 188, 19, 255, 255, 255, 1, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
 "format": "RGBA8",
@@ -38,9 +84,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_48h40"]
-image = SubResource("Image_evcgq")
+image = SubResource("Image_3e0k5")
 
-[sub_resource type="Image" id="Image_3e0k5"]
+[sub_resource type="Image" id="Image_37pt1"]
 data = {
 "data": PackedByteArray(181, 181, 181, 48, 179, 179, 179, 50, 213, 213, 213, 6, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 180, 180, 180, 64, 180, 180, 180, 64, 179, 179, 179, 50, 180, 180, 180, 64, 180, 180, 180, 54, 213, 213, 213, 6, 255, 255, 255, 0, 255, 255, 255, 0, 180, 180, 180, 64, 180, 180, 180, 64, 204, 204, 204, 5, 178, 178, 178, 53, 180, 180, 180, 64, 180, 180, 180, 54, 213, 213, 213, 6, 255, 255, 255, 0, 180, 180, 180, 64, 180, 180, 180, 64, 255, 255, 255, 0, 204, 204, 204, 5, 182, 182, 182, 52, 180, 180, 180, 64, 180, 180, 180, 51, 255, 255, 255, 0, 180, 180, 180, 64, 180, 180, 180, 64, 255, 255, 255, 0, 213, 213, 213, 6, 180, 180, 180, 54, 180, 180, 180, 64, 179, 179, 179, 50, 255, 255, 255, 0, 180, 180, 180, 64, 180, 180, 180, 64, 213, 213, 213, 6, 180, 180, 180, 54, 180, 180, 180, 64, 183, 183, 183, 53, 170, 170, 170, 6, 255, 255, 255, 0, 180, 180, 180, 64, 180, 180, 180, 64, 182, 182, 182, 49, 180, 180, 180, 64, 183, 183, 183, 53, 170, 170, 170, 6, 255, 255, 255, 0, 255, 255, 255, 0, 180, 180, 180, 64, 180, 180, 180, 64, 181, 181, 181, 41, 182, 182, 182, 49, 170, 170, 170, 6, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 180, 180, 180, 64, 180, 180, 180, 64),
 "format": "RGBA8",
@@ -50,14 +96,14 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_05pgy"]
-image = SubResource("Image_3e0k5")
+image = SubResource("Image_37pt1")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1evl8"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(1, 1, 1, 0.75)
+bg_color = Color(0.0646965, 0.0646965, 0.0646965, 0.75)
 draw_center = false
 border_width_left = 2
 border_width_top = 2
@@ -102,6 +148,7 @@ corner_radius_bottom_left = 3
 corner_detail = 5
 
 [resource]
+default_font = ExtResource("1_ysmll")
 Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
 Button/colors/font_focus_color = Color(0, 0, 0, 1)
@@ -129,6 +176,32 @@ HSlider/icons/grabber = ExtResource("5_qorja")
 HSlider/icons/grabber_disabled = ExtResource("6_5i3ko")
 HSlider/icons/grabber_highlight = ExtResource("5_qorja")
 HSlider/styles/grabber_area = SubResource("StyleBoxTexture_bem4n")
+MenuButton/styles/disabled = SubResource("StyleBoxTexture_ghken")
+MenuButton/styles/focus = SubResource("StyleBoxTexture_6xq68")
+MenuButton/styles/normal = SubResource("StyleBoxTexture_xm72f")
+MenuButton/styles/pressed = SubResource("StyleBoxTexture_2qb6c")
+OptionButton/colors/font_color = Color(1, 1, 1, 1)
+OptionButton/colors/font_focus_color = Color(0, 0, 0, 1)
+OptionButton/colors/font_hover_color = Color(0, 0, 0, 1)
+OptionButton/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+OptionButton/colors/font_pressed_color = Color(0, 0, 0, 1)
+OptionButton/constants/arrow_margin = 51
+OptionButton/constants/modulate_arrow = 20
+OptionButton/constants/outline_size = -6
+OptionButton/font_sizes/font_size = 25
+OptionButton/fonts/font = ExtResource("1_ysmll")
+OptionButton/icons/arrow = ExtResource("8_3e0k5")
+OptionButton/styles/disabled = SubResource("StyleBoxTexture_wu13o")
+OptionButton/styles/disabled_mirrored = SubResource("StyleBoxTexture_po1fc")
+OptionButton/styles/focus = SubResource("StyleBoxTexture_evcgq")
+OptionButton/styles/hover = SubResource("StyleBoxTexture_kjgdw")
+OptionButton/styles/hover_mirrored = SubResource("StyleBoxTexture_ui7uf")
+OptionButton/styles/hover_pressed = SubResource("StyleBoxTexture_t6jdl")
+OptionButton/styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_khl2m")
+OptionButton/styles/normal = SubResource("StyleBoxTexture_3e0k5")
+OptionButton/styles/normal_mirrored = SubResource("StyleBoxTexture_y121d")
+OptionButton/styles/pressed = SubResource("StyleBoxTexture_37pt1")
+OptionButton/styles/pressed_mirrored = SubResource("StyleBoxTexture_1q25t")
 TextEdit/colors/background_color = Color(0, 0, 0, 0)
 TextEdit/colors/caret_background_color = Color(0, 0, 0, 0)
 TextEdit/colors/caret_color = Color(0, 0, 0, 1)

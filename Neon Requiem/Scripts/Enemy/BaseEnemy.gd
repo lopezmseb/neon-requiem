@@ -11,7 +11,10 @@ func _ready():
 	# Scale Upgrades Based on Level
 	ScaleUpgrades()
 	offensiveMaterial.shader = COLORS.OFFENSIVE_SHADER
+	offensiveMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
 	defensiveMaterial.shader = COLORS.DEFENSIVE_SHADER
+	defensiveMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
+	
 	
 func ScaleUpgrades():
 	var playerCount = get_tree().root.find_children("*", "Player", true, false).size()

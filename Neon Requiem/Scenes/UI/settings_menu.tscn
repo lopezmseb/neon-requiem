@@ -130,6 +130,7 @@ popup/item_3/text = "Tritanopia"
 popup/item_3/id = 3
 
 [node name="UnstuckButton" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -140,6 +141,7 @@ text = "Unstuck"
 metadata/_edit_use_anchors_ = true
 
 [node name="MenuButton" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8

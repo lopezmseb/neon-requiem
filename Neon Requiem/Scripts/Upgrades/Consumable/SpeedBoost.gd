@@ -19,7 +19,6 @@ func _on_body_entered(body: Node2D) -> void:
 		$CollisionShape2D.call_deferred("set_disabled", true)
 		$PowerUp.play()
 
-
 func _on_timer_timeout() -> void:
 	speedComponent = curPlayer.get_node("SpeedComponent")
 	speedComponent.baseSpeed = originalSpeed

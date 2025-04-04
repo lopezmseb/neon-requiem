@@ -19,6 +19,7 @@ func _physics_process(delta):
 		
 	move_and_slide()
 
+# Display damage numbers
 func _on_health_component_entity_damaged(attack: float):
 	onDamage.emit(false) 
 	

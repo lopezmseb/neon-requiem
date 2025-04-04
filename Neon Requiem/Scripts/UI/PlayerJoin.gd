@@ -4,10 +4,10 @@ var players = 0
 var Max_Players = 4
 var first_player_device_id = -1  # -1 for keyboard, or the ID for the first controller
 var button_pressed = false
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
-	# Debugging
-	await get_tree().process_frame  # Ensure scene tree is built
+	# Ensure scene tree is built
+	await get_tree().process_frame  
 	
 	if join_card:
 		join_card.player_joined.connect(_on_player_joined)
@@ -17,7 +17,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-
+	
+# when an input event is registered, add a new player to the game
 func _on_player_joined(player_id: int, device_id: int, device_type: String, sprite: String):
 	# Instantiate PlayerCard
 	var new_player = preload("res://Scenes/UI/PlayerCard.tscn").instantiate()

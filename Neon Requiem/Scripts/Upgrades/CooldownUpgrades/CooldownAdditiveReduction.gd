@@ -7,7 +7,6 @@ func _process(delta):
 	upgradeText = "Lower cooldown by {value}s to your {ability}".format({"value": baseAdditive , "ability": ability})
 	if(time > 0):
 		upgradeText += "\nCurrent Cooldown: {newValue}".format({"newValue": Apply(time)})
-	
 	upgradeTitle = "Cooldown Reduction"
 
 func Apply(baseStat: float, extraData: Dictionary = {}):

@@ -138,8 +138,6 @@ func JumpToPlayer():
 	enemy.position = randomPlayer.position
 	
 	$AttackCooldown.start()
-	
-	
 
 func Track_Closest_Player():
 	readyToAttack = false
@@ -257,14 +255,9 @@ func Spread_Attack(baseDegree: float = 0):
 			return
 	
 	$AttackCooldown.start()
-
-#func _notification(what):
-#	pass
 	
 func _on_attack_cooldown_timeout():
 	readyToAttack = true
-	
-
 
 func _on_health_component_health_depleted(owner):
 	isBossAlive = false

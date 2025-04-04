@@ -45,17 +45,11 @@ func damage(attack: AttackComponent):
 				pickupObject.position = parent.position
 				parent.get_parent().call_deferred("add_sibling", pickupObject)
 
-
-
-		
-
 func calcMaxHealth():
 	# Here we will run all health upgrades when implemented
 	var maxHealth = BASE_HEALTH
 	for i in get_children():
 		var upgrade = i as UpgradeStrategy
-		
 		maxHealth = i.Apply(maxHealth)
-		
-	
+
 	return maxHealth

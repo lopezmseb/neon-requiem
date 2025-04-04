@@ -17,7 +17,7 @@ var devices_seen = {}  # Dictionary to track devices and their type (keyboard or
 var characters = ["res://Assets/Characters/Jex.png","res://Assets/Characters/GRIM.png","res://Assets/Characters/Volt.png","res://Assets/Characters/Nyx.png"]
 
 func _input(event):
-#	if Keyboard, set deviceID to -1, else use regular ID
+#	If Keyboard, set deviceID to -1, else use regular ID
 	if(player_counter <= Max_Players):
 		if event is InputEventKey:
 			handle_device(-1, "keyboard")

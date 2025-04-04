@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @export var level = 0
 
-# change the colour of the boss outline
+# Change the colour of the boss outline
 func switchColors():
 	if(color_component.color == COLORS.OFFENSIVE):
 		var shaderMaterial = ShaderMaterial.new()
@@ -23,7 +23,7 @@ func _ready():
 	GlobalSignals.onColorChange.connect(switchColors)
 	ScaleBoss()
 
-#Scale the boss health in proportion to the amount of players
+# Scale the boss health in proportion to the amount of players
 func ScaleBoss():
 	var playerCount = get_tree().root.find_children("*", "Player", true, false).size()
 	$HealthComponent/HealthAdditiveUpgrade.level = clampf(floor(level/6)  + playerCount, 0, 999)

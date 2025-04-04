@@ -174,7 +174,7 @@ func read_player_data():
 					addPlayer(player_counter,device_type,device_id, sprite)
 		file.close()  # Close the file after reading
 
-# add player with player number, device and sprite
+# Add player with player number, device and sprite
 func addPlayer(player_counter: int, device_type: String, device_id: int, sprite: String):
 	if(player_counter == 0):
 		var player = playerScene.instantiate()
@@ -292,12 +292,12 @@ var dead_players = 0
 
 # Handles the dealth of players and enemies
 func _on_player_death(player):
-#	if enemy dies, delete it. 
+#	If enemy dies, delete it. 
 	if(player in enemies):
 		player.queue_free()
 		enemies.erase(player)
 	else:
-		#	if player dies, hide and teleport it away and remove input
+		#	If player dies, hide and teleport it away and remove input
 		var index = players.find(player)
 		var UI = viewports[index].get_node("UserInterface")
 		var respawn = UI.get_node("Respawn")
@@ -311,7 +311,7 @@ func _on_player_death(player):
 func ToGameOver():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
 
-# used to change to game over scene after old scene is cleaned up
+# Used to change to game over scene after old scene is cleaned up
 func game_over():
 	call_deferred("ToGameOver")
 	
@@ -373,7 +373,7 @@ func level_cleared():
 	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
 	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
 	
-	#stop the shooting and abilities on upgrade screen
+	# Stop the shooting and abilities on upgrade screen
 	for player in players:
 		player.position = Vector2(99999,99999)
 		player.disable_input()
@@ -383,7 +383,7 @@ func level_cleared():
 	for bullet in bullets:
 		bullet.queue_free()
 		
-	#remove all pickups
+	# Remove all pickups
 	for child in $HBoxContainer/SubViewportContainer/SubViewport.get_children():
 		if child is Consumable:
 			child.queue_free()

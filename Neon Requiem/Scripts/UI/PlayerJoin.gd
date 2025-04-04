@@ -18,7 +18,7 @@ func _ready():
 func _process(delta):
 	pass
 	
-# when an input event is registered, add a new player to the game
+# When an input event is registered, add a new player to the game
 func _on_player_joined(player_id: int, device_id: int, device_type: String, sprite: String):
 	# Instantiate PlayerCard
 	var new_player = preload("res://Scenes/UI/PlayerCard.tscn").instantiate()

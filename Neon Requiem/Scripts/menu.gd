@@ -9,7 +9,7 @@ func _ready():
 func _process(delta):
 	pass
 
-# when a new game is created, delete all saves
+# When a new game is created, delete all saves
 func _on_new_game_pressed():
 	if FileAccess.file_exists("user://room.save"):
 		DirAccess.remove_absolute("user://room.save")

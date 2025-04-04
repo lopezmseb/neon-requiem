@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cwuxgblo0jje2"]
 
 [ext_resource type="Texture2D" uid="uid://c1jeheo6lbgu8" path="res://Assets/Theme/settings.png" id="1_h3yw8"]
-[ext_resource type="Script" uid="uid://dp3ghwsi4t4xh" path="res://Scenes/UI/settings_menu.gd" id="1_hoxsw"]
+[ext_resource type="Script" uid="uid://dp3ghwsi4t4xh" path="res://Scripts/settings_menu.gd" id="1_hoxsw"]
 [ext_resource type="FontFile" uid="uid://da6x4se2ncqfu" path="res://Assets/Theme/Better VCR 9.0.1.ttf" id="2_ed0ws"]
 [ext_resource type="Theme" uid="uid://crtm2m3sw3yoa" path="res://Assets/Theme/Default.tres" id="3_1dscj"]
 
@@ -179,6 +179,6 @@ metadata/_edit_use_anchors_ = true
 [connection signal="item_selected" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/UnstuckButton" to="." method="_on_unstuck_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/MenuButton" to="." method="_on_menu_button_pressed"]
-[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/CloseButton" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/GridContainer/QuitButton" to="." method="_on_quit_button_pressed"]

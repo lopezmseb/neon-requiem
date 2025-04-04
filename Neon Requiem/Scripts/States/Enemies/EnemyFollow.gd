@@ -103,8 +103,7 @@ func _on_health_component_health_depleted(owner):
 		var timer = i as Timer
 		timer.stop()
 	onNewState.emit(self, AvailableStates.Death)
-	
-	#owner.queue_free()
+
 func _on_base_enemy_on_damage(allowAnimation: bool):
 	canPlayAnimation = allowAnimation
 	if(not isEnemyAlive):

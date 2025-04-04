@@ -15,7 +15,7 @@ func _ready():
 	defensiveMaterial.shader = COLORS.DEFENSIVE_SHADER
 	defensiveMaterial.set_shader_parameter("colourBlindMode", int(GlobalVariables.colourBlind))
 	
-	
+# Scale Upgrades Based on Level
 func ScaleUpgrades():
 	var playerCount = get_tree().root.find_children("*", "Player", true, false).size()
 
@@ -24,7 +24,6 @@ func ScaleUpgrades():
 	
 func _physics_process(delta):
 	if(animated_sprite_2d):
-		
 		if(COLORS.enemyShader == COLORS.OFFENSIVE_SHADER):
 			animated_sprite_2d.material = offensiveMaterial
 			color_component.color = COLORS.OFFENSIVE
@@ -37,6 +36,7 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+# Display damage numbers
 func _on_health_component_entity_damaged(attack: float):
 	onDamage.emit(false) 
 	

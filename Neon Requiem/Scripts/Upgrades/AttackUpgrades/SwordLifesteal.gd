@@ -25,4 +25,3 @@ func Apply(stat: float, dict: Dictionary = {}):
 		sourceHealth.currentHealth = clampf(sourceHealth.currentHealth + (stat * percentage), 0, sourceHealth.MAX_HEALTH)
 	
 	return stat
-		

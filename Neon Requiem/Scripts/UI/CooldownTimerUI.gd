@@ -29,7 +29,6 @@ func _process(delta):
 			$Time.text = ""
 		else:
 			$Time.text = "[center][b]{timeLeft}[/b][/center]".format(({"timeLeft": round(cooldownComponent.time_left)}))
-		
-	
+
 func updateValues(min,max,current):
 	setProgressBarValues(min,max,current)

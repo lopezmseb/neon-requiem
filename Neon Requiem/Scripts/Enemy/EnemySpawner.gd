@@ -13,6 +13,3 @@ func spawnEnemies(numberOfEnemies: float):
 		enemyObjects.append(newEnemyScene.instantiate())
 	
 	return enemyObjects
-
-
-	

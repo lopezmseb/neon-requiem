@@ -10,7 +10,6 @@ var devices = []
 var upgradeScenes = []
 signal endSelection
 
-
 func _ready():
 	var tween = get_tree().create_tween()
 	tween.tween_property($Fade_Upgrade, "color:a", 0.5, 1)
@@ -52,13 +51,13 @@ func _process(delta):
 	$Turn.text = "[center]Player {currentPlayer}'s Turn".format({"currentPlayer": int(currentPlayerNumber)})
 	if(currentPlayerNumber - 1 < devices.size()):
 		set_controller_device(devices[currentPlayerNumber - 1])
+		
 	var count = 0
 	for i in upgradeScenes:
-
 		if(is_instance_valid(i)):
 			i.upgradeStrategy = upgrades[count] 
 			count += 1
-	
+
 func read_player_data():
 	if FileAccess.file_exists(player_save):
 		var file = FileAccess.open(player_save, FileAccess.READ)
@@ -67,22 +66,21 @@ func read_player_data():
 		while file.eof_reached() == false:
 			var line = file.get_line().strip_edges() 
 			if line != "":
-				# Split the line by commas (assuming CSV format)
+				# Split the line by commas
 				var data = line.split(",")
 
 				if data.size() == 4:  # Ensure the line has exactly 3 values
-					  # Convert player_counter to integer
-					  # The device type is a string
 					var device_id = int(data[2])  # Convert device_id to integer
 					devices.append(device_id)
 		file.close()  # Close the file after reading
-		
+
 func onButtonPressed(upgradeStrategy, id):
 	set_controller_device(-1)
 	endSelection.emit()
 	
 var current_device_id: int = -1  # Track the active controller
 
+# Sets the only active input to the current player choosing the upgrade
 func set_controller_device(device_id: int):
 	# If the device ID is -1, clear all controller inputs
 	if device_id == -1:

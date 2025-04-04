@@ -75,7 +75,7 @@ func _process(delta):
 					continue
 					
 				if(atlasCoords == Vector2i(4,1)):
-					if(playerColor.color == COLORS.OFFENSIVE):				
+					if(playerColor.color == COLORS.OFFENSIVE):
 						continue
 						
 					if(playerHealth):
@@ -162,7 +162,6 @@ func find_mst(nodes: Array):
 	
 	#repeat until no more node remains
 	while nodes:
-		print("IN NODE LOOP")
 		var minD = INF #minimum distance so far
 		var minP = null #position of that node
 		var p = null #current position
@@ -182,13 +181,6 @@ func find_mst(nodes: Array):
 		nodes.erase(minP)
 	return path
 	
-#func _input(event):
-	#if(Input.is_key_pressed(KEY_DELETE)):
-		#moveToNextLevel(1)
-	#
-	#if(Input.is_key_pressed(KEY_INSERT)):
-		#changeColors()
-			
 func makeMap():
 	# Create a Tile Map for generated rooms and path
 	tileMap.clear()
@@ -229,7 +221,6 @@ func makeMap():
 				var chance_10 = randf_range(0.0, 1.0) < 0.13  # 13% chance
 				var chace_25 = randi() % 4 # 25% chance
 				
-		
 				# Check for corners first
 				if x == 2 and y == 2:  # Top-left corner
 					if tileMap.get_cell_atlas_coords(0, wallPosition) == Vector2i(5, 0):
@@ -279,7 +270,6 @@ func makeMap():
 						elif(crissCross < 0.15):
 							tileMap.set_cell(2, wallPosition, 1, oppositeFloorTile, 0)
 					tileMap.set_cell(0, wallPosition, 1, Vector2i(0,1), 0)
-					
 		
 		var p = path.get_closest_point(room.position)
 		
@@ -433,7 +423,6 @@ func carvePath(pos1: Vector2i, pos2: Vector2i):
 			tileMap.set_cell(0, left_pos, 1, Vector2i(0, 0), 1)
 		elif tileMap.get_cell_atlas_coords(0, left_pos) == Vector2i(0, 0) && tileMap.get_cell_alternative_tile(0, left_pos) != 1:
 			tileMap.set_cell(0, left_pos, 1, Vector2i(7, 0))
-			
 			
 		if tileMap.get_cell_atlas_coords(0, right_pos) == Vector2i(5, 0) || tileMap.get_cell_atlas_coords(0, right_pos) == Vector2i(4, 0):
 			tileMap.set_cell(0, right_pos, 1, Vector2i(0, 0), 3)

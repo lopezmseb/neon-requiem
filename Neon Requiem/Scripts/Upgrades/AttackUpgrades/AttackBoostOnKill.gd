@@ -9,7 +9,6 @@ func _ready():
 
 func _process(delta):
 	upgradeText = "On '{trigger}' kill, your next '{target}' attack will do {percent}% damage".format({'trigger': triggerAttack, 'target': attackToBoost, 'percent': 100 + (100*baseAdditive*(level+1))})
-	
 
 func Apply(stat: float, upgradeDict: Dictionary = {}):
 	# If boost timer is not running, boost might be eligible, check other conditions
@@ -31,7 +30,3 @@ func Apply(stat: float, upgradeDict: Dictionary = {}):
 		return stat
 	# Set Multiplier Here
 	return stat
-	
-	
-	
-	

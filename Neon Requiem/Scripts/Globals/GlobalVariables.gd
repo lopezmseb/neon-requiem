@@ -2,6 +2,7 @@ extends Node
 
 var enemyFloorRate = 5
 var allowDamageFromFloors = true
+# Integer 0-3 (Defualt: 0, Deuteranopia: 1, Protanopia: 2, Tritanopia: 3)
 var colourBlind = 0
 
 func getMaxEnemiesByLevel(level: float):

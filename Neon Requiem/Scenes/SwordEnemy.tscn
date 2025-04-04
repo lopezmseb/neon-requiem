@@ -22,6 +22,7 @@ shader_parameter/line_color = Color(0.439216, 0.945098, 0.239216, 1)
 shader_parameter/min_thickness = 0.0
 shader_parameter/max_thickness = 1.0
 shader_parameter/line_thickness = 1.0
+shader_parameter/colourBlindMode = 0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jihc"]
 atlas = ExtResource("3_d5a3w")

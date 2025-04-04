@@ -12,7 +12,6 @@ func _on_body_entered(body: Node2D) -> void:
 		var amountToHeal = baseHealthHealed	
 		for i in userUpgrades:
 			var upgrade = i as HealthPackUpgrade
-			
 			amountToHeal = upgrade.Apply(amountToHeal)
 			
 		# Heal
@@ -22,4 +21,3 @@ func _on_body_entered(body: Node2D) -> void:
 		$PowerUp.play()
 		await $PowerUp.finished
 		queue_free()
-			

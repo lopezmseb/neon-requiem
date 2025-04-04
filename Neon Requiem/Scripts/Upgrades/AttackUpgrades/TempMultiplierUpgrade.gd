@@ -21,4 +21,3 @@ func Apply(stat: float, upgradeDict: Dictionary = {}):
 	
 func changeEnable(value: bool):
 	enableBoost = value
-	

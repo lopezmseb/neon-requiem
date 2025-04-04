@@ -13,6 +13,7 @@ extends Control
 @onready var settings_menu = $SettingsMenu
 @onready var playerCamera = preload("res://Scripts/Player/PlayerCamera.gd")
 @onready var upgradeSelectionScreen = preload("res://Scenes/UI/UpgradeSelectScreen.tscn")
+
 var room_save = "user://room.save"
 var player_save = "user://players.save"
 var level: int = 1
@@ -34,9 +35,8 @@ func _ready():
 		level = file.get_var(level)
 		
 	hbox.size = DisplayServer.window_get_size()
-	# Set Pixel Style
-	var subviewports = find_children("SubViewport")
 	
+	var subviewports = find_children("SubViewport")
 	for i in subviewports:
 		var subviewport = i as SubViewport
 		viewports.append(subviewport)
@@ -44,6 +44,7 @@ func _ready():
 			subviewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 			subviewport.world_2d = mainViewport.world_2d
 	
+# Saves the entire player scene by player name
 func save_player(player: Player, playerName: String):
 	var save_directory = "user://saves/"
 	var save_path = save_directory + "player_" + playerName + ".tscn"
@@ -75,11 +76,12 @@ func save_player(player: Player, playerName: String):
 	else:
 		print("Failed to pack player scene.")
 
-		
+# Saves all players
 func save_all_players():
 	for player in players:
 		save_player(player, player.playerName)
-		
+
+# Loads one player from save data by name
 func load_player(playerName: String) -> Player:
 	var save_path = "user://saves/player_" + playerName  + ".tscn"
 	
@@ -96,6 +98,7 @@ func load_player(playerName: String) -> Player:
 	
 	return null
 
+# Loads all players from save
 func load_all_players():
 	var loaded_any = false
 	var playerNames = ["Jex","Grim","Volt","Nyx"]
@@ -104,7 +107,6 @@ func load_all_players():
 		var player = load_player(playername)
 		if(player != null):
 			if(players.size() == 0 ):
-				
 				var remoteTransform := RemoteTransform2D.new()
 				remoteTransform.remote_path = mainCamera.get_path()
 				player.add_child(remoteTransform)
@@ -127,7 +129,6 @@ func load_all_players():
 				players.append(player)
 				# UI Config
 				playerInterface.setPlayer(player)
-				# Camera Config
 				# SubViewport Config 
 				subViewport.world_2d = mainViewport.world_2d
 				subViewport.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
@@ -152,16 +153,17 @@ func load_all_players():
 				player.add_child(remoteTransform)
 				# Spawn new Player into game
 				roomGen.spawnPlayer(player, 0)
-	
+
+# Reads player device info from CSV file format
 func read_player_data():
 	if FileAccess.file_exists(player_save):
 		var file = FileAccess.open(player_save, FileAccess.READ)
 
-	# Read all lines from the file
+		# Read all lines from the file
 		while file.eof_reached() == false:
 			var line = file.get_line().strip_edges()
 			if line != "":
-				# Split the line by commas (assuming CSV format)
+				# Split the line by commas
 				var data = line.split(",")
 
 				if data.size() == 4:  # Ensure the line has exactly 3 values
@@ -172,8 +174,8 @@ func read_player_data():
 					addPlayer(player_counter,device_type,device_id, sprite)
 		file.close()  # Close the file after reading
 
+# Add player with player number, device and sprite
 func addPlayer(player_counter: int, device_type: String, device_id: int, sprite: String):
-
 	if(player_counter == 0):
 		var player = playerScene.instantiate()
 		var remoteTransform := RemoteTransform2D.new()
@@ -205,7 +207,6 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		players.append(anotherPlayer)
 		# UI Config
 		playerInterface.setPlayer(anotherPlayer)
-		# Camera Config
 
 		# SubViewport Config 
 		subViewport.world_2d = mainViewport.world_2d
@@ -218,7 +219,6 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		# Add Children to Scene
 		subViewport.add_child(camera)
 		subViewport.add_child(playerInterface)
-		
 		subViewport.add_child(anotherPlayer)
 		container.add_child(subViewport)
 		hbox.add_child(container)
@@ -232,11 +232,7 @@ func addPlayer(player_counter: int, device_type: String, device_id: int, sprite:
 		# Spawn new Player into game
 		roomGen.spawnPlayer(anotherPlayer, 0)
 
-#func _input(event):
-#	if event.is_action_pressed("add_player"):
-#		addPlayer()
-		
-
+# Updates the viewport grid based on how many players there are 
 func update_grid():
 	var child_count = $HBoxContainer.get_child_count()  # Count number of children
 
@@ -263,6 +259,7 @@ func update_grid():
 				$HBoxContainer.set_columns(3)
 				sub_viewport_container.custom_minimum_size = Vector2(DisplayServer.window_get_size().x / 3, DisplayServer.window_get_size().y / 3)
 
+# Sets the zoom of cameras based on a multiplier number
 func set_zoom(multiplier: float):
 	for player in players:
 		print(player.playerName)
@@ -281,7 +278,8 @@ func _process(delta):
 	if(enemyCount == 0 && canChangeLevel):
 		canChangeLevel = false
 		level_cleared()
-		
+	
+#	If the menu button is pressed, open the settings menu
 	if Input.is_action_just_pressed("Menu"):
 		settings_menu.visible = true
 		get_tree().paused = true
@@ -292,12 +290,14 @@ func _process(delta):
 
 var dead_players = 0
 
+# Handles the dealth of players and enemies
 func _on_player_death(player):
-
+#	If enemy dies, delete it. 
 	if(player in enemies):
 		player.queue_free()
 		enemies.erase(player)
 	else:
+		#	If player dies, hide and teleport it away and remove input
 		var index = players.find(player)
 		var UI = viewports[index].get_node("UserInterface")
 		var respawn = UI.get_node("Respawn")
@@ -308,16 +308,10 @@ func _on_player_death(player):
 	if dead_players == players.size():
 		game_over()
 
-#func _input(event):
-	#if(Input.is_key_pressed(KEY_DELETE)):
-		#for enemy in enemiesNode.get_children():
-			#enemy.queue_free()
-		#enemiesNode.get_children().clear()
-		#print("All enemies deleted.")
-			
 func ToGameOver():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
 
+# Used to change to game over scene after old scene is cleaned up
 func game_over():
 	call_deferred("ToGameOver")
 	
@@ -329,6 +323,7 @@ func _on_level_generated():
 			load_all_players()
 		roomGen.players = players
 
+#	Change to boss room if it is a boss floor
 	if(level % GlobalVariables.enemyFloorRate == 0):
 		var room = roomGen.getRooms().filter(func(room): return room.name == "BossRoom").front()
 		if(room):
@@ -336,11 +331,12 @@ func _on_level_generated():
 			var boss = preload("res://Scenes/Enemies/Bosses/Boss.tscn").instantiate()
 			enemiesNode.add_child(boss)
 			roomGen.spawnEnemy(boss, "", roomMarker.global_position)
+
+#	Generate a regular floor
 	else:
 		# Spawn Enemies
 		for room in roomGen.getRooms():
 			#Do not spawn enemies in the Starting Room
-			
 			if(room == roomGen.startRoom):
 				continue;
 			
@@ -349,7 +345,6 @@ func _on_level_generated():
 			var numEnemies = randi() % int(maxEnemiesPerRoom) + 1
 			
 			var enemies = EnemySpawner.new().spawnEnemies(numEnemies)
-			
 			for enemy in enemies:
 				enemy.level = level
 				enemiesNode.add_child(enemy)
@@ -360,41 +355,38 @@ func _on_level_generated():
 	GlobalVariables.allowDamageFromFloors = true
 	
 	call_deferred("fadeOut")
-	
+
 func fadeOut():
 	var tween = create_tween()
 	tween.tween_property(fade, 'modulate:a', 0, 5)
-	
-	
+
 func fadeIn():
 	# Fade Black
 	var tween = create_tween()
 	tween.tween_property(fade, 'modulate:a', 1, 0.25)
-	
+
+# When a level is cleared move on to upgrades
 func level_cleared():
 	call_deferred("fadeIn")
-	
 	GlobalVariables.allowDamageFromFloors = false
 	# Pick Upgrade
 	upgradeSelectScreen = upgradeSelectionScreen.instantiate()
 	upgradeSelectScreen.connect("endSelection", onUpgradeSelected)
 	
-	#stop the shooting and abilities on upgrade screen
+	# Stop the shooting and abilities on upgrade screen
 	for player in players:
 		player.position = Vector2(99999,99999)
 		player.disable_input()
-
+	
 	# Remove any existing bullets
 	var bullets = get_tree().root.find_children("*", "Bullet", true, false)
-
 	for bullet in bullets:
 		bullet.queue_free()
 		
-	#remove all pickups
+	# Remove all pickups
 	for child in $HBoxContainer/SubViewportContainer/SubViewport.get_children():
 		if child is Consumable:
 			child.queue_free()
-		
 	
 	# Start Upgrade Process
 	var baseUpgrades : Array[Node] = players[0].find_children("*", "UpgradeStrategy")
@@ -404,11 +396,10 @@ func level_cleared():
 	while(selectedUpgrades.size() != clampf(players.size(), 3, players.size() + 1)):
 		var randomUpgrade = randf_range(0, baseUpgrades.size())
 		selectedUpgrades.append(baseUpgrades.pop_at(randomUpgrade))
-			
+	
 	upgradeSelectScreen.upgrades = selectedUpgrades
 	add_child(upgradeSelectScreen)
 
-	
 func onUpgradeSelected():
 	upgradeSelectedCount = upgradeSelectedCount + 1
 	
@@ -428,7 +419,7 @@ func onUpgradeSelected():
 				player.visible = true
 				index += 1
 				player.enable_input()
-							
+				
 		# Increase Level
 		level = level + 1
 		
@@ -452,4 +443,3 @@ func onUpgradeSelected():
 		
 		upgradeSelectScreen.upgrades = newPlayerUpgrades
 		upgradeSelectScreen.currentPlayerNumber = upgradeSelectedCount + 1
-	

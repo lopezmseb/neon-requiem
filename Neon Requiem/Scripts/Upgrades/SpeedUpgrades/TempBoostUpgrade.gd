@@ -12,5 +12,4 @@ func Apply(stat, extraData: Dictionary = {}):
 	
 	if(player.isBoosted):
 		return stat + 25 * level
-		
 	return stat

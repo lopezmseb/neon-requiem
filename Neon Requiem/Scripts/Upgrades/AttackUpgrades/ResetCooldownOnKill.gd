@@ -26,6 +26,3 @@ func Apply(stat: float, upgradeDict: Dictionary = {}):
 	cooldownToReset.stop()
 	
 	return stat
-	
-	
-	

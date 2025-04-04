@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://do33iiqtyx0g3" path="res://Assets/Theme/Slider/selected.png" id="5_qorja"]
 [ext_resource type="Texture2D" uid="uid://chxaecrp8um7p" path="res://Assets/Theme/Slider/unselected.png" id="6_5i3ko"]
 [ext_resource type="Texture2D" uid="uid://v3gy3ja8vkfl" path="res://Assets/Theme/Slider/Bar_background.png" id="7_hpm1q"]
-[ext_resource type="Texture2D" uid="uid://c3llrtso30f76" path="res://Assets/Theme/Button/arrow.png" id="8_3e0k5"]
+[ext_resource type="Texture2D" uid="uid://by1nuognxasan" path="res://Assets/Theme/Button/arrow.png" id="8_3e0k5"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gunnb"]
 texture = ExtResource("2_3ojsc")

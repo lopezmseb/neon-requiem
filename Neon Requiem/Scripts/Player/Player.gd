@@ -61,8 +61,6 @@ func _input(event):
 			if(abs(tempDir.x) > 0.1 || abs(tempDir.y) > 0.1):
 				shootingDirection = position + tempDir.normalized() * 4000
 			
-
-				
 			var rightTrigger = Input.get_joy_axis(playerController, JOY_AXIS_TRIGGER_RIGHT);
 			
 			if(rightTrigger > 0.5 && is_shoot_ready):
@@ -122,17 +120,22 @@ func _physics_process(delta):
 	if is_dashing:
 		velocity = dash_direction * dashSpeed
 		dash_timer -= delta
+		
+		# Reset velocity after dash
 		if dash_timer <= 0:
 			is_dashing = false
-			velocity = Vector2.ZERO  # Reset velocity after dash
+			
+			velocity = Vector2.ZERO  
 	elif is_dashing:
 		velocity = dash_direction * dashSpeed
 		dash_timer -= delta
+		
+		# Reset velocity after dash
 		if dash_timer <= 0:
 			is_dashing = false
-			velocity = Vector2.ZERO  # Reset velocity after dash
+			velocity = Vector2.ZERO  
 	else:
-		velocity = movementDirection * $SpeedComponent.calculateSpeed()  # Normal movement
+		velocity = movementDirection * $SpeedComponent.calculateSpeed()
 		
 	if(velocity):
 		animatedSprite.play("Run-" + playerName)
@@ -151,14 +154,13 @@ func changeColor():
 	$AnimatedSprite2D.material = shaderMaterial
 
 func dash():
-	$DashCooldown.start()  # Start cooldown timer
+	$DashCooldown.start()
 	if is_dash_ready and not is_dashing:
 		dashSFX.play()
 		is_dashing = true
 		is_dash_ready = false
 		dash_timer = dash_duration
-		dash_direction = movementDirection.normalized()  # Keep the dash direction consistent
-		
+		dash_direction = movementDirection.normalized()  
 
 func _on_dash_cooldown_timeout():
 	is_dash_ready = true
@@ -232,7 +234,7 @@ func dashAttack():
 		is_ability2_ready = false
 		is_dashing = true
 		dash_timer = .1
-		dash_direction = direction.normalized()  # Keep the dash direction consistent
+		dash_direction = direction.normalized()
 		melee()
 
 	move_and_slide()

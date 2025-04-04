@@ -29,12 +29,9 @@ func _setHealth(newHealth):
 	if(health < previousHealth):
 		timer.start()
 
-	
-
 func updateHealthBar(delta):
 	if(health != healthComponent.currentHealth):
 		health = healthComponent.currentHealth
-
 
 func _on_time_to_catch_up_timeout():
 	$HealthRemaining/DamageTaken.value = health

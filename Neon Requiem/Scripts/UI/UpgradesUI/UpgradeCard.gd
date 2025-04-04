@@ -25,8 +25,8 @@ func upgradeStrategyFillInfo():
 func _ready():
 	upgradeStrategyFillInfo()
 	
-			
 func _process(delta):
+#	If the card is being hovered or in focus scale
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	pivot_offset = size/2
